@@ -1,0 +1,145 @@
+# ---------------------------------------------------------------------------
+# nota-homepage-rebuild
+#
+# Root-level ignore rules for the whole workspace (web/ + cms/).
+# Kept in one place so there is a single source of truth for what never
+# reaches the remote. Package-level .gitignore files are added later only if
+# a tool genuinely requires one.
+# ---------------------------------------------------------------------------
+
+
+# ---------------------------------------------------------------------------
+# Secrets and environment
+#
+# Nothing carrying a real credential is ever tracked. Only *.example files are
+# committed, and those contain placeholder values only.
+# ---------------------------------------------------------------------------
+.env
+.env.*
+*.env
+*.env.*
+.env.local
+*.env.local
+
+# Templates are the exception and must stay tracked.
+!.env.example
+!*.env.example
+!.env.*.example
+
+
+# ---------------------------------------------------------------------------
+# Dependencies
+# ---------------------------------------------------------------------------
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/releases
+!.yarn/plugins
+!.yarn/versions
+
+
+# ---------------------------------------------------------------------------
+# Next.js (web/)
+# ---------------------------------------------------------------------------
+.next/
+out/
+build/
+dist/
+.vercel/
+.turbo/
+next-env.d.ts
+*.tsbuildinfo
+
+
+# ---------------------------------------------------------------------------
+# Strapi (cms/)
+#
+# Schemas under cms/src/api and cms/src/components are source code and MUST
+# stay tracked — they are how content types reach production. Only Strapi's
+# generated, cached and uploaded artefacts are ignored here.
+# ---------------------------------------------------------------------------
+.tmp/
+.cache/
+.strapi/
+.strapi-updater.json
+exports/
+
+# Not a secret. This is Enterprise Edition's local trial-licence cache file,
+# regenerated on install/login and irrelevant to Community Edition (what this
+# project runs). Ignored only so an accidental EE trial doesn't leave a stray
+# local file staged; nothing sensitive lives in it.
+license.txt
+
+# Uploaded media lives on the Railway volume in production and on disk
+# locally. It is content, not code.
+cms/public/uploads/*
+!cms/public/uploads/.gitkeep
+
+
+# ---------------------------------------------------------------------------
+# Local database
+#
+# Postgres runs in Docker locally; its data directory is a bind mount and must
+# never be committed. Keep these paths in sync with docker-compose.yml.
+# SQLite patterns are defensive — Strapi falls back to SQLite if misconfigured.
+# ---------------------------------------------------------------------------
+.data/
+data/postgres/
+postgres-data/
+pgdata/
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+
+
+# ---------------------------------------------------------------------------
+# Logs and diagnostics
+# ---------------------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+
+# ---------------------------------------------------------------------------
+# Test and coverage output
+# ---------------------------------------------------------------------------
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+blob-report/
+.playwright/
+
+
+# ---------------------------------------------------------------------------
+# Editors and tooling
+# ---------------------------------------------------------------------------
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+.eslintcache
+.claude/settings.local.json
+
+
+# ---------------------------------------------------------------------------
+# OS noise
+# ---------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+desktop.ini
