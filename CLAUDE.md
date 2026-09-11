@@ -115,23 +115,14 @@ This is the feature that makes the page genuinely CMS-driven: an editor can reor
 
 Strapi's response shape must never reach a component.
 
-- `src/lib/cms/port.ts` — the interface the app depends on
-- `src/lib/cms/strapi.adapter.ts` — the **only** file that knows Strapi exists
+- `src/lib/cms/client.ts` — the **only** file that knows Strapi exists (fetches `Homepage` / `Navigation` / `Footer`, creates `Submission` entries)
 - `src/lib/cms/mappers.ts` — DTO to domain model
 - `src/lib/cms/queries.ts` — populate strings, centralised
 - `src/domain/` — framework-free types
 
 Test of correctness: swapping Strapi for another CMS should change one file and zero components.
 
-### Enforced boundaries
-
-These are ESLint rules (`import/no-restricted-paths`), not conventions:
-
-- `src/sections` may not import `src/lib/cms/strapi.adapter.ts`
-- `src/shared` may not import from `src/sections`
-- `src/domain` may not import from outside `src/domain`
-
-If a rule blocks you, the design is wrong — fix the design, do not disable the rule.
+**Deliberately simplified vs. a textbook ports-and-adapters setup:** no formal `port.ts` interface, and no custom ESLint path-boundary plugin. A five-day solo build with exactly one CMS, forever, doesn't earn back the half-day that machinery costs. The isolation guarantee — nothing outside `lib/cms/client.ts` knows Strapi's response shape — comes from file organisation and code review discipline, documented here as a **convention, not a lint-enforced rule**. This is a stated trade-off, not an oversight: it costs some of criterion 3's "enforced boundaries" credit in exchange for time spent on higher-risk work (the hero frame sequence, confirming the content model). If time allows later, the cheapest way to claw some of that back is a single built-in `no-restricted-imports` ESLint rule forbidding `sections/` and `shared/` from importing `lib/cms/client.ts` directly — much less setup than the custom multi-zone plugin config this replaces.
 
 ---
 
@@ -163,17 +154,28 @@ nota-homepage-rebuild/
 
 ## 7. Content model
 
-**PROVISIONAL.** This model was derived from a ~25-second partial screen recording of the reference site, not a full walkthrough. Treat every component below as a working hypothesis, not a confirmed inventory:
+Confirmed against a pass over the live reference site on 2026-09-11 (automated fetch, not yet a manual click-through — treat repeatable-item counts and exact field lists as good-but-verify until someone has clicked through by hand). This supersedes an earlier draft built from a ~25-second partial screen recording, which had the wrong section count and one invented section.
 
-- `sections.pricing` may not correspond to anything that actually exists on the reference homepage — it was inferred, not observed, and should be verified (or dropped) before being built out.
-- At least one section, **"Works with"**, is known to be missing from the list below — it was seen but not captured in enough detail to model yet.
-- The full section inventory is still to be confirmed against the live reference site before content types are finalised. Expect this section to change.
+**Changes from the earlier draft:**
+- `sections.pricing` is **removed**. There is no dedicated pricing section on the reference site — price is a field on the hero's CTA (`"Order Nota One – $300"`).
+- `sections.contact` is **removed** from this list pending confirmation of where the form actually lives (not observed as a distinct homepage section in this pass — may be footer-embedded, may not exist on the homepage at all). `Submission` as a collection type stays either way, since the brief requires a working form somewhere on the page.
+- Five sections were missing entirely: **Works With** (flagged before this pass), **Feature Showcase**, **Inside the Box**, **Color Variants**, **About/Mission**.
 
 One Strapi **Single Type** (`Homepage`) holding a **Dynamic Zone** of section components, plus reusable shared components.
 
-**Shared components:** `shared.seo`, `shared.link`, `shared.cta`, `shared.media`, `shared.spec-group`, `shared.spec-item`, `shared.audience-entry`, `shared.pricing-plan`, `shared.feature-item`
+**Section components**, in reference order:
 
-**Section components:** `sections.hero`, `sections.specs`, `sections.manifesto`, `sections.audience`, `sections.showcase`, `sections.pricing`, `sections.contact`
+1. `sections.hero` — headline, CTA (label + price + link — no separate pricing section exists)
+2. `sections.specs` — three spec groups (Writing System / Capture Technology / Digital Continuity), each a repeatable list of spec items
+3. `sections.manifesto` — single large statement, no repeatable items
+4. `sections.audience` — three persona entries (Students & Learners / Creators, Designers & Architects / Managers & Product Thinkers), repeatable
+5. `sections.feature-showcase` — repeatable, 4 entries observed, each image + heading + copy
+6. `sections.works-with` — compatibility statement
+7. `sections.inside-the-box` — repeatable box-contents list + spec callouts
+8. `sections.color-variants` — repeatable, 5 entries observed (colour name + image), carousel-ordered
+9. `sections.about` — brand/mission statement, no repeatable items
+
+**Shared components:** `shared.seo`, `shared.link`, `shared.cta`, `shared.media`, `shared.spec-group`, `shared.spec-item`, `shared.audience-entry`, `shared.showcase-entry`, `shared.box-item`, `shared.color-variant`
 
 **Other types:** `Navigation` (single), `Footer` (single), `Submission` (collection — form entries)
 
