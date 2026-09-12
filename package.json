@@ -1,0 +1,16 @@
+{
+  "name": "nota-homepage-rebuild",
+  "private": true,
+  "description": "Workspace scripts only — cms/ and web/ are separate npm projects, not npm workspaces.",
+  "scripts": {
+    "dev": "concurrently -k -n cms,web -c cyan.bold,magenta.bold \"npm run cms\" \"npm run web\"",
+    "cms": "npm --prefix cms run develop",
+    "web": "npm --prefix web run dev",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:reset": "docker compose down -v && docker compose up -d"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.4"
+  }
+}

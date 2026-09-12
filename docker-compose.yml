@@ -1,0 +1,23 @@
+# Local development Postgres. Matches the engine Railway runs in
+# production (see CLAUDE.md §4) so nothing behaves differently after deploy.
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: nota-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi
+      POSTGRES_DB: nota
+    ports:
+      - "5432:5432"
+    volumes:
+      - nota-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U strapi -d nota"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  nota-pgdata:
