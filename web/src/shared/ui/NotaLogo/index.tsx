@@ -13,9 +13,10 @@ interface NotaLogoProps {
  */
 export function NotaLogo({ color = "white", className }: NotaLogoProps) {
   return (
+    // No width/height attributes: those would render at a fixed pixel size
+    // regardless of viewport. viewBox alone keeps the aspect ratio; the
+    // consumer's CSS sets the actual (responsive, vw-based) size.
     <svg
-      width="71"
-      height="26"
       viewBox="0 0 71 26"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -7,7 +7,7 @@
 
 .hero {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   overflow: hidden;
   background: var(--color-bg-radial);
   color: var(--color-white);
@@ -19,7 +19,7 @@
 
 .desktop {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 @media (max-width: 991px) {
@@ -35,59 +35,36 @@
   height: 100%;
 }
 
-/* Contrast note: the gradient runs light (near #969CA6) at centre-top to
-   dark (#3A3C40) toward the edges. The order card sits in the lighter
-   region — plain white text there measures 2.76:1, under WCAG AA's 4.5:1.
-   The scrim brings it to 5.19:1. Verified by computing both, not assumed. */
-.orderCard {
-  position: absolute;
-  top: 5vh;
-  right: 5vw;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 0.25em;
-  padding: 1em 1.5em;
-  border-radius: 999px;
-  background: var(--color-black-30);
-  font-family: var(--font-sans);
-  font-size: var(--text-main, 1rem);
-  text-align: right;
-}
-
-.orderLabel {
-  font-size: 0.75em;
-  opacity: 0.8;
-}
-
-.orderProduct {
-  font-weight: 600;
-}
-
-.orderPrice {
-  font-size: 0.85em;
-}
-
-/* Headline sits over the gradient's dark end (bottom-left, past the 80%
-   stop) — 11.05:1 against white, no scrim needed there. */
+/* Sits over the gradient's dark end (bottom-left, past the 80% stop) —
+   11.05:1 against white (computed, not assumed). No order card here
+   anymore — see index.tsx for why. */
 .headline {
   position: absolute;
-  bottom: 6vh;
-  left: 5vw;
+  bottom: 5.56vw;
+  left: 2.5vw;
   z-index: 2;
   display: flex;
   flex-direction: column;
   font-family: var(--font-serif);
   font-weight: 400;
-  line-height: 1.05;
 }
 
+/* Line-height and letter-spacing differ per line in the reference (not a
+   uniform value across both, which an earlier version used) — confirmed
+   against its live CSS. That earlier uniform 1.05 line-height is most of
+   why the rendered headline looked visibly larger/looser than the
+   reference at the same font-size: these two lines are meant to sit
+   tight, not loose. */
 .headlineLine1 {
   font-size: var(--text-headline-1);
+  line-height: 100%;
+  letter-spacing: -0.04em;
 }
 
 .headlineLine2 {
   font-size: var(--text-headline-2);
+  line-height: 80%;
+  letter-spacing: -0.05em;
 }
 
 /* ---------------------------------------------------------------------- */
