@@ -84,3 +84,30 @@ mark is the SVG component, not that text.
 pill) is the opposite case, and is a normal Media Library upload: it's a
 product photograph, which is exactly the kind of asset an editor should
 be able to replace.
+
+### Two sections are built simpler than the reference actually animates
+
+The "Who it's for" and "Inside the box" sections are built to
+`CLAUDE.md`'s own description (a sticky label with flowing content and a
+grey-to-white text fill; a title fill and a grid of items) rather than
+the reference's actual mechanism, which turns out to be considerably
+more elaborate — confirmed by fetching its live CSS, not assumed:
+
+- **Who** uses a sticky "camera" viewport, `180vh`-tall scroll-pinned
+  text and video tracks, a video animated with 3D `perspective`/
+  `transform-origin` (not a plain autoplaying loop), a
+  horizontally-clipped reveal for the persona list, and its own
+  dedicated curtain transition on entry.
+- **Inside the box** wipes between a background image and a hover-state
+  image per item using a 25-row "blinds" grid, not a simple reveal.
+
+Both are real, deliberately scoped-down simplifications, not oversights.
+Reproducing either with confidence from static CSS alone — with no way
+to actually watch the reference animate — was judged too high-risk for
+the time available: getting a scroll-driven 3D transform or a 25-part
+wipe subtly wrong is worse than not attempting it, and a wrong-but-
+confident copy is harder to justify in review than a stated, honest
+simplification. What's built keeps every piece of content from the CMS
+and the interaction CLAUDE.md itself documents (a fill effect, a sticky
+label, a flowing layout); what's cut is the specific choreography beyond
+what could be verified.
