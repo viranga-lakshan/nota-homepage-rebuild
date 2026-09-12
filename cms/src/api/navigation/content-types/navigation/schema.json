@@ -16,7 +16,46 @@
       "required": true,
       "maxLength": 20,
       "default": "NŌTA",
-      "description": "The wordmark in the top-left corner. Set as text so it stays sharp at every screen size."
+      "description": "The wordmark in the top-left corner, used if no logo image is uploaded below. Set as text so it stays sharp at every screen size."
+    },
+    "logo_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "SVG wordmark, if you have one. Optional - the text above is the fallback and is used until this is set."
+    },
+    "logo_image_alt": {
+      "type": "string",
+      "required": false,
+      "maxLength": 150,
+      "description": "Describes the logo image for screen readers. Fill this in whenever a logo image is uploaded."
+    },
+    "nota_mark": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "The standalone NOTA mark shown top-right on mobile. Optional - the mobile header lays out fine without it, just without that mark."
+    },
+    "nota_mark_alt": {
+      "type": "string",
+      "required": false,
+      "maxLength": 150,
+      "description": "Describes the mark for screen readers. Fill this in whenever the mark is uploaded."
+    },
+    "mobile_menu_image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"],
+      "description": "Photo shown behind the mobile menu overlay when it opens."
+    },
+    "mobile_menu_image_alt": {
+      "type": "string",
+      "required": true,
+      "maxLength": 150,
+      "description": "Describes the mobile menu photo for screen readers."
     },
     "items": {
       "type": "component",
