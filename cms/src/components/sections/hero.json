@@ -19,11 +19,20 @@
       "maxLength": 30,
       "description": "Second line of the headline, for example \"for real thinking\"."
     },
-    "lottie_url": {
+    "sequence_base_path": {
       "type": "string",
       "required": true,
-      "maxLength": 500,
-      "description": "Web address of the pen animation file (.json). Upload the file in Media Library, then paste its URL here."
+      "maxLength": 200,
+      "default": "/sequence/",
+      "description": "Folder the pen animation frames are served from. The frames themselves ship with the site, so only change this if a developer has moved them."
+    },
+    "sequence_frame_count": {
+      "type": "integer",
+      "required": true,
+      "default": 75,
+      "min": 1,
+      "max": 300,
+      "description": "How many frames are in that folder. Must match exactly, or the animation will stop short or flicker at the end."
     },
     "mobile_fallback": {
       "type": "media",
