@@ -17,14 +17,14 @@
 import { z } from "zod";
 
 const serverSchema = z.object({
-  STRAPI_URL: z.string().url(),
+  STRAPI_URL: z.url(),
   STRAPI_TOKEN: z.string().min(1),
   REVALIDATE_SECRET: z.string().min(1),
 });
 
 const publicSchema = z.object({
-  NEXT_PUBLIC_STRAPI_MEDIA_URL: z.string().url(),
-  NEXT_PUBLIC_SITE_URL: z.string().url(),
+  NEXT_PUBLIC_STRAPI_MEDIA_URL: z.url(),
+  NEXT_PUBLIC_SITE_URL: z.url(),
 });
 
 type Env = z.infer<typeof serverSchema> & z.infer<typeof publicSchema>;
