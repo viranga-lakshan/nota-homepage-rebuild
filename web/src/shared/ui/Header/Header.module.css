@@ -40,30 +40,10 @@
 
 .burger {
   display: none;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
+  padding: 0;
   background: none;
   border: none;
   cursor: pointer;
-}
-
-/* 3x3 dot grid (⠿), not the classic three-bar icon — matches the
-   reference's mobile trigger specifically. */
-.burgerGrid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 4px;
-  width: 18px;
-  height: 18px;
-}
-
-.burgerGrid span {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: var(--color-white);
 }
 
 /* Below 991px (CLAUDE.md §3): nav links and the order button give way to a

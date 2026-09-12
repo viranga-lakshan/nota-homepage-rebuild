@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Footer, Navigation } from "@/domain/site";
 import { NotaLogo } from "@/shared/ui/NotaLogo";
+import { BurgerIcon } from "@/shared/ui/BurgerIcon";
 import { MobileMenu } from "@/shared/ui/MobileMenu/MobileMenu";
 import styles from "./Header.module.css";
 
@@ -57,11 +58,7 @@ export function Header({ navigation, footer }: HeaderProps) {
           aria-expanded={isMenuOpen}
           onClick={() => setIsMenuOpen(true)}
         >
-          <span className={styles.burgerGrid}>
-            {Array.from({ length: 9 }).map((_, i) => (
-              <span key={i} />
-            ))}
-          </span>
+          <BurgerIcon color="white" />
         </button>
       </header>
 

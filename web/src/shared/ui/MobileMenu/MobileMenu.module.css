@@ -16,11 +16,14 @@
   color: var(--color-black);
   padding: 3vh 6vw;
   opacity: 0;
-  transform: translateY(-2%);
+  /* Slides down from fully off-screen above, matching the reference's own
+     overlay entrance — an earlier version used a subtle fade + 2% shift,
+     which wasn't how the real one moves. */
+  transform: translateY(-100%);
   pointer-events: none;
   transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+    opacity 0.35s ease,
+    transform 0.35s ease;
 }
 
 .overlay[data-open="true"] {
@@ -99,13 +102,27 @@
   left: 50%;
   bottom: 1em;
   transform: translateX(-50%);
-  padding: 0.6em 1.2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25em;
+  padding: 0.6em 1.5em;
   border-radius: 999px;
   background: var(--color-black-30);
   color: var(--color-white);
   font-family: var(--font-sans);
   font-size: 0.85rem;
   white-space: nowrap;
+}
+
+.orderPillProduct {
+  color: var(--color-white-40);
+}
+
+.orderPillDivider {
+  width: 1.5em;
+  height: 1px;
+  background: var(--color-white);
 }
 
 .footer {
