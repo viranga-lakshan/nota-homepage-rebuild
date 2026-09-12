@@ -1,0 +1,156 @@
+/**
+ * Spacing/sizing values are carried from a supplied spec, not individually
+ * confirmed against fetched reference CSS the way hero/specs were — the
+ * base colour/typography tokens they build on are confirmed.
+ */
+.heading {
+  background: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  padding: var(--space-page-y) var(--space-page-x);
+  text-align: center;
+}
+
+.headingLight,
+.headingBold {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: var(--text-large-4);
+  font-weight: 400;
+}
+
+.headingLight {
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.headingBold {
+  color: var(--color-black);
+}
+
+.desktop {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.slideImage {
+  object-fit: cover;
+}
+
+.slideHeadline {
+  position: absolute;
+  left: var(--space-page-x);
+  bottom: 5.56vw;
+  z-index: 2;
+  max-width: 45vw;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--text-large-1);
+  line-height: 1.1;
+  color: var(--color-white);
+}
+
+.callout {
+  position: absolute;
+  right: var(--space-page-x);
+  bottom: 5.56vw;
+  z-index: 2;
+  width: 27.78vw;
+  padding: 1.67vw;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.83vw;
+  backdrop-filter: blur(10px);
+}
+
+.calloutTitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-card);
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: 0.83vw;
+}
+
+.calloutBody {
+  font-family: var(--font-sans);
+  font-size: var(--text-button);
+  color: var(--color-white-40);
+  line-height: 1.5;
+}
+
+.pagination {
+  position: absolute;
+  right: var(--space-page-x);
+  bottom: 2.78vw;
+  z-index: 3;
+  display: flex;
+  gap: 0.56vw;
+}
+
+.dot {
+  width: 0.42vw;
+  height: 0.42vw;
+  min-width: 4px;
+  min-height: 4px;
+  border-radius: 50%;
+  background: var(--color-white-40);
+}
+
+.dotActive {
+  background: var(--color-white);
+}
+
+.mobile {
+  display: none;
+}
+
+.mobileSlide {
+  position: relative;
+  background: var(--color-black);
+  padding: 8.33vw 4.69vw;
+}
+
+.mobileSlideImage {
+  width: 100%;
+  height: auto;
+  border-radius: 4.17vw;
+  margin-bottom: 4.17vw;
+}
+
+.mobileSlideHeadline {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: 7.29vw;
+  color: var(--color-white);
+  margin-bottom: 4.17vw;
+}
+
+.mobileCallout {
+  padding: 4.17vw;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4.17vw;
+}
+
+@media (max-width: 991px) {
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+
+  .headingLight,
+  .headingBold {
+    font-size: 8.33vw;
+  }
+}
