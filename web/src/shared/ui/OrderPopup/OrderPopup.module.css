@@ -1,0 +1,144 @@
+/**
+ * Values confirmed against fetched reference CSS (.popup__content,
+ * .popup__main-text, .popup__input, .headline--1) — not the supplied
+ * spec's guesses. See OrderPopup.tsx docblock for what changed.
+ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.overlay[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    transition-duration: 0.01ms;
+  }
+}
+
+.popup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  row-gap: 4.33vw;
+  width: 55.44vw;
+  padding: 5.54vw 2.02vw 6.15vw;
+  background: var(--color-white);
+  border-radius: 4px;
+  text-align: center;
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--text-h1);
+  color: var(--color-black);
+  line-height: 0.9;
+  margin-bottom: 0.83vw;
+}
+
+.subtext {
+  font-family: var(--font-sans);
+  font-size: var(--text-main);
+  color: var(--color-gray);
+  max-width: 29.94vw;
+  margin: 0 auto;
+}
+
+.field {
+  width: 100%;
+  margin-top: 1.67vw;
+}
+
+/* An underlined field, not a rounded pill — confirmed against the real
+   .popup__input rule, which sets every border to none except a
+   translucent bottom border. */
+.input {
+  width: 100%;
+  padding-bottom: 0.4vw;
+  border: none;
+  border-bottom: 1px solid var(--color-black-30);
+  font-family: var(--font-sans);
+  font-size: var(--text-main);
+  outline: none;
+  background: none;
+  color: var(--color-black);
+  transition: border-color 0.2s ease;
+}
+
+.input:focus {
+  border-bottom-color: var(--color-black);
+}
+
+.error {
+  display: block;
+  margin-top: 0.5vw;
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  color: #c0392b;
+  text-align: left;
+}
+
+.submitButton {
+  margin-top: 1.67vw;
+  padding: 0.83vw 1.67vw;
+  background: var(--color-black);
+  color: var(--color-white);
+  border: none;
+  border-radius: 100px;
+  font-family: var(--font-sans);
+  font-size: var(--text-main);
+  cursor: pointer;
+}
+
+.submitButton:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.closeButton {
+  margin-top: 1.67vw;
+  background: none;
+  border: none;
+  font-family: var(--font-sans);
+  font-size: var(--text-main);
+  color: var(--color-gray);
+  cursor: pointer;
+}
+
+@media (max-width: 991px) {
+  .popup {
+    width: 90vw;
+    padding: 12.5vw 6.25vw;
+  }
+
+  .heading {
+    font-size: 12.5vw;
+  }
+
+  .subtext {
+    max-width: 100%;
+    font-size: 3.65vw;
+  }
+
+  .input {
+    font-size: 3.65vw;
+  }
+
+  .submitButton {
+    padding: 3.13vw 4.17vw;
+    font-size: 3.65vw;
+  }
+}

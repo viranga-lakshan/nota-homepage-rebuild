@@ -1,16 +1,18 @@
 "use client";
 
 import { useState } from "react";
-import type { Footer, Navigation } from "@/domain/site";
+import type { Footer, Navigation, OrderPopup as OrderPopupData } from "@/domain/site";
 import { NotaLogo } from "@/shared/ui/NotaLogo";
 import { NotaMark } from "@/shared/ui/NotaMark";
 import { BurgerIcon } from "@/shared/ui/BurgerIcon";
 import { MobileMenu } from "@/shared/ui/MobileMenu/MobileMenu";
+import { OrderPopup } from "@/shared/ui/OrderPopup/OrderPopup";
 import styles from "./Header.module.css";
 
 interface HeaderProps {
   navigation: Navigation;
   footer: Footer | null;
+  orderPopup: OrderPopupData | null;
 }
 
 /**
@@ -31,11 +33,15 @@ interface HeaderProps {
  * invented a `.header__mark` class that does not exist anywhere in the
  * reference's actual CSS.
  *
- * 'use client': opening/closing the mobile menu is real interactivity, not
- * something a Server Component can own.
+ * The order button now opens OrderPopup for real — degrades to doing
+ * nothing if the CMS entry doesn't exist yet, rather than crashing.
+ *
+ * 'use client': opening/closing the mobile menu and the popup is real
+ * interactivity, not something a Server Component can own.
  */
-export function Header({ navigation, footer }: HeaderProps) {
+export function Header({ navigation, footer, orderPopup }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   return (
     <>
@@ -52,9 +58,12 @@ export function Header({ navigation, footer }: HeaderProps) {
           </ul>
         </nav>
 
-        {/* Not yet a real trigger — becomes one once the order popup
-            exists (this is what it opens on the reference site). */}
-        <button type="button" className={styles.orderButton}>
+        <button
+          type="button"
+          className={styles.orderButton}
+          onClick={() => setIsPopupOpen(true)}
+          disabled={!orderPopup}
+        >
           <NotaMark color="black" className={styles.orderMark} />
           <span className={styles.orderContent}>
             <span className={styles.orderTexts}>
@@ -83,6 +92,10 @@ export function Header({ navigation, footer }: HeaderProps) {
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
       />
+
+      {orderPopup && (
+        <OrderPopup popup={orderPopup} isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
+      )}
     </>
   );
 }
