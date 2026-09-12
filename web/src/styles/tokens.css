@@ -1,0 +1,87 @@
+/**
+ * Design tokens as CSS custom properties (CLAUDE.md §4).
+ *
+ * Seeded here with only what the hero section needs — colours, fonts, and
+ * the two headline sizes. Tokens for sections not yet built (large-1, main,
+ * card, menu, headline-3/4 …) are added when those sections are, rather
+ * than guessed at now.
+ *
+ * Breakpoint ordering matters and is deliberate: max-width blocks run from
+ * widest (991px) to narrowest (479px), min-width blocks from narrowest
+ * (1440px) to widest (1920px). At a viewport where more than one block
+ * matches, CSS applies both and the later one wins — so this order is what
+ * makes "narrower overrides broader" and "wider overrides narrower" true
+ * without relying on specificity tricks.
+ */
+
+:root {
+  /* Colour */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray: #666666;
+  --color-white-40: rgba(255, 255, 255, 0.4);
+  --color-white-5: rgba(255, 255, 255, 0.05);
+  --color-black-30: rgba(0, 0, 0, 0.3);
+  --color-black-10: rgba(0, 0, 0, 0.1);
+  --color-bg-radial: radial-gradient(farthest-corner at center top, #969ca6 0%, #3a3c40 80%);
+
+  /* Type — the actual font files are self-hosted via next/font/google in
+     app/layout.tsx, which exposes them under these variable names; a
+     literal font-family string here would fight next/font's own loading
+     rather than use it. */
+  --font-serif: var(--font-instrument-serif), serif;
+  --font-sans: var(--font-inter), sans-serif;
+
+  /* Headline sizes — the 992–1439px range (no explicit breakpoint of its
+     own in CLAUDE.md §3) is the value with no media query applied. */
+  --text-headline-1: 9.68vw;
+
+  /* headline-2 is an approximation: CLAUDE.md §3 only gives its base
+     value (12.1vw), not per-breakpoint numbers like headline-1 has. Scaled
+     here by headline-1's own ratio at each breakpoint as a stand-in until
+     the real source values are available — replace these five values
+     first if the real numbers turn up. */
+  --text-headline-2: 12.1vw;
+}
+
+/* max-width: 991px — tablet. Also where CLAUDE.md §3 turns all scroll
+   animation off; that's a JS/GSAP concern, not a token, but the two facts
+   share this breakpoint for a reason. */
+@media (max-width: 991px) {
+  :root {
+    --text-headline-1: 12.5vw;
+    --text-headline-2: 15.625vw; /* approximated, see note above */
+  }
+}
+
+/* max-width: 767px — mobile landscape */
+@media (max-width: 767px) {
+  :root {
+    --text-headline-1: 14.58vw;
+    --text-headline-2: 18.23vw; /* approximated */
+  }
+}
+
+/* max-width: 479px — mobile portrait */
+@media (max-width: 479px) {
+  :root {
+    --text-headline-1: 18.75vw;
+    --text-headline-2: 23.44vw; /* approximated */
+  }
+}
+
+/* min-width: 1440px — large desktop */
+@media (min-width: 1440px) {
+  :root {
+    --text-headline-1: 6.67vw;
+    --text-headline-2: 8.34vw; /* approximated */
+  }
+}
+
+/* min-width: 1920px — xl desktop */
+@media (min-width: 1920px) {
+  :root {
+    --text-headline-1: 5vw;
+    --text-headline-2: 6.25vw; /* approximated */
+  }
+}
