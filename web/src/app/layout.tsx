@@ -10,11 +10,14 @@ import "./globals.css";
 //
 // Instrument Serif ships one weight (400, regular) — next/font/google
 // requires that stated explicitly for non-variable fonts, no implicit
-// default. Inter is a variable font, so its whole weight range is
-// available without listing each one.
+// default. Both styles are loaded: the reference's own Google Fonts
+// request (confirmed by fetching its actual <link> tag) includes
+// "400,400italic", not normal-only. Inter is a variable font, so its
+// whole weight range is available without listing each one.
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: "400",
+  style: ["normal", "italic"],
   variable: "--font-instrument-serif",
 });
 

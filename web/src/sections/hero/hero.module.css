@@ -56,13 +56,13 @@
    reference at the same font-size: these two lines are meant to sit
    tight, not loose. */
 .headlineLine1 {
-  font-size: var(--text-headline-1);
+  font-size: var(--text-h1);
   line-height: 100%;
   letter-spacing: -0.04em;
 }
 
 .headlineLine2 {
-  font-size: var(--text-headline-2);
+  font-size: var(--text-h2);
   line-height: 80%;
   letter-spacing: -0.05em;
 }
