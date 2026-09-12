@@ -1,0 +1,61 @@
+/**
+ * Spacing/sizing values are carried from a supplied spec, not individually
+ * confirmed against fetched reference CSS.
+ */
+.section {
+  background: var(--color-black);
+  padding: var(--space-page-y) var(--space-page-x);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.39vw;
+}
+
+.card {
+  position: relative;
+  border-radius: 1.39vw;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+
+.cardImage {
+  object-fit: cover;
+}
+
+.cardLabel {
+  position: absolute;
+  top: 1.39vw;
+  left: 1.39vw;
+  background: var(--color-white);
+  color: var(--color-black);
+  border-radius: 100px;
+  padding: 0.42vw 1.11vw;
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+
+.videoCard {
+  grid-column: span 2;
+  aspect-ratio: 2 / 1;
+  border-radius: 1.39vw;
+  overflow: hidden;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 991px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cardLabel {
+    font-size: 2.6vw;
+  }
+}

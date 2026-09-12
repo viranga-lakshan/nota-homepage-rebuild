@@ -1,0 +1,96 @@
+/**
+ * Spacing/sizing values are carried from a supplied spec, not individually
+ * confirmed against fetched reference CSS.
+ */
+.desktop {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--color-black);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slideImage {
+  object-fit: cover;
+}
+
+.slideText {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.colorName,
+.tagline {
+  display: block;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--text-large-3);
+  line-height: 1;
+}
+
+.colorName {
+  color: var(--color-white);
+}
+
+.tagline {
+  color: var(--color-white-40);
+}
+
+.pagination {
+  position: absolute;
+  left: 50%;
+  bottom: 2.78vw;
+  z-index: 3;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 0.56vw;
+}
+
+.dot {
+  width: 0.42vw;
+  height: 0.42vw;
+  min-width: 4px;
+  min-height: 4px;
+  border-radius: 50%;
+  background: var(--color-white-40);
+}
+
+.dotActive {
+  background: var(--color-white);
+}
+
+.mobile {
+  display: none;
+}
+
+.mobileSlide {
+  position: relative;
+  height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 991px) {
+  .desktop {
+    display: none;
+  }
+
+  .mobile {
+    display: block;
+  }
+
+  .colorName,
+  .tagline {
+    font-size: 12.5vw;
+  }
+}
