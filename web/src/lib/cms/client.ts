@@ -42,20 +42,25 @@ export type CacheTag = (typeof CACHE_TAGS)[keyof typeof CACHE_TAGS];
 /**
  * Reads a Strapi single type.
  *
+ * Sent with no Authorization header, deliberately: the bootstrap script
+ * (cms/src/index.ts) grants the public role unauthenticated `find` on
+ * exactly these four single types, so a token is not needed to read them —
+ * only draft/unpublished content would ever need one, which nothing here
+ * fetches. Confirmed against a live instance while building this: an
+ * invalid token produces a 401 that a correct, empty one would not have,
+ * making a bad token strictly worse than sending none.
+ *
  * Returns null when nothing is published yet — an unpublished single type is
  * an ordinary state during content setup, not an error, and the caller
- * decides what to show. Anything else (bad token, CMS down, malformed JSON)
- * throws with the status attached, because those are real failures and
- * silently rendering an empty page would hide them.
+ * decides what to show. Anything else (CMS down, malformed JSON, a real
+ * permission change) throws with the status attached, because those are
+ * real failures and silently rendering an empty page would hide them.
  */
 async function fetchSingle<T>(path: string, query: string, tag: CacheTag): Promise<T | null> {
   const env = getEnv();
   const url = query ? `${env.STRAPI_URL}${path}?${query}` : `${env.STRAPI_URL}${path}`;
 
   const response = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${env.STRAPI_TOKEN}`,
-    },
     next: { tags: [tag] },
   });
 
