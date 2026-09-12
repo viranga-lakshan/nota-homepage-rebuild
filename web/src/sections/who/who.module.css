@@ -1,0 +1,101 @@
+/**
+ * A simplified build of this section — see index.tsx docblock for why.
+ * Spacing/sizing values below are carried from a supplied spec, not
+ * individually confirmed against fetched reference CSS the way hero and
+ * specs were; the base colour and typography tokens they build on
+ * (tokens.css) are confirmed.
+ */
+.section {
+  background: var(--color-black);
+  color: var(--color-white);
+  padding: var(--space-page-y) var(--space-page-x);
+}
+
+.manifesto {
+  font-family: var(--font-serif);
+  font-size: var(--text-large-1);
+  line-height: 1.15;
+  margin-bottom: 8.33vw;
+}
+
+.word {
+  transition: color 0.1s;
+}
+
+.whoWrapper {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 4.17vw;
+  margin-bottom: 6.94vw;
+}
+
+.labelCol {
+  position: relative;
+}
+
+.label {
+  position: sticky;
+  top: 40vh;
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  color: var(--color-white-40);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.intro {
+  font-family: var(--font-sans);
+  font-size: var(--text-main);
+  font-weight: 600;
+  text-align: right;
+  margin-bottom: 4.17vw;
+  line-height: 1.5;
+}
+
+.persona {
+  margin-bottom: 4.17vw;
+}
+
+.personaTitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-main);
+  font-weight: 700;
+  margin-bottom: 1.39vw;
+}
+
+.personaBody {
+  font-family: var(--font-sans);
+  font-size: var(--text-card);
+  color: var(--color-white-40);
+  line-height: 1.6;
+}
+
+.video {
+  width: 100%;
+  border-radius: 1.39vw;
+}
+
+@media (max-width: 991px) {
+  .whoWrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .label {
+    position: static;
+    margin-bottom: 4.17vw;
+  }
+
+  .intro {
+    text-align: left;
+    font-size: 3.65vw;
+  }
+
+  .personaTitle {
+    font-size: 4.17vw;
+  }
+
+  .personaBody {
+    font-size: 3.13vw;
+  }
+}
