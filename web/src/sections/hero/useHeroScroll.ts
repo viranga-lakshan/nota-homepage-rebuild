@@ -144,7 +144,10 @@ export function useHeroScroll({
           const trigger = ScrollTrigger.create({
             trigger: container,
             start: "top top",
-            end: "+=200%",
+            // 300vh pin duration, from the reference's own animation config
+            // (data_do_json) — supersedes an earlier "200vh" instruction
+            // that predated that source being available.
+            end: "+=300%",
             pin: true,
             scrub: true,
             onUpdate: (self) => {
