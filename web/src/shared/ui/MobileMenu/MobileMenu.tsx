@@ -37,12 +37,13 @@ export function MobileMenu({ navigation, footer, isOpen, onClose }: MobileMenuPr
       aria-label="Menu"
     >
       <div className={styles.topBar}>
-        <NotaLogo color="black" />
+        <NotaLogo color="black" className={styles.logo} />
         <button type="button" className={styles.closeButton} onClick={onClose} aria-label="Close menu">
           {/* Path data pulled directly from the reference site's own close
               button — the earlier version of this hand-drew a plain two-line
-              X, which wasn't the real asset. */}
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              X, which wasn't the real asset. No width/height attributes,
+              same reason as NotaLogo/NotaMark: sized via CSS instead. */}
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.closeIcon} aria-hidden="true">
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -51,7 +52,7 @@ export function MobileMenu({ navigation, footer, isOpen, onClose }: MobileMenuPr
             />
           </svg>
         </button>
-        <NotaMark color="black" />
+        <NotaMark color="black" className={styles.mark} />
       </div>
 
       <nav className={styles.nav} aria-label="Mobile">
