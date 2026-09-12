@@ -159,6 +159,8 @@ export interface NavigationDto {
   order_button_label: string;
   order_product_name: string;
   order_price: string;
+  mobile_menu_image: StrapiMediaDto;
+  mobile_menu_image_alt: string;
 }
 
 export interface FooterDto {

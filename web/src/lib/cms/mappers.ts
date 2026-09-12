@@ -240,6 +240,7 @@ export function toNavigation(dto: NavigationDto): Navigation {
     orderButtonLabel: dto.order_button_label,
     orderProductName: dto.order_product_name,
     orderPrice: dto.order_price,
+    mobileMenuImage: toImage(dto.mobile_menu_image, dto.mobile_menu_image_alt),
   };
 }
 

@@ -3,17 +3,26 @@
  * inside its Dynamic Zone.
  */
 
+import type { Image } from "./media";
+
 export interface NavItem {
   label: string;
   href: string;
 }
 
 export interface Navigation {
+  /**
+   * Kept even though the rendered logo is now the inline NotaLogo
+   * component, not this text — it stays the accessible name/fallback, and
+   * nothing forces an editor to know that.
+   */
   logoText: string;
   items: NavItem[];
   orderButtonLabel: string;
   orderProductName: string;
   orderPrice: string;
+  /** Behind the order pill in the mobile menu overlay. */
+  mobileMenuImage: Image;
 }
 
 export interface Footer {

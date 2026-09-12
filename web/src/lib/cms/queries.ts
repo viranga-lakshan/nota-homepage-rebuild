@@ -65,6 +65,7 @@ const HOMEPAGE_POPULATE = {
 
 const NAVIGATION_POPULATE = {
   items: true,
+  mobile_menu_image: true,
 } as const;
 
 const FOOTER_POPULATE = {
