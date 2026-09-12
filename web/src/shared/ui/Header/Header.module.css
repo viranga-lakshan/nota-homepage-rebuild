@@ -1,0 +1,73 @@
+.header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2vw;
+  padding: 3vh 5vw;
+  color: var(--color-white);
+  font-family: var(--font-sans);
+}
+
+.logo {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navList {
+  display: flex;
+  gap: 2.5vw;
+  list-style: none;
+}
+
+.orderButton {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15em;
+  font-size: 0.85rem;
+  text-align: right;
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.burger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--color-white);
+}
+
+/* Below 991px (CLAUDE.md §3): nav links and the order button give way to a
+   single burger icon. The logo stays. */
+@media (max-width: 991px) {
+  .nav,
+  .orderButton {
+    display: none;
+  }
+
+  .burger {
+    display: flex;
+  }
+}
