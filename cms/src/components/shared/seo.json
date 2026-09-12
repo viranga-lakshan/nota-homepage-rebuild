@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_shared_seos",
+  "info": {
+    "displayName": "SEO",
+    "icon": "search",
+    "description": "Search-engine and social-share metadata. Field names mirror the HTML meta tags they map to."
+  },
+  "options": {},
+  "attributes": {
+    "metaTitle": {
+      "type": "string",
+      "required": true,
+      "maxLength": 60,
+      "description": "Browser tab title and the headline in search results. Under 60 characters so it is not truncated."
+    },
+    "metaDescription": {
+      "type": "text",
+      "required": true,
+      "maxLength": 160,
+      "description": "The summary shown beneath the title in search results. Under 160 characters so it is not truncated."
+    },
+    "ogImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "Preview image used when the page is shared on social media. 1200x630 pixels works best."
+    },
+    "ogImageAlt": {
+      "type": "string",
+      "required": false,
+      "maxLength": 150,
+      "description": "Describes the share image for screen readers. Fill this in whenever a share image is set."
+    },
+    "noIndex": {
+      "type": "boolean",
+      "default": true,
+      "required": true,
+      "description": "Hides the page from search engines. Leave this ON - the original design belongs to its creators."
+    }
+  }
+}

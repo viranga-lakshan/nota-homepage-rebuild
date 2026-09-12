@@ -1,0 +1,30 @@
+{
+  "collectionName": "components_shared_detail_cards",
+  "info": {
+    "displayName": "Detail Card",
+    "icon": "picture",
+    "description": "One close-up product photo with a label pill, used in the details grid."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80,
+      "description": "Text of the label pill on the card, for example \"Aluminum body\"."
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"],
+      "description": "Close-up photo for this card."
+    },
+    "image_alt": {
+      "type": "string",
+      "required": true,
+      "maxLength": 150,
+      "description": "Describes the photo for screen readers and when the image fails to load."
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "kind": "singleType",
+  "collectionName": "navigations",
+  "info": {
+    "singularName": "navigation",
+    "pluralName": "navigations",
+    "displayName": "Navigation",
+    "description": "The header: wordmark, menu links, and the sticky order button."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "logo_text": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20,
+      "default": "NŌTA",
+      "description": "The wordmark in the top-left corner. Set as text so it stays sharp at every screen size."
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.nav-item",
+      "required": true,
+      "min": 1,
+      "max": 8,
+      "description": "Menu links, in display order. Between 1 and 8 - more than 8 will not fit the header."
+    },
+    "order_button_label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20,
+      "default": "Order",
+      "description": "Text on the header's order button."
+    },
+    "order_product_name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40,
+      "default": "Nota One",
+      "description": "Product name on the header's order button."
+    },
+    "order_price": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20,
+      "default": "$300",
+      "description": "Price on the header's order button. Change it here and in the Hero section - they appear in two places."
+    }
+  }
+}

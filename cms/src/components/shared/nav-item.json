@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_nav_items",
+  "info": {
+    "displayName": "Navigation Item",
+    "icon": "link",
+    "description": "One link in the header or footer navigation. Drag to reorder - the site follows this order."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 30,
+      "description": "The visible link text, for example \"Specifications\"."
+    },
+    "href": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200,
+      "description": "Where the link goes. Use an anchor such as #specifications to jump to a section on this page."
+    }
+  }
+}

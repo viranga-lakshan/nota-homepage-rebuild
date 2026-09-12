@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_shared_box_items",
+  "info": {
+    "displayName": "Box Item",
+    "icon": "gift",
+    "description": "One item included in the box, with its own photo and description."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50,
+      "description": "Name of the item, for example \"The NOTA Smart Pen\"."
+    },
+    "description": {
+      "type": "text",
+      "required": true,
+      "maxLength": 300,
+      "description": "What the item is and what it does."
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"],
+      "description": "Photo of this item."
+    },
+    "image_alt": {
+      "type": "string",
+      "required": true,
+      "maxLength": 150,
+      "description": "Describes the photo for screen readers and when the image fails to load."
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "collectionName": "components_shared_spec_items",
+  "info": {
+    "displayName": "Spec Item",
+    "icon": "bulletList",
+    "description": "A single bullet line inside a specification group."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80,
+      "description": "One specification line, for example \"Real-time stroke capture\"."
+    }
+  }
+}

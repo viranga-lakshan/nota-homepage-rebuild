@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_sections_color_variants",
+  "info": {
+    "displayName": "Section - Colour Variants",
+    "icon": "star",
+    "description": "Pinned carousel of full-screen pen colours, one slide per colour."
+  },
+  "options": {},
+  "attributes": {
+    "colors": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.color-variant",
+      "required": true,
+      "min": 1,
+      "max": 8,
+      "description": "The pen colours, in carousel order. Between 1 and 8."
+    }
+  }
+}

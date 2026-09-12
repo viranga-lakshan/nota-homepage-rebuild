@@ -1,0 +1,49 @@
+{
+  "kind": "singleType",
+  "collectionName": "order_popups",
+  "info": {
+    "singularName": "order-popup",
+    "pluralName": "order-popups",
+    "displayName": "Order Popup",
+    "description": "The email sign-up dialog that opens when a visitor clicks an order button."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40,
+      "default": "Stay ahead",
+      "description": "Heading at the top of the dialog."
+    },
+    "subtext": {
+      "type": "text",
+      "required": true,
+      "maxLength": 200,
+      "description": "Sentence beneath the heading explaining what signing up does."
+    },
+    "email_placeholder": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40,
+      "default": "E-mail",
+      "description": "Grey hint text inside the empty email box."
+    },
+    "button_label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 30,
+      "default": "Notify me",
+      "description": "Text on the submit button."
+    },
+    "success_message": {
+      "type": "string",
+      "required": true,
+      "maxLength": 120,
+      "default": "All set. We'll keep you posted",
+      "description": "Confirmation shown after a visitor successfully signs up."
+    }
+  }
+}

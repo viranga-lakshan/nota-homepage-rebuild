@@ -1,0 +1,34 @@
+{
+  "collectionName": "components_sections_papers",
+  "info": {
+    "displayName": "Section - Smart Paper",
+    "icon": "write",
+    "description": "Pinned scroll sequence explaining the smart paper, one full-screen slide at a time."
+  },
+  "options": {},
+  "attributes": {
+    "section_heading_light": {
+      "type": "string",
+      "required": true,
+      "maxLength": 30,
+      "default": "Works with",
+      "description": "First half of the heading, shown in the lighter weight."
+    },
+    "section_heading_bold": {
+      "type": "string",
+      "required": true,
+      "maxLength": 30,
+      "default": "smart paper",
+      "description": "Second half of the heading, shown in bold."
+    },
+    "slides": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.paper-slide",
+      "required": true,
+      "min": 2,
+      "max": 6,
+      "description": "The slides, in scroll order. Between 2 and 6 - each one holds the screen while the reader scrolls."
+    }
+  }
+}
