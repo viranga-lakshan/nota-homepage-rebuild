@@ -66,6 +66,11 @@ next-env.d.ts
 .strapi-updater.json
 exports/
 
+# TypeScript types Strapi derives from the (committed) schema files on every
+# `develop`/`build` run. Regenerated automatically — not source, same
+# treatment as dist/.
+cms/types/generated/
+
 # Not a secret. This is Enterprise Edition's local trial-licence cache file,
 # regenerated on install/login and irrelevant to Community Edition (what this
 # project runs). Ignored only so an accidental EE trial doesn't leave a stray
