@@ -1,0 +1,42 @@
+{
+  "collectionName": "components_shared_paper_slides",
+  "info": {
+    "displayName": "Paper Slide",
+    "icon": "book",
+    "description": "One full-screen slide in the smart paper scroll sequence."
+  },
+  "options": {},
+  "attributes": {
+    "headline": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80,
+      "description": "The large headline shown on the left of the slide."
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"],
+      "description": "Full-bleed background image for this slide. Landscape, at least 1920px wide."
+    },
+    "image_alt": {
+      "type": "string",
+      "required": true,
+      "maxLength": 150,
+      "description": "Describes the image for screen readers and when the image fails to load."
+    },
+    "callout_title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50,
+      "description": "Heading of the frosted callout card on the right."
+    },
+    "callout_body": {
+      "type": "text",
+      "required": true,
+      "maxLength": 400,
+      "description": "Body copy inside the callout card."
+    }
+  }
+}

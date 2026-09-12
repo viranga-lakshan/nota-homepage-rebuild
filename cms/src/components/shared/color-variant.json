@@ -1,0 +1,36 @@
+{
+  "collectionName": "components_shared_color_variants",
+  "info": {
+    "displayName": "Colour Variant",
+    "icon": "paintBrush",
+    "description": "One pen colour, shown as a full-screen slide in the colour carousel."
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 30,
+      "description": "Colour name, for example \"Graphite Black\"."
+    },
+    "tagline": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40,
+      "description": "The short phrase shown beside the colour name, for example \"Clarity in silence\"."
+    },
+    "image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"],
+      "description": "Full-screen photo of the pen in this colour. Landscape, at least 1920px wide."
+    },
+    "image_alt": {
+      "type": "string",
+      "required": true,
+      "maxLength": 150,
+      "description": "Describes the photo for screen readers and when the image fails to load."
+    }
+  }
+}
