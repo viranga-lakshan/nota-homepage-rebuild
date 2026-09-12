@@ -15,10 +15,10 @@
  * exist in Strapi yet (CLAUDE.md §7), so there is nothing real to fetch.
  */
 
-import { env } from "@/shared/lib/env";
+import { getEnv } from "@/shared/lib/env";
 
 function strapiUrl(path: string): string {
-  return `${env.STRAPI_URL}${path}`;
+  return `${getEnv().STRAPI_URL}${path}`;
 }
 
 export async function getHomepage(): Promise<unknown> {
