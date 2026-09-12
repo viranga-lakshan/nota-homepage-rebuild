@@ -1,0 +1,129 @@
+/**
+ * Confirmed against fetched CSS: the section pins via a sticky "camera"
+ * (.specs__camera, height:100vh, position:sticky — the same standard
+ * mechanism as CLAUDE.md §3 describes, no exotic offset like hero's),
+ * the pen image is sized by height not width (.specs__content--img,
+ * 71.12vh at base), and the eyebrow reuses the shared headline-4 style
+ * (font-weight 600, letter-spacing -0.07em — not the plain 400-weight
+ * text an earlier guess assumed). Card grid/padding values are the
+ * supplied spec's numbers, not yet individually confirmed.
+ */
+.section {
+  position: relative;
+  background: var(--color-white);
+  padding: var(--space-page-y) var(--space-page-x);
+  overflow: hidden;
+}
+
+.headingWrapper {
+  text-align: center;
+  margin-bottom: 4.17vw;
+}
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: var(--text-h4);
+  font-weight: 600;
+  letter-spacing: -0.07em;
+  color: rgba(0, 0, 0, 0.35);
+}
+
+.heading {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: var(--text-large-4);
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-black);
+}
+
+.penWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2.78vw;
+}
+
+.penImage {
+  height: 71.12vh;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 1440px) {
+  .penImage {
+    height: 66.04vh;
+  }
+}
+
+@media (min-width: 1920px) {
+  .penImage {
+    height: 67.96vh;
+  }
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.39vw;
+}
+
+.card {
+  border: 1px solid var(--color-black-10);
+  border-radius: 0.56vw;
+  padding: 1.39vw;
+}
+
+.cardTitle {
+  font-family: var(--font-sans);
+  font-size: var(--text-card);
+  font-weight: 600;
+  padding-bottom: 1.11vw;
+  margin-bottom: 1.11vw;
+  border-bottom: 1px solid var(--color-black-10);
+}
+
+.itemList {
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 0.56vw;
+  padding: 0.83vw 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  font-family: var(--font-sans);
+  font-size: var(--text-small);
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.dot {
+  width: 0.35vw;
+  height: 0.35vw;
+  min-width: 4px;
+  min-height: 4px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+@media (max-width: 991px) {
+  .penImage {
+    height: auto;
+    width: 60vw;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 4.17vw;
+  }
+
+  .cardTitle {
+    font-size: 4.17vw;
+  }
+
+  .item {
+    font-size: 3.13vw;
+  }
+}
