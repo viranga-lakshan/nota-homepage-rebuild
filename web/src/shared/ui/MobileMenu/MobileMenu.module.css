@@ -1,0 +1,118 @@
+/**
+ * Always in the DOM (see MobileMenu.tsx for why — the `inert` attribute,
+ * not conditional mounting, is what makes it unreachable while closed).
+ * The transition below is what CSS Modules can do for an open/closed
+ * overlay; it is deliberately simple compared to the scroll-driven GSAP
+ * work elsewhere in this project because this is a discrete state change,
+ * not something tied to a scroll position.
+ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-white);
+  color: var(--color-black);
+  padding: 3vh 6vw;
+  opacity: 0;
+  transform: translateY(-2%);
+  pointer-events: none;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.overlay[data-open="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    transition-duration: 0.01ms;
+  }
+}
+
+@media (min-width: 992px) {
+  /* The overlay is mobile-only chrome — the burger that opens it is
+     already hidden above 991px in Header.module.css, so this never
+     becomes reachable on desktop regardless of `isOpen` state. */
+  .overlay {
+    display: none;
+  }
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3vh;
+  text-align: center;
+}
+
+.navList a {
+  font-family: var(--font-serif);
+  font-size: 8vw;
+  font-weight: 400;
+  color: var(--color-black);
+}
+
+.productWrap {
+  position: relative;
+  align-self: center;
+  width: 70vw;
+  max-width: 320px;
+  margin-bottom: 3vh;
+}
+
+.productImage {
+  width: 100%;
+  height: auto;
+  border-radius: 24px;
+}
+
+.orderPill {
+  position: absolute;
+  left: 50%;
+  bottom: 1em;
+  transform: translateX(-50%);
+  padding: 0.6em 1.2em;
+  border-radius: 999px;
+  background: var(--color-black-30);
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  color: var(--color-gray);
+  padding-top: 2vh;
+}
