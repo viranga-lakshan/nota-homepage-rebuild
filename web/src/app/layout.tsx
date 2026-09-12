@@ -1,15 +1,27 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Instrument_Serif, Inter } from "next/font/google";
+import { SmoothScrollProvider } from "@/lib/animation/SmoothScrollProvider";
+import "../styles/tokens.css";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Self-hosted at build time (not loaded from Google's CDN at request time) —
+// standard next/font/google behaviour, and incidentally the right call for
+// a page that must not leak visitor requests to a third party.
+//
+// Instrument Serif ships one weight (400, regular) — next/font/google
+// requires that stated explicitly for non-variable fonts, no implicit
+// default. Inter is a variable font, so its whole weight range is
+// available without listing each one.
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
+  weight: "400",
+  variable: "--font-instrument-serif",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const inter = Inter({
   subsets: ["latin"],
+  weight: "variable",
+  variable: "--font-inter",
 });
 
 // TODO: title/description will come from the CMS's shared.seo component via
@@ -28,8 +40,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+    <html lang="en" className={`${instrumentSerif.variable} ${inter.variable}`}>
+      <body>
+        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+      </body>
     </html>
   );
 }
