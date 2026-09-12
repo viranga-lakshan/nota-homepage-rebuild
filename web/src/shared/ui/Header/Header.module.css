@@ -14,9 +14,7 @@
 }
 
 .logo {
-  font-size: 1.25rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
+  display: block;
 }
 
 .nav {
@@ -42,9 +40,8 @@
 
 .burger {
   display: none;
-  flex-direction: column;
+  align-items: center;
   justify-content: center;
-  gap: 5px;
   width: 32px;
   height: 32px;
   background: none;
@@ -52,10 +49,20 @@
   cursor: pointer;
 }
 
-.burger span {
-  display: block;
-  width: 100%;
-  height: 2px;
+/* 3x3 dot grid (⠿), not the classic three-bar icon — matches the
+   reference's mobile trigger specifically. */
+.burgerGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  width: 18px;
+  height: 18px;
+}
+
+.burgerGrid span {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
   background: var(--color-white);
 }
 

@@ -1,54 +1,76 @@
-import type { Navigation } from "@/domain/site";
+"use client";
+
+import { useState } from "react";
+import type { Footer, Navigation } from "@/domain/site";
+import { NotaLogo } from "@/shared/ui/NotaLogo";
+import { MobileMenu } from "@/shared/ui/MobileMenu/MobileMenu";
 import styles from "./Header.module.css";
 
 interface HeaderProps {
   navigation: Navigation;
+  footer: Footer | null;
 }
 
 /**
- * The persistent header: logo, nav links, order button. Visually overlays
- * the hero because hero is full-viewport, but it is not part of the hero
- * section — it renders once, above every section, sourced from the
- * separate `Navigation` single type.
+ * The persistent header: logo, nav links, order button, and — below 991px —
+ * the burger that opens MobileMenu. Visually overlays the hero because hero
+ * is full-viewport, but it is not part of the hero section; it renders
+ * once, above every section, sourced from the separate Navigation single
+ * type (plus Footer, passed through only for the mobile overlay's credit
+ * line).
  *
- * No client interactivity yet, so this stays a Server Component
- * (CLAUDE.md §8). The mobile burger below is deliberately just an icon: the
- * actual overlay menu (`.popup-menu` in the CLAUDE.md §3 correction) is
- * real work of its own — its own content, its own animation — not
- * something to improvise as a header detail. It has no click handler yet.
+ * 'use client' now, unlike its first version: opening/closing the mobile
+ * menu is real interactivity, not something a Server Component can own.
  */
-export function Header({ navigation }: HeaderProps) {
+export function Header({ navigation, footer }: HeaderProps) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <header className={styles.header}>
-      <span className={styles.logo}>{navigation.logoText}</span>
+    <>
+      <header className={styles.header}>
+        <NotaLogo color="white" className={styles.logo} />
 
-      <nav className={styles.nav} aria-label="Primary">
-        <ul className={styles.navList}>
-          {navigation.items.map((item) => (
-            <li key={item.href}>
-              <a href={item.href}>{item.label}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+        <nav className={styles.nav} aria-label="Primary">
+          <ul className={styles.navList}>
+            {navigation.items.map((item) => (
+              <li key={item.href}>
+                <a href={item.href}>{item.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
 
-      {/* Not yet a real trigger — becomes one once the order popup exists.
-          Duplicates the hero section's own order card by design: the
-          content model gives each its own fields (CLAUDE.md §7 navigation
-          conventions note this explicitly) since one is section content
-          and the other is persistent chrome, even though on screen they
-          may end up showing the same values. */}
-      <div className={styles.orderButton}>
-        <span>{navigation.orderButtonLabel}</span>
-        <span>{navigation.orderProductName}</span>
-        <span>{navigation.orderPrice}</span>
-      </div>
+        {/* Not yet a real trigger — becomes one once the order popup exists.
+            Duplicates the hero section's own order card by design: the
+            content model gives each its own fields (CLAUDE.md §7) since one
+            is section content and the other is persistent chrome. */}
+        <div className={styles.orderButton}>
+          <span>{navigation.orderButtonLabel}</span>
+          <span>{navigation.orderProductName}</span>
+          <span>{navigation.orderPrice}</span>
+        </div>
 
-      <button type="button" className={styles.burger} aria-label="Open menu" disabled>
-        <span />
-        <span />
-        <span />
-      </button>
-    </header>
+        <button
+          type="button"
+          className={styles.burger}
+          aria-label="Open menu"
+          aria-expanded={isMenuOpen}
+          onClick={() => setIsMenuOpen(true)}
+        >
+          <span className={styles.burgerGrid}>
+            {Array.from({ length: 9 }).map((_, i) => (
+              <span key={i} />
+            ))}
+          </span>
+        </button>
+      </header>
+
+      <MobileMenu
+        navigation={navigation}
+        footer={footer}
+        isOpen={isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+      />
+    </>
   );
 }
