@@ -12,9 +12,11 @@ interface NotaMarkProps {
  */
 export function NotaMark({ color = "black", className }: NotaMarkProps) {
   return (
+    // No width/height attributes — see NotaLogo for why. Confirmed the
+    // reference does the same: the identical mark appears twice on the
+    // real site, once as inline SVG and once as an uploaded image
+    // reference, at two different sizes each time.
     <svg
-      width="38"
-      height="40"
       viewBox="0 0 38 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
