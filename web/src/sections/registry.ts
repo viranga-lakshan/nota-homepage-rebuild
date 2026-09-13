@@ -19,6 +19,7 @@
 import type { ComponentType } from "react";
 import type { Section, SectionType } from "@/domain/sections";
 import { Hero } from "./hero";
+import { Specs } from "./specs";
 
 type SectionProps<T extends Section> = { section: T };
 
@@ -26,6 +27,7 @@ export const sectionRegistry: {
   [K in SectionType]?: ComponentType<SectionProps<Extract<Section, { type: K }>>>;
 } = {
   hero: Hero,
+  specs: Specs,
 };
 
 export function resolveSection<T extends Section>(section: T): ComponentType<SectionProps<T>> | null {

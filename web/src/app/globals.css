@@ -14,10 +14,15 @@ html {
   height: 100%;
 }
 
+/* `clip`, not `hidden`. Both stop sideways overflow, but `overflow-x:
+   hidden` makes the element a scroll container, and a scroll container
+   ancestor is what `position: sticky` sticks to — which silently breaks
+   every sticky descendant (they track the scroll 1:1 instead of holding).
+   Every section camera on this page is sticky, so this matters. */
 html,
 body {
   max-width: 100vw;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {

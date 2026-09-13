@@ -22,11 +22,14 @@
   --color-white: #ffffff;
   --color-black: #000000;
   --color-gray: #666666;
+  --color-white-50: rgba(255, 255, 255, 0.5);
   --color-white-40: rgba(255, 255, 255, 0.4);
   --color-white-10: rgba(255, 255, 255, 0.1);
   --color-white-5: rgba(255, 255, 255, 0.05);
   --color-black-50: rgba(0, 0, 0, 0.5);
   --color-black-30: rgba(0, 0, 0, 0.3);
+  --color-black-20: rgba(0, 0, 0, 0.2);
+  --color-black-2: rgba(0, 0, 0, 0.02);
   --color-black-10: rgba(0, 0, 0, 0.1);
   --color-bg-radial: radial-gradient(farthest-corner at center top, #969ca6 0%, #3a3c40 80%);
 
@@ -42,6 +45,11 @@
      exact typography scale supplied for the reference site. */
   --text-headline-1: 9.68vw;
   --text-headline-2: 12.1vw;
+
+  /* Specs section: card title and card list item. No breakpoint
+     overrides in the source — the vw units carry them. */
+  --text-headline-3: 2.22vw;
+  --text-card: 1.61vw;
 }
 
 /* max-width: 991px — tablet. Also where scroll animation turns off
