@@ -18,10 +18,11 @@ interface UseWhoScrollOptions {
  *   36 -> 48:  Right-side intro paragraph words turn from gray to white sequentially
  *   48 -> 72:  Personas sequence (Students & Learners -> Creators -> Managers)
  *              entering horizontally from RIGHT -> LEFT with title/body subtle stagger
- *              while contentWrapper smoothly translates upward (y: 0 -> -38vw)
- *   68 -> 78:  Video enters as a compact 34vh card at BOTTOM-RIGHT strictly below Managers text
- *   78 -> 94:  Text layer scrolls up & fades out as Video expands to fill the 100% frame (exact 0.5cm top/bottom gaps)
- *   94 -> 100: Video card holds centered before handing over to next section
+ *              while contentWrapper smoothly translates upward
+ *   68 -> 76:  Video enters as a compact 34vh card at BOTTOM-RIGHT strictly below Managers text
+ *   76 -> 86:  Text layer scrolls up & fades out as Video expands to fill the framed stage (exact 0.5cm top/bottom gaps)
+ *   86 -> 94:  Video HOLDS full-screen framed state firmly in view
+ *   94 -> 100: ONLY AFTER HOLD, with continued scroll: Video shrinks (scale: 1 -> 0.65) as Paper climbs up
  */
 const MANIFESTO_WORDS_START = 5;
 const MANIFESTO_WORDS_END = 22;
@@ -57,13 +58,16 @@ const PERSONA_3_BODY_START = 66;
 const PERSONA_3_BODY_END = 72;
 
 const VIDEO_STAGE_ENTER_START = 68;
-const VIDEO_STAGE_ENTER_END = 78;
+const VIDEO_STAGE_ENTER_END = 76;
 
-const TEXT_EXIT_START = 78;
-const TEXT_EXIT_END = 88;
+const TEXT_EXIT_START = 76;
+const TEXT_EXIT_END = 86;
 
-const VIDEO_EXPAND_START = 78;
-const VIDEO_EXPAND_END = 94;
+const VIDEO_EXPAND_START = 76;
+const VIDEO_EXPAND_END = 86;
+
+const VIDEO_PUSHBACK_START = 94;
+const VIDEO_PUSHBACK_END = 100;
 
 export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
   useEffect(() => {
@@ -110,6 +114,15 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
           );
           const videoStage = section.querySelector<HTMLElement>("[data-video-stage]");
           const videoWrapper = section.querySelector<HTMLElement>("[data-video-wrapper]");
+          const whoVideo = section.querySelector<HTMLVideoElement>("[data-who-video]");
+
+          let videoHasPlayed = false;
+
+          if (whoVideo) {
+            whoVideo.loop = false;
+            whoVideo.muted = true;
+            whoVideo.playsInline = true;
+          }
 
           if (isDesktop) {
             const timeline = gsap.timeline({
@@ -118,6 +131,13 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 start: "top top",
                 end: "bottom bottom",
                 scrub: true,
+                onUpdate: (self) => {
+                  if (whoVideo && !videoHasPlayed && self.progress >= 0.65) {
+                    videoHasPlayed = true;
+                    whoVideo.currentTime = 0;
+                    whoVideo.play().catch(() => {});
+                  }
+                },
               },
             });
 
@@ -324,12 +344,14 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                   x: "15vw",
                   width: "50vw",
                   height: "34vh",
+                  scale: 1,
                 },
                 {
                   opacity: 1,
                   x: "0vw",
                   width: "50vw",
                   height: "34vh",
+                  scale: 1,
                   ease: "power2.out",
                   duration: VIDEO_STAGE_ENTER_END - VIDEO_STAGE_ENTER_START,
                 },
@@ -342,14 +364,27 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 {
                   width: "100%",
                   height: "100%",
+                  scale: 1,
                   ease: "power2.inOut",
                   duration: VIDEO_EXPAND_END - VIDEO_EXPAND_START,
                 },
                 VIDEO_EXPAND_START
               );
+
+              // 12. Video pushes back into the background ONLY AFTER HOLDING full frame (from 94% to 100%)
+              timeline.to(
+                videoWrapper,
+                {
+                  scale: 0.65,
+                  opacity: 0.7,
+                  ease: "power1.inOut",
+                  duration: VIDEO_PUSHBACK_END - VIDEO_PUSHBACK_START,
+                },
+                VIDEO_PUSHBACK_START
+              );
             }
 
-            // 12. Text layer exit (gracefully moves up and fades out without overlapping video growth)
+            // 13. Text layer exit (gracefully moves up and fades out without overlapping video growth)
             if (textLayer) {
               timeline.fromTo(
                 textLayer,

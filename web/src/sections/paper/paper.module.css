@@ -1,0 +1,425 @@
+/**
+ * The Paper ("Works with smart paper") section.
+ *
+ * Sequence:
+ * 1. Slides up over Who section with solid white stage & "Works with smart paper" heading.
+ * 2. Heading fades out.
+ * 3. 5 vertical divider lines draw down from TOP to BOTTOM, starting from RIGHT to LEFT.
+ * 4. 6 white curtain panels slide down from TOP to BOTTOM, starting from LEFT to RIGHT.
+ * 5. Reveals the 4-slide dark showcase carousel:
+ *    - Slide 1: Special paper with invisible pattern (Closed black notebook)
+ *    - Slide 2: Natural paper feel for unrestricted thinking (Open notebook sketches)
+ *    - Slide 3: Micro-optical dots sub-millimeter precision (Dot code closeup)
+ *    - Slide 4: Everything you write is synced to your phone in real time (Smartphone sync)
+ * 6. Synchronized 4-bar indicator at the bottom.
+ * 7. Outro: As user scrolls further past slide 4:
+ *    - Bottom 4-bar indicator fades out first
+ *    - Top-left headline & bottom-right callout card fade out
+ *    - Only the clean standalone center phone/background image remains in view.
+ */
+
+.paper {
+  position: relative;
+  z-index: 120;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  min-height: 100vh;
+}
+
+.camera {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #080808;
+  box-sizing: border-box;
+}
+
+@media (min-width: 992px) {
+  .paper {
+    height: 900vh;
+    margin-top: -100vh;
+    position: sticky;
+    top: -800vh;
+  }
+
+  .camera {
+    position: sticky;
+    top: 0;
+  }
+}
+
+/* =========================================================================
+   Underneath Dark Showcase Stage (Stacked Slides)
+   ========================================================================= */
+
+.darkStage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #080808;
+  z-index: 1;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.slideLayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  will-change: opacity, transform;
+}
+
+.slideActive {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.slideInactive {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.stageBgWrap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.stageBgImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Top Left Headline */
+.stageHeadlineWrap {
+  position: absolute;
+  top: 9vh;
+  left: 4.5vw;
+  max-width: 32vw;
+  z-index: 2;
+  will-change: opacity, transform;
+}
+
+.stageHeadline {
+  font-family: var(--font-serif);
+  font-size: 3.6vw;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: var(--color-white);
+  font-weight: 400;
+  margin: 0;
+}
+
+.headlineLine {
+  display: block;
+}
+
+/* Bottom Right Callout Stack (Two Distinct Rounded Boxes) */
+.calloutWrap {
+  position: absolute;
+  bottom: 8vh;
+  right: 4.5vw;
+  width: 440px;
+  max-width: 30vw;
+  min-width: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 3;
+  will-change: opacity, transform;
+}
+
+.calloutTitleBox {
+  background: rgba(30, 30, 30, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 1.25rem 1.6rem;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+.calloutTitle {
+  font-family: var(--font-sans);
+  font-size: 1.42rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0;
+  color: #ffffff;
+  letter-spacing: -0.025em;
+}
+
+.calloutBodyBox {
+  background: rgba(30, 30, 30, 0.85);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 22px;
+  padding: 1.6rem 1.6rem 1.8rem 1.6rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+.calloutBody {
+  font-family: var(--font-sans);
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.92);
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  white-space: pre-line;
+}
+
+/* Bottom Center Indicators */
+.indicatorsWrap {
+  position: absolute;
+  bottom: 3.5vh;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  z-index: 4;
+  will-change: opacity, transform;
+}
+
+.indicatorTrack {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 34vw;
+  max-width: 480px;
+  justify-content: space-between;
+}
+
+.indicatorBar {
+  flex: 1;
+  height: 2.5px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  transition: background-color 0.25s ease;
+  will-change: background-color;
+}
+
+.indicatorActive {
+  background-color: #ffffff !important;
+}
+
+/* =========================================================================
+   6 White Curtains & 5 Divider Lines Overlay
+   ========================================================================= */
+
+.curtainOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.curtains {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  width: 100%;
+  height: 100%;
+}
+
+.curtain {
+  height: 100%;
+  background-color: var(--color-white);
+  will-change: transform;
+  transform: translate3d(0, 0%, 0);
+}
+
+.gridDividers {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.dividerLine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: rgba(0, 0, 0, 0.12);
+  transform-origin: top center;
+  transform: scaleY(0);
+  will-change: transform;
+}
+
+/* =========================================================================
+   Intro Heading ("Works with smart paper")
+   ========================================================================= */
+
+.headingWrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  padding-left: 2.02vw;
+  padding-right: 2.02vw;
+  box-sizing: border-box;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-size: 8.2vw;
+  line-height: 100%;
+  letter-spacing: -0.035em;
+  color: var(--color-black);
+  margin: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.headingLight {
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.45);
+  display: block;
+}
+
+.headingBold {
+  font-weight: 400;
+  color: var(--color-black);
+  display: block;
+}
+
+@media (min-width: 1440px) {
+  .heading {
+    font-size: 7.2vw;
+  }
+}
+
+@media (min-width: 1920px) {
+  .heading {
+    font-size: 6.8vw;
+  }
+}
+
+/* =========================================================================
+   Mobile Layout
+   ========================================================================= */
+
+@media (max-width: 991px) {
+  .paper {
+    height: auto;
+    margin-top: 0;
+    position: relative;
+    top: auto;
+  }
+
+  .camera {
+    height: auto;
+    min-height: 100vh;
+    position: relative;
+    padding: 6vh 4vw;
+  }
+
+  .curtainOverlay {
+    display: none;
+  }
+
+  .headingWrapper {
+    position: relative;
+    inset: auto;
+    padding: 8vh 4vw 4vh 4vw;
+    color: var(--color-white);
+  }
+
+  .heading {
+    font-size: 11vw;
+    line-height: 105%;
+  }
+
+  .headingLight {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .headingBold {
+    color: var(--color-white);
+  }
+
+  .darkStage {
+    position: relative;
+    inset: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8vh;
+    padding: 4vh 0;
+  }
+
+  .slideLayer {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+    margin-bottom: 6vh;
+  }
+
+  .stageBgWrap {
+    position: relative;
+    width: 100%;
+    height: 45vh;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .stageHeadlineWrap {
+    position: relative;
+    top: auto;
+    left: auto;
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .stageHeadline {
+    font-size: 8vw;
+  }
+
+  .calloutWrap {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .calloutTitleBox,
+  .calloutBodyBox {
+    padding: 1.25rem;
+  }
+
+  .indicatorsWrap {
+    display: none;
+  }
+}
