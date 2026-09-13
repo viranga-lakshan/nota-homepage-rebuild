@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import type { HeroSection } from "@/domain/sections";
+import { HeroSmartPen } from "@/sections/hero-smart-pen";
 import { PenSequence } from "./PenSequence";
 import styles from "./hero.module.css";
 
@@ -47,6 +48,12 @@ export function Hero({ section }: HeroProps) {
           <span className={styles.headlineLine1}>{section.headlineLine1}</span>
           <span className={styles.headlineLine2}>{section.headlineLine2}</span>
         </h1>
+
+        {/* The hero's outro: six white curtains that climb over the pen
+            during the last third of the pin. Rendered inside the hero, and
+            inside its desktop tree, because it rides the hero's pin and
+            because the reference has no such transition on mobile. */}
+        <HeroSmartPen heroRef={containerRef} />
       </div>
 
       {/* Mobile tree — static CMS image, hidden at 992px and above via CSS */}

@@ -1,0 +1,82 @@
+/**
+ * The white-curtain transition that closes the hero.
+ *
+ * Curtain geometry is taken from the reference's own stylesheet (its
+ * `.transition-specs` block), not approximated: a six-column grid of
+ * full-height white panels, each starting one viewport below, separated by a
+ * 1px 20%-black hairline.
+ *
+ * Its *containing* structure is not the reference's, and deliberately so.
+ * The reference stacks overlapping sticky "cameras" (a 180vh section pulled
+ * up over the hero by `margin-top: -100vh`). Our hero is pinned by
+ * ScrollTrigger instead, and a negative-margin sibling cannot be measured
+ * correctly against a pin spacer — GSAP reverts pins to measure, and in that
+ * reverted layout such a section sits at document 0. So the curtains live
+ * inside the pinned hero as an overlay and ride its pin. Same picture, and
+ * it measures correctly. See the hook for the timing half of this.
+ */
+
+.transition {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  /* Above the hero's canvas (auto) and its headline (2) — the curtains
+     cover the wordmark and headline on their way up, as in the reference. */
+  z-index: 3;
+  /* Decorative chrome laid over the hero: it must never swallow a click
+     meant for the hero or the fixed header underneath it. */
+  pointer-events: none;
+}
+
+/* The reference deletes this transition below 992px rather than adapting it
+   (`.transition-specs { display: none }`), serving a static mobile hero
+   instead. This element is already inside the hero's desktop-only tree, so
+   this is belt-and-braces — but it is also the honest place to state the
+   rule, and it is what the hook's own 992px gate pairs with.
+
+   Reduced motion is handled the same way, and for the same reason the hero
+   creates no ScrollTrigger at all under it (CLAUDE.md §8): this element is
+   *only* a motion effect. Its "final state" is a white screen that has
+   already served its purpose, so the honest static rendering is no element
+   at all. */
+@media (max-width: 991px) {
+  .transition {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .transition {
+    display: none;
+  }
+}
+
+/* Darkens the hero showing between the curtains as they climb. Ramps to
+   0.75, not to 1 — the pen stays faintly visible underneath right to the
+   end, and the last curtain is what finally hides it. */
+.veil {
+  position: absolute;
+  inset: 0;
+  background: var(--color-black);
+  opacity: 0;
+}
+
+.curtains {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: end;
+}
+
+/* The starting translate lives here rather than in the hook so the curtains
+   are already off-screen on the very first paint — set from JS they would
+   flash six white columns across the hero before the effect runs. The hook
+   compensates for GSAP reading this value back; see its `y: 0`. */
+.curtain {
+  height: 100%;
+  background: var(--color-white);
+  border-right: 1px solid var(--color-black-20);
+  transform: translate3d(0, 100%, 0);
+  will-change: transform;
+}

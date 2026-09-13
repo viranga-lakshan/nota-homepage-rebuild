@@ -5,11 +5,25 @@
  * what animates, and the two are kept in step by using the same number.
  */
 
+/* Height is scroll *distance*, not visible height: the 100vh camera inside
+   sticks to the top and the remaining 300vh is what scrubs the pen and,
+   in its final third, the curtain transition.
+
+   This replaced a ScrollTrigger `pin`. The pin worked in isolation, but it
+   inserts a spacer, and GSAP reverts pins to measure — so a following
+   section that overlaps this one (`margin-top: -100vh`, the way every
+   camera on the reference hands over to the next) measured as if it began
+   at document 0 and finished its animation before it was ever reached.
+   CSS sticky is what the reference itself uses, and it composes. */
+/* min-height, not height: below 992px the mobile tree is taller than the
+   viewport (image + headline + padding), and a fixed 100vh would let it
+   spill into the section below. It used to be clipped by an `overflow:
+   hidden` here — which hid the bottom of the mobile hero rather than
+   fixing it, and could not stay anyway: an overflow ancestor breaks the
+   sticky camera. Clipping now belongs to .desktop, which needs it. */
 .hero {
   position: relative;
-  height: 100vh;
-  overflow: hidden;
-  background: var(--color-bg-radial);
+  min-height: 100vh;
   color: var(--color-white);
 }
 
@@ -20,6 +34,31 @@
 .desktop {
   position: relative;
   height: 100vh;
+  overflow: hidden;
+  background: var(--color-bg-radial);
+}
+
+@media (min-width: 992px) {
+  .hero {
+    height: 400vh;
+  }
+
+  .desktop {
+    position: sticky;
+    top: 0;
+  }
+}
+
+/* No scroll animation under reduced motion (see useHeroScroll), so the
+   extra 300vh would be 300vh of nothing to scroll through. */
+@media (min-width: 992px) and (prefers-reduced-motion: reduce) {
+  .hero {
+    height: 100vh;
+  }
+
+  .desktop {
+    position: relative;
+  }
 }
 
 @media (max-width: 991px) {
@@ -77,6 +116,7 @@
 
 @media (max-width: 991px) {
   .mobile {
+    background: var(--color-bg-radial);
     display: flex;
     flex-direction: column;
     align-items: center;

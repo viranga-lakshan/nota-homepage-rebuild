@@ -63,10 +63,15 @@ export function useHeroScroll({
 
     const images: HTMLImageElement[] = new Array(sequenceFrameCount);
 
+    // The canvas fills the sticky camera (its own parent), which is one
+    // viewport tall. The section it lives in is 400vh — four times too
+    // tall to size a canvas from.
+    const camera = canvas.parentElement!;
+
     function resizeCanvas() {
       const dpr = window.devicePixelRatio || 1;
-      const width = container!.clientWidth;
-      const height = container!.clientHeight;
+      const width = camera.clientWidth;
+      const height = camera.clientHeight;
 
       canvas!.width = width * dpr;
       canvas!.height = height * dpr;
@@ -85,8 +90,8 @@ export function useHeroScroll({
         return;
       }
 
-      const width = container!.clientWidth;
-      const height = container!.clientHeight;
+      const width = camera.clientWidth;
+      const height = camera.clientHeight;
       const imgRatio = img.naturalWidth / img.naturalHeight;
       const boxRatio = width / height;
 
@@ -144,11 +149,10 @@ export function useHeroScroll({
           const trigger = ScrollTrigger.create({
             trigger: container,
             start: "top top",
-            // 300vh pin duration, from the reference's own animation config
-            // (data_do_json) — supersedes an earlier "200vh" instruction
-            // that predated that source being available.
-            end: "+=300%",
-            pin: true,
+            // The section is 400vh with a 100vh sticky camera, so this is a
+            // 300vh scrub. No `pin`: the camera is held by CSS sticky
+            // instead (see hero.module.css for why that swap happened).
+            end: "bottom bottom",
             scrub: true,
             onUpdate: (self) => {
               const index = Math.round(self.progress * (sequenceFrameCount - 1));
