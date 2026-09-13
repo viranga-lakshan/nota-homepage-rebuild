@@ -109,7 +109,7 @@ function renderAnimatedWords(text: string, dataAttribute: string): ReactNode {
  *   3. Left Label: "Who it's for:" in subtle uppercase sans-serif.
  *   4. Intro: FOUR separate <p> elements, exactly 6 lines total.
  *   5. Personas: 3 audience blocks entering sequentially from RIGHT -> LEFT with title/body subtle stagger.
- *   6. Video: Framed with 0.5cm top/bottom black bars & 1.5cm side black borders, expanding to fill the frame.
+ *   6. Video: Plays once when reached on scroll, stops at final frame until page reload.
  */
 export function Who({ section }: WhoProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -195,16 +195,14 @@ export function Who({ section }: WhoProps) {
           </div>
         </div>
 
-        {/* Video Stage Frame: Precision black framing on all 4 sides */}
+        {/* Video Stage Frame: Plays once and holds on final frame */}
         <div data-video-stage className={styles.videoStage}>
           <div data-video-wrapper className={styles.videoWrapper}>
             <video
               data-who-video
               className={styles.video}
               src={section.video?.url || "https://nota.uprock.pro/video/pen.mp4"}
-              autoPlay
               muted
-              loop
               playsInline
             />
           </div>
