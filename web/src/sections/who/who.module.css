@@ -1,0 +1,566 @@
+/**
+ * The Who / Manifesto section.
+ *
+ * Sits on a solid black background at z-index 110 (covering the fixed navbar),
+ * seamlessly continuing from the Specifications outro black screen.
+ *
+ * Exact typography and spacing references from the original NŌTA website:
+ *   - Manifesto (large-text--1): Instrument Serif, line-height 110%, letter-spacing -0.03em
+ *       Base desktop: 4.64vw, max-width 78.5vw
+ *       >= 1440px:    3.82vw, max-width 76.5vw
+ *       >= 1920px:    3.65vw, max-width 78.5vw
+ *   - Container padding: 2.02vw (2.78vw at 1440px, 2.08vw at 1920px)
+ *   - Camera top padding: 6.05vw
+ *   - Content row-gap: 2.02vw (2.08vw at 1440px+)
+ *   - Lower right column: max-width 40vw (40vw at 1440px, 38vw at 1920px)
+ *   - Intro paragraph: Inter, font-size 1.61vw (1.39vw at 1440px, 1.25vw at 1920px), line-height 130%
+ *   - Persona Item: flex-direction column, row-gap: 0.8vw, align-items: flex-end, width: 43.35vw
+ *   - Persona Title: Inter 600, width: 100%, text-align: left (starts further left)
+ *   - Persona Body: Inter 400, width: 34.88vw, text-align: left (indented to the right)
+ *   - Video Stage: framed with exact ~0.5cm (1.75vh) black bar on top & bottom, ~1.5cm (2.02vw) on left & right
+ */
+
+.who {
+  position: relative;
+  z-index: 110;
+  background-color: var(--color-black);
+  color: var(--color-white);
+  min-height: 100vh;
+}
+
+.camera {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background-color: var(--color-black);
+  box-sizing: border-box;
+}
+
+@media (min-width: 992px) {
+  .who {
+    height: 800vh;
+    margin-top: -100vh;
+    position: sticky;
+    top: -700vh;
+  }
+
+  .camera {
+    position: sticky;
+    top: 0;
+  }
+}
+
+.textLayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding-top: 6.05vw;
+  padding-left: 2.02vw;
+  padding-right: 2.02vw;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.contentWrapper {
+  display: flex;
+  flex-direction: column;
+  row-gap: 2.02vw;
+  width: 100%;
+  will-change: transform;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Top Manifesto Block (large-text--1 / who__text1)                           */
+/* -------------------------------------------------------------------------- */
+
+.manifestoBlock {
+  padding-bottom: 0;
+  width: 100%;
+}
+
+.manifesto {
+  font-family: var(--font-serif);
+  font-size: 4.64vw;
+  font-weight: 400;
+  line-height: 110%;
+  letter-spacing: -0.03em;
+  color: var(--color-white-40);
+  margin: 0;
+  max-width: 78.5vw;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Horizontal Divider                                                         */
+/* -------------------------------------------------------------------------- */
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin: 0;
+  opacity: 0;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Lower Section (Who it's for + Right Intro Paragraph + Personas)            */
+/* -------------------------------------------------------------------------- */
+
+.lowerSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.leftColumn {
+  flex-shrink: 0;
+  opacity: 0;
+}
+
+.whoLabel {
+  font-family: var(--font-sans);
+  font-size: 1.01vw;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--color-white-40);
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.rightColumnGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  row-gap: 0.8vw;
+  width: 100%;
+  max-width: 40vw;
+  margin-left: auto;
+  transform: translate3d(8vw, 0, 0);
+  opacity: 0;
+}
+
+.intro,
+.introParagraph {
+  font-family: var(--font-sans);
+  font-size: 1.61vw;
+  font-weight: 500;
+  line-height: 130%;
+  letter-spacing: -0.03em;
+  text-align: left;
+  color: var(--color-white-40);
+  margin: 0;
+  width: fit-content;
+  max-width: 40vw;
+}
+
+.manifestoLine,
+.introLine {
+  display: block;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Audience / Persona Items (Theses)                                          */
+/* -------------------------------------------------------------------------- */
+
+.thesesWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  row-gap: 2.8vw;
+  margin-top: 3.73vw;
+  overflow: hidden;
+  padding-left: 2.32vw;
+  padding-right: 2.32vw;
+  margin-left: -2.02vw;
+  margin-right: -2.02vw;
+  margin-bottom: 0.5vw;
+  width: 100%;
+}
+
+.personaItem {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.8vw;
+  align-items: flex-end;
+  width: 43.35vw;
+  overflow: hidden;
+}
+
+.personaTitle {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 1.61vw;
+  font-weight: 600;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-align: left;
+  margin: 0;
+  transform: translate3d(18vw, 0, 0);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.personaBody {
+  width: 34.88vw;
+  font-family: var(--font-sans);
+  font-size: 1.25vw;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: left;
+  margin: 0;
+  transform: translate3d(18vw, 0, 0);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Pen Video Stage — Framed with exact 1.75vh (~0.5cm) black borders          */
+/* -------------------------------------------------------------------------- */
+
+.videoStage {
+  position: absolute;
+  top: 1.75vh;
+  bottom: 1.75vh;
+  left: 2.02vw;
+  right: 2.02vw;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0;
+  z-index: 2;
+  will-change: transform, opacity;
+}
+
+.videoWrapper {
+  width: 48vw;
+  height: 32vw;
+  background-color: #ffffff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform, width, height;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Word-level / Character-level reveal styling                                */
+/* -------------------------------------------------------------------------- */
+
+.wordWrap {
+  display: inline;
+}
+
+.word {
+  display: inline;
+  font: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: var(--color-white-40);
+  transition: color 0.1s ease;
+}
+
+/* -------------------------------------------------------------------------- */
+/* Responsive Breakpoints matching reference                                  */
+/* -------------------------------------------------------------------------- */
+
+@media (min-width: 1440px) {
+  .textLayer {
+    padding-top: 6.05vw;
+    padding-left: 2.78vw;
+    padding-right: 2.78vw;
+  }
+
+  .contentWrapper {
+    row-gap: 2.08vw;
+  }
+
+  .manifesto {
+    font-size: 3.82vw;
+    max-width: 76.5vw;
+  }
+
+  .whoLabel {
+    font-size: 0.9vw;
+  }
+
+  .rightColumn {
+    max-width: 40vw;
+    row-gap: 0.69vw;
+  }
+
+  .intro,
+  .introParagraph {
+    font-size: 1.39vw;
+    line-height: 130%;
+    text-align: left;
+    width: fit-content;
+    max-width: 40vw;
+  }
+
+  .thesesWrapper {
+    row-gap: 2.5vw;
+  }
+
+  .personaTitle {
+    font-size: 1.45vw;
+  }
+
+  .personaBody {
+    font-size: 1.15vw;
+    width: 34.88vw;
+  }
+
+  .videoStage {
+    top: 1.75vh;
+    bottom: 1.75vh;
+    left: 2.78vw;
+    right: 2.78vw;
+  }
+}
+
+@media (min-width: 1920px) {
+  .textLayer {
+    padding-top: 6.05vw;
+    padding-left: 2.08vw;
+    padding-right: 2.08vw;
+  }
+
+  .manifesto {
+    font-size: 3.65vw;
+    max-width: 78.5vw;
+  }
+
+  .whoLabel {
+    font-size: 0.8vw;
+  }
+
+  .rightColumn {
+    max-width: 38vw;
+    row-gap: 0.52vw;
+  }
+
+  .intro,
+  .introParagraph {
+    font-size: 1.25vw;
+    text-align: left;
+    width: fit-content;
+    max-width: 38vw;
+  }
+
+  .personaTitle {
+    font-size: 1.35vw;
+  }
+
+  .personaBody {
+    font-size: 1.05vw;
+    width: 34.88vw;
+  }
+
+  .videoStage {
+    top: 1.75vh;
+    bottom: 1.75vh;
+    left: 2.08vw;
+    right: 2.08vw;
+  }
+}
+
+@media (max-width: 991px) {
+  .manifestoLine,
+  .introLine {
+    display: inline;
+  }
+
+  .who {
+    height: auto;
+    margin-top: 0;
+    position: relative;
+    top: auto;
+  }
+
+  .camera {
+    height: auto;
+    overflow: visible;
+  }
+
+  .textLayer {
+    position: relative;
+    inset: auto;
+    height: auto;
+    padding: 10vh 2.08vw 4vh;
+    pointer-events: auto;
+  }
+
+  .contentWrapper {
+    row-gap: 4.17vw;
+  }
+
+  .manifesto {
+    font-size: 6.25vw;
+    line-height: 110%;
+    max-width: 100%;
+  }
+
+  .divider {
+    opacity: 1;
+  }
+
+  .lowerSection {
+    flex-direction: column;
+    row-gap: 2.08vw;
+  }
+
+  .leftColumn {
+    opacity: 1;
+  }
+
+  .whoLabel {
+    font-size: 2.8vw;
+  }
+
+  .rightColumn {
+    max-width: 100%;
+    transform: none;
+    opacity: 1;
+  }
+
+  .intro,
+  .introParagraph {
+    font-size: 4vw;
+    line-height: 135%;
+    max-width: 100%;
+  }
+
+  .thesesWrapper {
+    margin-top: 6vw;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    row-gap: 5vw;
+  }
+
+  .personaItem {
+    width: 100%;
+    align-items: flex-start;
+    row-gap: 1.5vw;
+  }
+
+  .personaTitle {
+    font-size: 4.8vw;
+    text-align: left;
+    transform: none;
+    opacity: 1;
+  }
+
+  .personaBody {
+    font-size: 3.8vw;
+    width: 100%;
+    text-align: left;
+    transform: none;
+    opacity: 1;
+  }
+
+  .videoStage {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    margin-top: 6vw;
+    opacity: 1;
+  }
+
+  .videoWrapper {
+    position: relative;
+    width: 100%;
+    height: 45vh;
+  }
+}
+
+@media (max-width: 767px) {
+  .textLayer {
+    padding-left: 3.33vw;
+    padding-right: 3.33vw;
+  }
+
+  .contentWrapper {
+    row-gap: 6.67vw;
+  }
+
+  .manifesto {
+    font-size: 7.29vw;
+  }
+
+  .lowerSection {
+    row-gap: 3.33vw;
+  }
+
+  .personaTitle {
+    font-size: 5.5vw;
+  }
+
+  .personaBody {
+    font-size: 4.2vw;
+  }
+}
+
+@media (max-width: 479px) {
+  .textLayer {
+    padding-left: 3.13vw;
+    padding-right: 3.13vw;
+  }
+
+  .contentWrapper {
+    row-gap: 10vw;
+  }
+
+  .manifesto {
+    font-size: 9.38vw;
+  }
+
+  .lowerSection {
+    row-gap: 5vw;
+    max-width: 93.44vw;
+  }
+
+  .whoLabel {
+    font-size: 3.5vw;
+  }
+
+  .intro,
+  .introParagraph {
+    font-size: 4.8vw;
+  }
+
+  .personaTitle {
+    font-size: 6.2vw;
+  }
+
+  .personaBody {
+    font-size: 4.6vw;
+  }
+}
