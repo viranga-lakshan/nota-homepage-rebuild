@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import type { SpecsSection } from "@/domain/sections";
 import { useSpecsScroll } from "./useSpecsScroll";
+import { SpecsTransition } from "./SpecsTransition";
 import styles from "./specs.module.css";
 
 interface SpecsProps {
@@ -14,15 +15,9 @@ interface SpecsProps {
  * The Specifications section: the heading rises into place, the pen climbs
  * in behind, and the three spec columns arrive at staggered times.
  *
- * One tree, not two. The hero needs a desktop/mobile split because its
- * canvas frame sequence must never be fetched on mobile; nothing here is
- * expensive enough to warrant that, so the same markup serves both and CSS
- * decides whether it is a scroll stage or an ordinary stacked block.
- *
- * The CMS guarantees exactly three groups (min 3 / max 3 in the schema), so
- * the three-column grid cannot be broken by an editor — but nothing here
- * assumes the count either: the grid is declared once and the array is
- * rendered as it comes.
+ * An outro transition (SpecsTransition) then scales a 4-tier black geometric
+ * silhouette of the Nota pen outward from the center, seamlessly covering
+ * the section before handing off to the next section.
  */
 export function Specs({ section }: SpecsProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -72,6 +67,9 @@ export function Specs({ section }: SpecsProps) {
             ))}
           </div>
         </div>
+
+        {/* The scroll-driven black silhouette transition closing the section */}
+        <SpecsTransition />
       </div>
     </section>
   );

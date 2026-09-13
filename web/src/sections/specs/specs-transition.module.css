@@ -1,0 +1,92 @@
+/**
+ * The transition overlay that closes the Specifications section.
+ *
+ * Fixed at z-index 110 (above the fixed header at z-index 100) with
+ * pointer-events: none.
+ *
+ * Contains 4 stepped tiers forming the Nota pen silhouette:
+ *   - stem: top vertical stem
+ *   - bodyUpper: upper rectangular body
+ *   - bodyLower: lower wider body
+ *   - base: bottom wide base
+ *
+ * Each tier is anchored at top center (transform-origin: 50% 0%) and grows
+ * downward (scaleY) and outward (scaleX) until the viewport is 100% black.
+ */
+
+.transition {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 110;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.stem {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 2.5vw;
+  height: 28vh;
+  background-color: var(--color-black);
+  transform-origin: 50% 0%;
+  transform: translate3d(-50%, 0, 0) scale(1, 0);
+  will-change: transform;
+}
+
+.bodyUpper {
+  position: absolute;
+  top: 25vh;
+  left: 50%;
+  width: 16vw;
+  height: 26vh;
+  background-color: var(--color-black);
+  transform-origin: 50% 0%;
+  transform: translate3d(-50%, 0, 0) scale(1, 0);
+  will-change: transform;
+}
+
+.bodyLower {
+  position: absolute;
+  top: 48vh;
+  left: 50%;
+  width: 32vw;
+  height: 27vh;
+  background-color: var(--color-black);
+  transform-origin: 50% 0%;
+  transform: translate3d(-50%, 0, 0) scale(1, 0);
+  will-change: transform;
+}
+
+.base {
+  position: absolute;
+  top: 72vh;
+  left: 50%;
+  width: 50vw;
+  height: 30vh;
+  background-color: var(--color-black);
+  transform-origin: 50% 0%;
+  transform: translate3d(-50%, 0, 0) scale(1, 0);
+  will-change: transform;
+}
+
+@media (max-width: 991px) {
+  .stem {
+    width: 4vw;
+  }
+
+  .bodyUpper {
+    width: 28vw;
+  }
+
+  .bodyLower {
+    width: 52vw;
+  }
+
+  .base {
+    width: 76vw;
+  }
+}
