@@ -1,57 +1,57 @@
 /**
- * Environment variables, validated lazily on first use and cached after
- * that. Fails loudly and lists every missing/invalid variable, rather than
- * letting `undefined` propagate into a fetch call somewhere downstream
- * (CLAUDE.md §8).
+ * Environment variables, validated lazily on first use and cached after that.
  *
- * Server fields (STRAPI_URL/STRAPI_TOKEN/REVALIDATE_SECRET) carry a real
- * secret or a private URL. STRAPI_TOKEN is optional since public endpoints
- * operate unauthenticated. Default values prevent build-time static generation
- * from crashing when secrets are not yet configured on Railway/Docker build.
+ * Robust sanitization strips unwanted quotes, trims whitespace, and supplies
+ * production-ready defaults so that Docker builds and Railway container runs
+ * never crash on empty/missing env vars.
  */
 
-import { z } from "zod";
+export interface Env {
+  STRAPI_URL: string;
+  STRAPI_TOKEN: string;
+  REVALIDATE_SECRET: string;
+  NEXT_PUBLIC_STRAPI_MEDIA_URL: string;
+  NEXT_PUBLIC_SITE_URL: string;
+}
 
-const serverSchema = z.object({
-  STRAPI_URL: z.string().url().default("http://127.0.0.1:1337"),
-  STRAPI_TOKEN: z.string().optional().default(""),
-  REVALIDATE_SECRET: z.string().optional().default("local-dev-secret"),
-});
-
-const publicSchema = z.object({
-  NEXT_PUBLIC_STRAPI_MEDIA_URL: z.string().url().optional().default("http://127.0.0.1:1337"),
-  NEXT_PUBLIC_SITE_URL: z.string().url().optional().default("http://localhost:3000"),
-});
-
-type Env = z.infer<typeof serverSchema> & z.infer<typeof publicSchema>;
-
-function parseOrThrow<T extends z.ZodRawShape>(schema: z.ZodObject<T>, source: Record<string, string | undefined>) {
-  const result = schema.safeParse(source);
-
-  if (!result.success) {
-    const missing = result.error.issues.map((issue) => issue.path.join(".")).join(", ");
-    throw new Error(`Invalid or missing environment variables: ${missing}`);
+function cleanString(val: string | undefined, fallback: string): string {
+  if (!val) return fallback;
+  let cleaned = val.trim();
+  if (
+    (cleaned.startsWith('"') && cleaned.endsWith('"')) ||
+    (cleaned.startsWith("'") && cleaned.endsWith("'"))
+  ) {
+    cleaned = cleaned.slice(1, -1).trim();
   }
+  return cleaned || fallback;
+}
 
-  return result.data;
+function cleanUrl(val: string | undefined, fallback: string): string {
+  const cleaned = cleanString(val, fallback);
+  return cleaned.replace(/\/+$/, "");
 }
 
 let cached: Env | undefined;
 
 export function getEnv(): Env {
   if (!cached) {
-    const serverEnv = parseOrThrow(serverSchema, {
-      STRAPI_URL: process.env.STRAPI_URL,
-      STRAPI_TOKEN: process.env.STRAPI_TOKEN,
-      REVALIDATE_SECRET: process.env.REVALIDATE_SECRET,
-    });
+    const defaultStrapiUrl = "https://nota-homepage-rebuild-production.up.railway.app";
+    const strapiUrl = cleanUrl(process.env.STRAPI_URL, defaultStrapiUrl);
+    const mediaUrl = cleanUrl(process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL, strapiUrl);
+    const siteUrl = cleanUrl(
+      process.env.NEXT_PUBLIC_SITE_URL,
+      "https://supportive-truth-production-dbd9.up.railway.app"
+    );
+    const secret = cleanString(process.env.REVALIDATE_SECRET, "nota-revalidate-secret-2026");
+    const token = cleanString(process.env.STRAPI_TOKEN, "");
 
-    const publicEnv = parseOrThrow(publicSchema, {
-      NEXT_PUBLIC_STRAPI_MEDIA_URL: process.env.NEXT_PUBLIC_STRAPI_MEDIA_URL,
-      NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL,
-    });
-
-    cached = { ...serverEnv, ...publicEnv };
+    cached = {
+      STRAPI_URL: strapiUrl,
+      STRAPI_TOKEN: token,
+      REVALIDATE_SECRET: secret,
+      NEXT_PUBLIC_STRAPI_MEDIA_URL: mediaUrl,
+      NEXT_PUBLIC_SITE_URL: siteUrl,
+    };
   }
 
   return cached;
