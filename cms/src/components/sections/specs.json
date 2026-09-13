@@ -1,0 +1,47 @@
+{
+  "collectionName": "components_sections_specs",
+  "info": {
+    "displayName": "Section - Specifications",
+    "icon": "stack",
+    "description": "Specifications section: heading, the pen photo, and exactly three columns of specs."
+  },
+  "options": {},
+  "attributes": {
+    "eyebrow": {
+      "type": "string",
+      "required": true,
+      "maxLength": 30,
+      "default": "Nota pen",
+      "description": "Small label above the heading."
+    },
+    "heading": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40,
+      "default": "Specifications",
+      "description": "The section heading."
+    },
+    "pen_image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"],
+      "description": "Photo of the pen that scales up behind the spec columns as the page scrolls."
+    },
+    "pen_image_alt": {
+      "type": "string",
+      "required": true,
+      "maxLength": 150,
+      "description": "Describes the pen photo for screen readers and when the image fails to load."
+    },
+    "groups": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.spec-group",
+      "required": true,
+      "min": 3,
+      "max": 3,
+      "description": "The three spec columns. Exactly three - the layout is a three-column grid."
+    }
+  }
+}

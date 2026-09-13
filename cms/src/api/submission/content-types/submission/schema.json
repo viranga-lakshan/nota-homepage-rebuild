@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "submissions",
+  "info": {
+    "singularName": "submission",
+    "pluralName": "submissions",
+    "displayName": "Submission",
+    "description": "Email addresses captured by the order popup. Created by the website - read here, do not add by hand."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "email": {
+      "type": "email",
+      "required": true,
+      "maxLength": 254,
+      "description": "The address the visitor signed up with. Validated in the browser and again on the server."
+    },
+    "source": {
+      "type": "string",
+      "required": true,
+      "maxLength": 50,
+      "default": "homepage",
+      "description": "Which part of the site the sign-up came from, so entries stay traceable if more forms are added later."
+    },
+    "submitted_at": {
+      "type": "datetime",
+      "required": true,
+      "description": "When the visitor submitted the form. Recorded by the website in the visitor's moment, separate from Strapi's own created-at."
+    }
+  }
+}

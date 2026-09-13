@@ -1,0 +1,72 @@
+{
+  "collectionName": "components_sections_heroes",
+  "info": {
+    "displayName": "Section - Hero",
+    "icon": "rocket",
+    "description": "Opening full-screen section: the scroll-driven pen animation, the headline, and the order button."
+  },
+  "options": {},
+  "attributes": {
+    "headline_line1": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20,
+      "description": "First line of the headline, for example \"Smart pen\"."
+    },
+    "headline_line2": {
+      "type": "string",
+      "required": true,
+      "maxLength": 30,
+      "description": "Second line of the headline, for example \"for real thinking\"."
+    },
+    "sequence_base_path": {
+      "type": "string",
+      "required": true,
+      "maxLength": 200,
+      "default": "/sequence/",
+      "description": "Folder the pen animation frames are served from. The frames themselves ship with the site, so only change this if a developer has moved them."
+    },
+    "sequence_frame_count": {
+      "type": "integer",
+      "required": true,
+      "default": 75,
+      "min": 1,
+      "max": 300,
+      "description": "How many frames are in that folder. Must match exactly, or the animation will stop short or flicker at the end."
+    },
+    "mobile_fallback": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"],
+      "description": "Still image shown instead of the animation on phones, where the animation is too heavy to download."
+    },
+    "mobile_fallback_alt": {
+      "type": "string",
+      "required": true,
+      "maxLength": 150,
+      "description": "Describes the fallback image for screen readers and when the image fails to load."
+    },
+    "order_label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20,
+      "default": "Order",
+      "description": "Text on the order button, before the product name."
+    },
+    "product_name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40,
+      "default": "Nota One",
+      "description": "Product name shown on the order button."
+    },
+    "price": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20,
+      "default": "$300",
+      "description": "Price shown on the order button. Free text so the currency symbol can be changed."
+    }
+  }
+}

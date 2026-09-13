@@ -1,0 +1,220 @@
+/**
+ * `fixed`, not `absolute`: the header stays pinned for the entire page
+ * scroll, not just while it happens to overlap the hero. Every size below
+ * is pulled directly from the reference's own live CSS files, not
+ * approximated — including the logo, which is intentionally responsive
+ * (an earlier version hardcoded it to a fixed 71x26px via SVG width/height
+ * attributes, which is wrong at any viewport the reference's own vw-based
+ * sizing would render differently at).
+ *
+ * Not yet built: the scroll-position-driven white/black colour switching
+ * the reference does (specific percentage ranges of *total page* scroll).
+ * That genuinely cannot be implemented correctly with six of seven
+ * sections still missing — the percentages are meaningless against a page
+ * that isn't full height yet.
+ */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.67vw 2.5vw;
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  transition: color 0.3s ease;
+}
+
+.logo {
+  display: block;
+  width: 7.56vw;
+  height: 2.42vw;
+}
+
+.nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navList {
+  display: flex;
+  align-items: center;
+  gap: 2.78vw;
+  list-style: none;
+}
+
+.navList a {
+  font-size: 1.61vw;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: inherit;
+  transition: opacity 0.2s;
+}
+
+.navList a:hover {
+  opacity: 0.7;
+}
+
+/* The order button is two separate pieces in one white box: the mark on
+   the left, a genuinely separate black pill on the right, with visible
+   gap between them (justify-content: space-between on a box wider than
+   its contents need). Not one pill — confirmed against live CSS. */
+.orderButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 34.27vw;
+  padding: 1.01vw;
+  background: var(--color-white);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.orderMark {
+  width: 3.83vw;
+  height: 4.03vw;
+  flex-shrink: 0;
+}
+
+.orderContent {
+  display: flex;
+  align-items: center;
+  gap: 1.01vw;
+  height: 4.23vw;
+  padding: 0 1.51vw;
+  background: var(--color-black);
+  border-radius: 4px;
+  color: var(--color-white);
+  font-size: 1.61vw;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+
+.orderTexts {
+  display: flex;
+  align-items: center;
+  gap: 0.4vw;
+}
+
+.orderProduct {
+  color: var(--color-white-40);
+}
+
+.orderDot {
+  width: 0.5vw;
+  height: 0.5vw;
+  border-radius: 50%;
+  background: var(--color-white);
+}
+
+.burger {
+  display: none;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.burgerIcon {
+  width: 4.17vw;
+  height: 4.17vw;
+}
+
+/* Below 991px: nav links and the order button give way to a burger. The
+   logo stays — no persistent mark icon in the collapsed header (see
+   Header.tsx docblock for why one isn't rendered here). */
+@media (max-width: 991px) {
+  .header {
+    padding: 4.17vw 4.69vw;
+  }
+
+  .logo {
+    width: 7.29vw;
+    height: 2.34vw;
+  }
+
+  .nav,
+  .orderButton {
+    display: none;
+  }
+
+  .burger {
+    display: flex;
+  }
+}
+
+@media (max-width: 767px) {
+  .logo {
+    width: 11.67vw;
+    height: 3.75vw;
+  }
+
+  .burgerIcon {
+    width: 6.67vw;
+    height: 6.67vw;
+  }
+}
+
+@media (max-width: 479px) {
+  .logo {
+    width: 17.5vw;
+    height: 5.63vw;
+  }
+
+  .burgerIcon {
+    width: 10vw;
+    height: 10vw;
+  }
+}
+
+@media (min-width: 1440px) {
+  .logo {
+    width: 5.21vw;
+    height: 1.67vw;
+  }
+
+  .orderButton {
+    width: 29.86vw;
+    padding: 1.39vw;
+  }
+
+  .orderMark {
+    width: 2.64vw;
+    height: 2.78vw;
+  }
+
+  .orderContent {
+    height: 3.61vw;
+    padding: 0 1.39vw;
+    gap: 0.69vw;
+  }
+}
+
+@media (min-width: 1920px) {
+  .logo {
+    width: 3.91vw;
+    height: 1.25vw;
+  }
+
+  .orderButton {
+    width: 22.4vw;
+    padding: 1.04vw;
+  }
+
+  .orderMark {
+    width: 1.98vw;
+    height: 2.08vw;
+  }
+
+  .orderContent {
+    height: 2.71vw;
+    padding: 0 1.04vw;
+    gap: 0.52vw;
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "collectionName": "components_shared_spec_groups",
+  "info": {
+    "displayName": "Spec Group",
+    "icon": "layer",
+    "description": "One column of the specifications section: a heading plus its bullet list."
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40,
+      "description": "The column heading, for example \"Writing System\"."
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.spec-item",
+      "required": true,
+      "min": 1,
+      "max": 6,
+      "description": "Bullet lines in this column. Between 1 and 6 - more than 6 overflows the column."
+    }
+  }
+}

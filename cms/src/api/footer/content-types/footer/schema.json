@@ -1,0 +1,42 @@
+{
+  "kind": "singleType",
+  "collectionName": "footers",
+  "info": {
+    "singularName": "footer",
+    "pluralName": "footers",
+    "displayName": "Footer",
+    "description": "The footer: closing statement, credits, copyright line and repeated menu links."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "description": {
+      "type": "text",
+      "required": true,
+      "maxLength": 300,
+      "description": "The closing statement about the brand, shown at the top of the footer."
+    },
+    "credit": {
+      "type": "text",
+      "required": true,
+      "maxLength": 300,
+      "description": "Design and studio credits."
+    },
+    "copyright": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80,
+      "description": "The copyright line, for example \"@2026 Nota Team\"."
+    },
+    "nav_links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.nav-item",
+      "required": true,
+      "min": 1,
+      "max": 8,
+      "description": "Footer links, in display order. Usually the same links as the header."
+    }
+  }
+}

@@ -1,0 +1,7 @@
+/**
+ * order-popup service
+ */
+
+import { factories } from '@strapi/strapi';
+
+export default factories.createCoreService('api::order-popup.order-popup');

@@ -154,42 +154,41 @@ nota-homepage-rebuild/
 
 ## 7. Content model
 
-Confirmed against a pass over the live reference site on 2026-09-11 (automated fetch, not yet a manual click-through — treat repeatable-item counts and exact field lists as good-but-verify until someone has clicked through by hand). This supersedes an earlier draft built from a ~25-second partial screen recording, which had the wrong section count and one invented section.
-
-**Changes from the earlier draft:**
-- `sections.pricing` is **removed**. There is no dedicated pricing section on the reference site — price is a field on the hero's CTA (`"Order Nota One – $300"`).
-- `sections.contact` is **removed** from this list pending confirmation of where the form actually lives (not observed as a distinct homepage section in this pass — may be footer-embedded, may not exist on the homepage at all). `Submission` as a collection type stays either way, since the brief requires a working form somewhere on the page.
-- Five sections were missing entirely: **Works With** (flagged before this pass), **Feature Showcase**, **Inside the Box**, **Color Variants**, **About/Mission**.
+**This section now describes what is actually built** (`cms/src/components/`, `cms/src/api/`), not a plan. Earlier revisions — a 7-section guess from a 25-second recording, then a 9-section list from an automated page fetch — were both wrong about section boundaries; a manual pass over the reference showed several of them are one scroll-driven section rather than separate ones (the manifesto and audience list share a section; "Works with" is the heading of the paper sequence, not a section of its own).
 
 One Strapi **Single Type** (`Homepage`) holding a **Dynamic Zone** of section components, plus reusable shared components.
 
-**Section components**, in reference order:
+**Section components** (7), in reference order:
 
-1. `sections.hero` — headline, CTA (label + price + link — no separate pricing section exists)
-2. `sections.specs` — three spec groups (Writing System / Capture Technology / Digital Continuity), each a repeatable list of spec items
-3. `sections.manifesto` — single large statement, no repeatable items
-4. `sections.audience` — three persona entries (Students & Learners / Creators, Designers & Architects / Managers & Product Thinkers), repeatable
-5. `sections.feature-showcase` — repeatable, 4 entries observed, each image + heading + copy
-6. `sections.works-with` — compatibility statement
-7. `sections.inside-the-box` — repeatable box-contents list + spec callouts
-8. `sections.color-variants` — repeatable, 5 entries observed (colour name + image), carousel-ordered
-9. `sections.about` — brand/mission statement, no repeatable items
+1. `sections.hero` — headline (two lines), Lottie animation URL, mobile fallback image, order button (label + product + price)
+2. `sections.specs` — eyebrow, heading, pen image, exactly 3 `shared.spec-group`
+3. `sections.who` — manifesto statement, intro, sticky label, repeatable `shared.persona`, looping video
+4. `sections.paper` — two-part heading ("Works with" / "smart paper"), 2–6 `shared.paper-slide`
+5. `sections.inside-box` — heading, description, 1–6 `shared.box-item`
+6. `sections.details` — 1–8 `shared.detail-card` (photo + label pill), plus one looping video
+7. `sections.color-variants` — 1–8 `shared.color-variant`, carousel-ordered
 
-**Shared components:** `shared.seo`, `shared.link`, `shared.cta`, `shared.media`, `shared.spec-group`, `shared.spec-item`, `shared.audience-entry`, `shared.showcase-entry`, `shared.box-item`, `shared.color-variant`
+**Shared components** (9): `shared.seo`, `shared.nav-item`, `shared.spec-item`, `shared.spec-group`, `shared.persona`, `shared.paper-slide`, `shared.box-item`, `shared.color-variant`, `shared.detail-card`
 
-**Other types:** `Navigation` (single), `Footer` (single), `Submission` (collection — form entries)
+**Other types:** `Navigation` (single — wordmark, links, order button), `Footer` (single — description, credit, copyright, links), `Order Popup` (single — the email capture dialog's copy), `Submission` (collection — captured email addresses)
+
+**Conventions worth knowing before editing a schema:**
+- Field names are `snake_case`, except `shared.seo`, whose fields carry the standard names of the meta tags they map to (`metaTitle`, `metaDescription`, `ogImage`, `noIndex`).
+- Strapi cannot make Media Library alt text mandatory, so every media field is paired with its own required `*_alt` string field. That is how the "alt text required on all media" rule below is actually enforced.
+- `description` in a `schema.json` attribute documents the field for developers reading the repo; it does **not** surface to editors. Editor-facing field descriptions live in Content Manager view configuration, which is database state — see the caveat below.
+- A **stale** `cms/types/generated/` breaks `strapi build` (it contradicts the new schemas); an **absent** one does not (typing falls back to permissive). It is gitignored, so Railway's fresh clone is fine. After changing a schema locally, run `npx strapi ts:generate-types` or start `develop` before trusting a build failure.
 
 ### Editor-experience rules
 
 The reviewers will log in and click around. These are graded, not optional:
 
-- Every string field has `required` and a sensible `maxLength` — an editor should not be able to break the layout
-- Alt text is required on all media
-- Every component has a distinct icon and a readable `displayName` so the Dynamic Zone picker makes sense
-- The Content Manager view is configured, not left at defaults
-- Draft & Publish is enabled on `Homepage`
-- `noIndex` on the SEO component defaults to `true`
-- Public role has `create` on `Submission` only — never `find`
+- Every string field has `required` and a sensible `maxLength` — an editor should not be able to break the layout ✅ done in schema
+- Alt text is required on all media ✅ done, via paired `*_alt` fields (see conventions above)
+- Every component has a distinct icon and a readable `displayName` so the Dynamic Zone picker makes sense ✅ done in schema
+- Draft & Publish is enabled on `Homepage` ✅ done, and deliberately off everywhere else
+- `noIndex` on the SEO component defaults to `true` ✅ done in schema
+- Public role has `create` on `Submission` only — never `find` ✅ done in code, `cms/src/index.ts` `bootstrap()`, so it survives a fresh database instead of needing to be re-clicked per environment. Verified: `GET /api/submissions` → 403, `POST` → 201.
+- The Content Manager view is configured, not left at defaults ⬜ **outstanding** — this is database state, not a schema file, so it cannot travel through git as written. It has to be done in the admin UI of each environment (or scripted against the content-manager configuration store). Until it is done, editors see default field ordering and no field descriptions.
 
 ---
 

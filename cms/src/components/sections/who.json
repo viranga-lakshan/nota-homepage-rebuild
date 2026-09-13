@@ -1,0 +1,46 @@
+{
+  "collectionName": "components_sections_whos",
+  "info": {
+    "displayName": "Section - Who It's For",
+    "icon": "message",
+    "description": "Dark section: the manifesto statement, the intro paragraph, the audience list, and a looping video."
+  },
+  "options": {},
+  "attributes": {
+    "manifesto": {
+      "type": "text",
+      "required": true,
+      "maxLength": 300,
+      "description": "The large serif statement that fills from grey to white as the reader scrolls past it."
+    },
+    "intro": {
+      "type": "text",
+      "required": true,
+      "maxLength": 400,
+      "description": "Introductory paragraph shown above the audience list."
+    },
+    "who_label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 30,
+      "default": "Who it's for:",
+      "description": "The sticky label in the left column beside the audience list."
+    },
+    "personas": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.persona",
+      "required": true,
+      "min": 1,
+      "max": 6,
+      "description": "The audience groups. Between 1 and 6."
+    },
+    "video": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["videos"],
+      "description": "Video that plays silently on a loop at the bottom of this section. MP4, 1920px wide."
+    }
+  }
+}

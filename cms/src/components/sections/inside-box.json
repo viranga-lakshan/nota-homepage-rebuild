@@ -1,0 +1,33 @@
+{
+  "collectionName": "components_sections_inside_boxes",
+  "info": {
+    "displayName": "Section - Inside The Box",
+    "icon": "store",
+    "description": "Light section listing everything included in the box."
+  },
+  "options": {},
+  "attributes": {
+    "heading": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40,
+      "default": "Inside the box",
+      "description": "The section heading."
+    },
+    "description_text": {
+      "type": "text",
+      "required": true,
+      "maxLength": 300,
+      "description": "Short paragraph beneath the heading, introducing what is in the box."
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.box-item",
+      "required": true,
+      "min": 1,
+      "max": 6,
+      "description": "The items included. Between 1 and 6."
+    }
+  }
+}

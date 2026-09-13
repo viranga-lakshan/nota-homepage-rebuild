@@ -1,0 +1,293 @@
+/**
+ * The Specifications section — the "smart pen" stage the curtain transition
+ * hands over to.
+ *
+ * Same camera pattern as the hero: `height` is scroll *distance*, not
+ * visible height. 300vh of section holds a 100vh sticky camera, so the
+ * content stays still for 200vh of scrolling while its animation scrubs.
+ *
+ * `margin-top: -100vh` is the handover. It pulls this section up over the
+ * hero's last 100vh — the stretch where the white curtains have already
+ * closed — so this camera is stuck and in place *before* the hero's camera
+ * slides away above it. Both are white at that moment, so the swap is
+ * invisible: that is the whole trick, and it is the reference's own
+ * (`.specs { height: 300vh; margin-top: -100vh }`).
+ *
+ * `position: sticky; top: -200vh` on the section is likewise the
+ * reference's, and it is what the *next* transition will need: it keeps this
+ * section in place while a following section, pulled up by its own -100vh,
+ * covers it. Nothing follows yet, so today it is inert — but this is the
+ * ending behaviour the next curtain has to begin against.
+ *
+ * Values below are the reference's own, not approximations: 5.6vh content
+ * padding, 16.63vw heading block, 71.12vh pen, three columns at 1.01vw gap
+ * inside 3.63vw side padding, 1.21vw card radius, 30px glass blur.
+ */
+
+.specs {
+  position: relative;
+}
+
+/* No background of its own, deliberately. This camera enters the viewport
+   from below while the hero's curtains are still climbing, so anything
+   painted here would cover the bottom of that transition — it is later in
+   the DOM and wins. The white belongs on .content, which fades in only
+   once this section owns the screen. */
+.camera {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Desktop only: the scroll stage. Below 992px the reference drops this
+   section's animated form entirely and serves a static one, so here the
+   same markup simply flows normally — see the bottom of this file. */
+@media (min-width: 992px) {
+  .specs {
+    height: 300vh;
+    margin-top: -100vh;
+    position: sticky;
+    top: -200vh;
+  }
+
+  .camera {
+    position: sticky;
+    top: 0;
+  }
+
+  /* Starting states, declared here rather than set from JS so nothing
+     flashes in place before the hook runs. The hook animates away from
+     exactly these values. */
+  .content {
+    opacity: 0;
+  }
+
+  .headingBlock {
+    transform: translate3d(0, 32.68vh, 0);
+    opacity: 0;
+  }
+
+  .penWrap {
+    transform: translate3d(0, 130%, 0);
+  }
+
+  .card {
+    transform: translate3d(0, 140%, 0);
+  }
+}
+
+/* The animated stage is motion, not content: under reduced motion the
+   section keeps its content but loses the 300vh of scrub, and the hook
+   leaves every element at its final state. */
+@media (min-width: 992px) and (prefers-reduced-motion: reduce) {
+  .specs {
+    height: auto;
+    margin-top: 0;
+    position: relative;
+    top: auto;
+  }
+
+  .camera {
+    position: relative;
+  }
+
+  /* …and the finished state, since nothing will animate to it. */
+  .content,
+  .headingBlock {
+    opacity: 1;
+  }
+
+  .headingBlock,
+  .penWrap,
+  .card {
+    transform: none;
+  }
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding-top: 5.6vh;
+  background: var(--color-white);
+  /* Explicit, not inherited: globals.css still carries the Next scaffold's
+     `prefers-color-scheme: dark` override on --foreground, which would
+     otherwise put near-white text on this white section. */
+  color: var(--color-black);
+}
+
+.headingBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 16.63vw;
+  text-align: center;
+}
+
+.heading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--color-black);
+  font-family: var(--font-serif);
+  font-size: var(--text-headline-1);
+  font-weight: 400;
+  line-height: 100%;
+  letter-spacing: -0.04em;
+}
+
+.eyebrow {
+  color: var(--color-gray);
+}
+
+/* Absolutely positioned so it sits *behind* the cards in the same box: the
+   cards are later in the flow and their glass blur reads over the pen.
+
+   `bottom` matches the cards' own `padding-bottom` (12.67vh), not 0. The
+   cards stop short of the camera's bottom edge by that padding, and the
+   pen has to stop at the same line — anchoring to 0 let it overshoot past
+   the card row into that empty margin instead of ending flush with it. */
+.penWrap {
+  position: absolute;
+  right: 0;
+  bottom: 12.67vh;
+  left: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.pen {
+  width: auto;
+  height: 71.12vh;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 1.01vw;
+  padding-right: 3.63vw;
+  padding-bottom: 12.67vh;
+  padding-left: 3.63vw;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1px;
+}
+
+/* The frosted panels. Both halves share the treatment; they are separate
+   boxes with a 1px gap so the title sits on its own pill. */
+.cardTitle,
+.cardItems {
+  padding: 2.67vh 1.92vw;
+  border: 1px solid var(--color-white-50);
+  border-radius: 1.21vw;
+  background-color: var(--color-black-2);
+  backdrop-filter: blur(30px);
+}
+
+.cardTitle {
+  font-size: var(--text-headline-3);
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -0.07em;
+}
+
+.cardItems {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.91vw;
+  list-style: none;
+}
+
+.cardItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 1.2vh;
+  border-bottom: 1px solid var(--color-black-10);
+}
+
+/* The last row carries no rule — the card edge already closes the list. */
+.cardItem:last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.cardItemLabel {
+  font-size: var(--text-card);
+  font-weight: 500;
+  line-height: 130%;
+  letter-spacing: -0.05em;
+}
+
+.cardItemDot {
+  flex-shrink: 0;
+  width: 0.81vw;
+  height: 0.81vw;
+  border-radius: 100vw;
+  background-color: var(--color-black-20);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Below 992px                                                            */
+/* ---------------------------------------------------------------------- */
+
+/* The reference hides the animated section here and renders a separate
+   static block instead. Rather than ship a second copy of the markup, the
+   same tree flows normally: no camera, no scrub, pen above the cards,
+   columns stacked. This layout is my own — the reference's mobile block was
+   not mined for exact values. */
+@media (max-width: 991px) {
+  .camera {
+    height: auto;
+    overflow: visible;
+  }
+
+  .content {
+    row-gap: 6vh;
+    padding: 8vh 6vw;
+  }
+
+  .headingBlock {
+    height: auto;
+  }
+
+
+  .penWrap {
+    position: relative;
+  }
+
+  .pen {
+    height: 40vh;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    row-gap: 2vh;
+    padding: 0;
+  }
+
+  .cardTitle,
+  .cardItems {
+    padding: 2.4vh 5vw;
+    border-radius: 3vw;
+  }
+
+  .cardTitle {
+    font-size: 5vw;
+  }
+
+  .cardItemLabel {
+    font-size: 4vw;
+  }
+
+  .cardItemDot {
+    width: 2vw;
+    height: 2vw;
+  }
+}

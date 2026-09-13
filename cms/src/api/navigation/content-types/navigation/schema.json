@@ -1,0 +1,91 @@
+{
+  "kind": "singleType",
+  "collectionName": "navigations",
+  "info": {
+    "singularName": "navigation",
+    "pluralName": "navigations",
+    "displayName": "Navigation",
+    "description": "The header: wordmark, menu links, and the sticky order button."
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "logo_text": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20,
+      "default": "NŌTA",
+      "description": "The wordmark in the top-left corner, used if no logo image is uploaded below. Set as text so it stays sharp at every screen size."
+    },
+    "logo_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "SVG wordmark, if you have one. Optional - the text above is the fallback and is used until this is set."
+    },
+    "logo_image_alt": {
+      "type": "string",
+      "required": false,
+      "maxLength": 150,
+      "description": "Describes the logo image for screen readers. Fill this in whenever a logo image is uploaded."
+    },
+    "nota_mark": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "The standalone NOTA mark shown top-right on mobile. Optional - the mobile header lays out fine without it, just without that mark."
+    },
+    "nota_mark_alt": {
+      "type": "string",
+      "required": false,
+      "maxLength": 150,
+      "description": "Describes the mark for screen readers. Fill this in whenever the mark is uploaded."
+    },
+    "mobile_menu_image": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images"],
+      "description": "Photo shown behind the mobile menu overlay when it opens."
+    },
+    "mobile_menu_image_alt": {
+      "type": "string",
+      "required": true,
+      "maxLength": 150,
+      "description": "Describes the mobile menu photo for screen readers."
+    },
+    "items": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.nav-item",
+      "required": true,
+      "min": 1,
+      "max": 8,
+      "description": "Menu links, in display order. Between 1 and 8 - more than 8 will not fit the header."
+    },
+    "order_button_label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20,
+      "default": "Order",
+      "description": "Text on the header's order button."
+    },
+    "order_product_name": {
+      "type": "string",
+      "required": true,
+      "maxLength": 40,
+      "default": "Nota One",
+      "description": "Product name on the header's order button."
+    },
+    "order_price": {
+      "type": "string",
+      "required": true,
+      "maxLength": 20,
+      "default": "$300",
+      "description": "Price on the header's order button. Change it here and in the Hero section - they appear in two places."
+    }
+  }
+}

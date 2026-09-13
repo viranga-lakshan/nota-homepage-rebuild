@@ -1,0 +1,100 @@
+/**
+ * Design tokens as CSS custom properties (CLAUDE.md §4).
+ *
+ * Seeded here with only what the hero/header/mobile-menu need — colours,
+ * fonts, and the two headline sizes. Tokens for sections not yet built
+ * (large-1/2/3, main, card, menu, button, headline-3/4 …) are added when
+ * those sections are, rather than declared unused now — their exact values
+ * are already known (a full typography scale has been provided), this is
+ * purely about not carrying dead custom properties for code that doesn't
+ * exist yet.
+ *
+ * Breakpoint ordering matters and is deliberate: max-width blocks run from
+ * widest (991px) to narrowest (479px), min-width blocks from narrowest
+ * (1440px) to widest (1920px). At a viewport where more than one block
+ * matches, CSS applies both and the later one wins — so this order is what
+ * makes "narrower overrides broader" and "wider overrides narrower" true
+ * without relying on specificity tricks.
+ */
+
+:root {
+  /* Colour */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  --color-gray: #666666;
+  --color-white-50: rgba(255, 255, 255, 0.5);
+  --color-white-40: rgba(255, 255, 255, 0.4);
+  --color-white-10: rgba(255, 255, 255, 0.1);
+  --color-white-5: rgba(255, 255, 255, 0.05);
+  --color-black-50: rgba(0, 0, 0, 0.5);
+  --color-black-30: rgba(0, 0, 0, 0.3);
+  --color-black-20: rgba(0, 0, 0, 0.2);
+  --color-black-2: rgba(0, 0, 0, 0.02);
+  --color-black-10: rgba(0, 0, 0, 0.1);
+  --color-bg-radial: radial-gradient(farthest-corner at center top, #969ca6 0%, #3a3c40 80%);
+
+  /* Type — the actual font files are self-hosted via next/font/google in
+     app/layout.tsx, which exposes them under these variable names; a
+     literal font-family string here would fight next/font's own loading
+     rather than use it. */
+  --font-serif: var(--font-instrument-serif), serif;
+  --font-sans: var(--font-inter), sans-serif;
+
+  /* Headline sizes — the 992–1439px range (no breakpoint of its own) is
+     the value with no media query applied. Confirmed against the full
+     exact typography scale supplied for the reference site. */
+  --text-headline-1: 9.68vw;
+  --text-headline-2: 12.1vw;
+
+  /* Specs section: card title and card list item. No breakpoint
+     overrides in the source — the vw units carry them. */
+  --text-headline-3: 2.22vw;
+  --text-card: 1.61vw;
+}
+
+/* max-width: 991px — tablet. Also where scroll animation turns off
+   entirely (a JS/GSAP concern, not a token, but the two facts share this
+   breakpoint for a reason). Below this point headline-1 and headline-2
+   collapse to the SAME size — confirmed exact, not a coincidence of an
+   earlier approximation. */
+@media (max-width: 991px) {
+  :root {
+    --text-headline-1: 12.5vw;
+    --text-headline-2: 12.5vw;
+  }
+}
+
+/* max-width: 767px — mobile landscape. Still equal to headline-1. */
+@media (max-width: 767px) {
+  :root {
+    --text-headline-1: 14.58vw;
+    --text-headline-2: 14.58vw;
+  }
+}
+
+/* max-width: 479px — mobile portrait. Still equal to headline-1. */
+@media (max-width: 479px) {
+  :root {
+    --text-headline-1: 18.75vw;
+    --text-headline-2: 18.75vw;
+  }
+}
+
+/* min-width: 1440px — large desktop. Headline-2 diverges from headline-1
+   again above 991px, same as the desktop-default relationship. */
+@media (min-width: 1440px) {
+  :root {
+    --text-headline-1: 6.67vw;
+    --text-headline-2: 8.33vw;
+  }
+}
+
+/* min-width: 1920px — xl desktop. No headline-2 override exists at this
+   breakpoint in the source — it stays at the 1440px value (8.33vw) rather
+   than getting its own number, which is why there is no --text-headline-2
+   line in this block. Not an omission. */
+@media (min-width: 1920px) {
+  :root {
+    --text-headline-1: 5vw;
+  }
+}

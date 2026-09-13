@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_sections_details",
+  "info": {
+    "displayName": "Section - Details",
+    "icon": "slideshow",
+    "description": "Dark grid of close-up product photos with label pills, plus one looping video card."
+  },
+  "options": {},
+  "attributes": {
+    "cards": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.detail-card",
+      "required": true,
+      "min": 1,
+      "max": 8,
+      "description": "The photo cards, in display order. Between 1 and 8."
+    },
+    "video": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["videos"],
+      "description": "Video that plays silently on a loop in one of the grid cards. MP4, 1920px wide."
+    }
+  }
+}

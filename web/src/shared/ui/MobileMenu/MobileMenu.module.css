@@ -1,0 +1,208 @@
+/**
+ * Always in the DOM (see MobileMenu.tsx for why — the `inert` attribute,
+ * not conditional mounting, is what makes it unreachable while closed).
+ *
+ * Overlay entrance direction is unresolved between two real sources that
+ * disagree: a direct fetch of the reference site's own live inline style
+ * showed `transform: translate(0px, -100%)` (slides down from above) on
+ * the closed overlay, while a separately-supplied exact CSS spec says
+ * `transform: translateX(100%)` with a `.is-open` class (slides in from
+ * the right). Keeping the vertical version below because it was read
+ * directly off the live element rather than reconstructed from static
+ * files — that same document also invented a `.header__mark` class that
+ * does not exist in the reference's real CSS and got the order button's
+ * background colour backwards, so it is not a reliable tiebreaker here.
+ */
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-white);
+  color: var(--color-black);
+  padding: 4.17vw 4.69vw;
+  opacity: 0;
+  transform: translateY(-100%);
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+}
+
+.overlay[data-open="true"] {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    transition-duration: 0.01ms;
+  }
+}
+
+@media (min-width: 992px) {
+  /* The overlay is mobile-only chrome — the burger that opens it is
+     already hidden above 991px in Header.module.css, so this never
+     becomes reachable on desktop regardless of `isOpen` state. */
+  .overlay {
+    display: none;
+  }
+}
+
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8.33vw;
+}
+
+/* Same real sizes as Header's .logo (the reference uses an identical value
+   set for both — .header__icon and .header__icon--static). */
+.logo {
+  width: 7.29vw;
+  height: 2.34vw;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+.closeIcon {
+  width: 4.17vw;
+  height: 4.17vw;
+}
+
+/* Same real sizes as the order button's mark (.button-order__logo and
+   .button__logo carry identical numbers in the reference at every shared
+   breakpoint). */
+.mark {
+  width: 3.26vw;
+  height: 3.39vw;
+}
+
+@media (max-width: 767px) {
+  .closeIcon {
+    width: 5vw;
+    height: 5vw;
+  }
+
+  .mark {
+    width: 5.21vw;
+    height: 5.42vw;
+  }
+}
+
+@media (max-width: 479px) {
+  .closeIcon {
+    width: 7.5vw;
+    height: 7.5vw;
+  }
+
+  .mark {
+    width: 7.81vw;
+    height: 8.13vw;
+  }
+}
+
+/* Sits near the top, not vertically centred — margin-bottom: auto pushes
+   the product image and footer down to fill the rest of the overlay. */
+.nav {
+  margin-bottom: auto;
+}
+
+.navList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6.25vw;
+}
+
+.navList a {
+  font-family: var(--font-serif);
+  font-size: 10.42vw;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--color-black);
+}
+
+.productWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  margin: 6.25vw 0;
+  border-radius: 6.25vw;
+  overflow: hidden;
+}
+
+.productImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* This is the same .button-order__content the header's order button uses
+   — confirmed against live CSS, not a separate "popup-menu__order-pill"
+   an earlier document invented. Its mobile styling is genuinely different
+   from the header's desktop version: 0.3 opacity (not 0.7 — the same
+   earlier document got this backwards too), a frosted blur, fixed
+   width/height with centred content rather than content-hugging padding. */
+.orderPill {
+  position: absolute;
+  left: 50%;
+  bottom: 4.17vw;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 8px;
+  width: 39.19vw;
+  height: 8.46vw;
+  border-radius: 6.64vw;
+  background: var(--color-black-30);
+  backdrop-filter: blur(15px);
+  color: var(--color-white);
+  font-family: var(--font-sans);
+  font-size: 3.13vw;
+  white-space: nowrap;
+}
+
+.orderPillProduct {
+  color: var(--color-white-40);
+}
+
+.orderPillDivider {
+  width: 1.5em;
+  height: 1px;
+  background: var(--color-white);
+}
+
+@media (max-width: 767px) {
+  .orderPill {
+    width: 42.92vw;
+    height: 8.75vw;
+    column-gap: 2.08vw;
+    font-size: 2.92vw;
+  }
+}
+
+@media (max-width: 479px) {
+  .orderPill {
+    width: 64.38vw;
+    height: 13.13vw;
+    font-size: 4.38vw;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-family: var(--font-sans);
+  font-size: 2.08vw;
+  color: var(--color-black-50);
+}

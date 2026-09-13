@@ -1,6 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
-import { env } from "@/shared/lib/env";
+import { getEnv } from "@/shared/lib/env";
 
 /**
  * Strapi webhook target — this is what makes "publish without a code
@@ -10,7 +10,7 @@ import { env } from "@/shared/lib/env";
 export async function POST(request: NextRequest) {
   const secret = request.nextUrl.searchParams.get("secret");
 
-  if (secret !== env.REVALIDATE_SECRET) {
+  if (secret !== getEnv().REVALIDATE_SECRET) {
     return NextResponse.json({ message: "Invalid secret" }, { status: 401 });
   }
 
