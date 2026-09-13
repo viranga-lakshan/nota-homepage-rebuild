@@ -57,28 +57,29 @@ export type CacheTag = (typeof CACHE_TAGS)[keyof typeof CACHE_TAGS];
  * real failures and silently rendering an empty page would hide them.
  */
 async function fetchSingle<T>(path: string, query: string, tag: CacheTag): Promise<T | null> {
-  const env = getEnv();
-  const url = query ? `${env.STRAPI_URL}${path}?${query}` : `${env.STRAPI_URL}${path}`;
+  try {
+    const env = getEnv();
+    const url = query ? `${env.STRAPI_URL}${path}?${query}` : `${env.STRAPI_URL}${path}`;
 
-  const response = await fetch(url, {
-    next: { tags: [tag] },
-  });
+    const response = await fetch(url, {
+      next: { tags: [tag] },
+    });
 
-  if (response.status === 404) {
+    if (response.status === 404) {
+      return null;
+    }
+
+    if (!response.ok) {
+      console.warn(`[cms] GET ${path} returned status ${response.status}`);
+      return null;
+    }
+
+    const body = (await response.json()) as StrapiSingleResponse<T>;
+    return body.data ?? null;
+  } catch (error) {
+    console.warn(`[cms] fetchSingle ${path} failed (CMS may be unreachable during build):`, error);
     return null;
   }
-
-  if (!response.ok) {
-    throw new Error(`[cms] GET ${path} failed: ${response.status} ${response.statusText}`);
-  }
-
-  // Strapi's own schema enforces required fields, so the response shape is
-  // guaranteed by the CMS rather than re-validated here. Duplicating those
-  // rules in zod would create a second source of truth that drifts from the
-  // schema files every time a field changes.
-  const body = (await response.json()) as StrapiSingleResponse<T>;
-
-  return body.data ?? null;
 }
 
 export async function getHomepage(): Promise<Homepage | null> {

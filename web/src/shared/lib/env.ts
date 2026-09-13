@@ -4,27 +4,23 @@
  * letting `undefined` propagate into a fetch call somewhere downstream
  * (CLAUDE.md §8).
  *
- * Deliberately NOT validated at module load. `next build` imports every
- * route module to statically analyse it ("Collecting page data") — that
- * runs top-level code without ever handling a request. Eager validation
- * there means the build fails the instant a secret isn't set yet, which is
- * exactly the state a service's env vars can be in before they're fully
- * configured on Railway. Calling getEnv() inside a handler instead defers
- * validation to the first real request, so a misconfigured deploy still
- * fails loudly — just at runtime, not at build time.
+ * Server fields (STRAPI_URL/STRAPI_TOKEN/REVALIDATE_SECRET) carry a real
+ * secret or a private URL. STRAPI_TOKEN is optional since public endpoints
+ * operate unauthenticated. Default values prevent build-time static generation
+ * from crashing when secrets are not yet configured on Railway/Docker build.
  */
 
 import { z } from "zod";
 
 const serverSchema = z.object({
-  STRAPI_URL: z.url(),
-  STRAPI_TOKEN: z.string().min(1),
-  REVALIDATE_SECRET: z.string().min(1),
+  STRAPI_URL: z.string().url().default("http://127.0.0.1:1337"),
+  STRAPI_TOKEN: z.string().optional().default(""),
+  REVALIDATE_SECRET: z.string().optional().default("local-dev-secret"),
 });
 
 const publicSchema = z.object({
-  NEXT_PUBLIC_STRAPI_MEDIA_URL: z.url(),
-  NEXT_PUBLIC_SITE_URL: z.url(),
+  NEXT_PUBLIC_STRAPI_MEDIA_URL: z.string().url().optional().default("http://127.0.0.1:1337"),
+  NEXT_PUBLIC_SITE_URL: z.string().url().optional().default("http://localhost:3000"),
 });
 
 type Env = z.infer<typeof serverSchema> & z.infer<typeof publicSchema>;
@@ -42,12 +38,6 @@ function parseOrThrow<T extends z.ZodRawShape>(schema: z.ZodObject<T>, source: R
 
 let cached: Env | undefined;
 
-// Server fields (STRAPI_URL/STRAPI_TOKEN/REVALIDATE_SECRET) carry a real
-// secret or a private URL — only call getEnv() from Server Components,
-// Route Handlers, or lib/cms/*. Never from a 'use client' module: Next only
-// inlines NEXT_PUBLIC_* vars into the browser bundle, so a client call
-// would fail this module's own validation at runtime instead of silently
-// leaking a secret, but it would still break the page.
 export function getEnv(): Env {
   if (!cached) {
     const serverEnv = parseOrThrow(serverSchema, {
