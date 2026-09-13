@@ -16,6 +16,8 @@ import { resolveSection } from "@/sections/registry";
  * does not yet. That is deliberate, not a bug — most of the seven sections
  * are still unbuilt.
  */
+export const dynamic = "force-dynamic";
+
 export default async function Home() {
   const [homepage, navigation, footer] = await Promise.all([
     getHomepage(),
