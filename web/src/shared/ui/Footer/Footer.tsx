@@ -184,6 +184,41 @@ export function Footer({ footer }: FooterProps) {
             )}
           </div>
         </div>
+
+        {/* Centered Made in Taptop bottom badge */}
+        <div className={styles.bottomBadge}>
+          <a
+            href="https://taptop.pro/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.badgeLink}
+          >
+            {footer?.madeInLogo?.url ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={footer.madeInLogo.url}
+                alt={footer.madeInLogo.alt || "Taptop"}
+                className={styles.badgeIcon}
+              />
+            ) : (
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className={styles.badgeIcon}
+                aria-hidden="true"
+              >
+                <rect x="3" y="3" width="8" height="8" rx="1.5" fill="white" />
+                <rect x="13" y="13" width="8" height="8" rx="1.5" fill="white" />
+                <rect x="3" y="13" width="8" height="8" rx="1.5" fill="white" fillOpacity="0.4" />
+                <rect x="13" y="3" width="8" height="8" rx="1.5" fill="white" fillOpacity="0.4" />
+              </svg>
+            )}
+            <span>Made in Taptop</span>
+          </a>
+        </div>
       </div>
     </footer>
   );
