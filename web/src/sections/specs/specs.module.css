@@ -149,7 +149,7 @@
 .penWrap {
   position: absolute;
   right: 0;
-  bottom: 10vh;
+  bottom: 14vh;
   left: 0;
   display: flex;
   align-items: flex-end;
@@ -173,7 +173,7 @@
   width: 100%;
   max-width: 70vw;
   margin: 0 auto;
-  padding-bottom: 12vh;
+  padding-bottom: 16vh;
   box-sizing: border-box;
 }
 
