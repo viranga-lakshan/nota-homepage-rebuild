@@ -132,10 +132,20 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 end: "bottom bottom",
                 scrub: true,
                 onUpdate: (self) => {
-                  if (whoVideo && !videoHasPlayed && self.progress >= 0.65) {
-                    videoHasPlayed = true;
-                    whoVideo.currentTime = 0;
-                    whoVideo.play().catch(() => {});
+                  if (whoVideo) {
+                    if (self.progress >= 0.65) {
+                      if (!videoHasPlayed) {
+                        videoHasPlayed = true;
+                        whoVideo.currentTime = 0;
+                        whoVideo.play().catch(() => {});
+                      }
+                    } else {
+                      if (videoHasPlayed) {
+                        videoHasPlayed = false;
+                        whoVideo.pause();
+                        whoVideo.currentTime = 0;
+                      }
+                    }
                   }
                 },
               },

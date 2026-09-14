@@ -108,6 +108,14 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                   const trans = section.querySelector<HTMLElement>("[data-specs-transition]");
                   if (trans) trans.style.display = "";
                 },
+                onLeaveBack: () => {
+                  const trans = section.querySelector<HTMLElement>("[data-specs-transition]");
+                  if (trans) trans.style.display = "none";
+                },
+                onEnter: () => {
+                  const trans = section.querySelector<HTMLElement>("[data-specs-transition]");
+                  if (trans) trans.style.display = "";
+                },
               },
             });
 
@@ -317,6 +325,12 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                   if (transitionOverlay) transitionOverlay.style.display = "none";
                 },
                 onEnterBack: () => {
+                  if (transitionOverlay) transitionOverlay.style.display = "";
+                },
+                onLeaveBack: () => {
+                  if (transitionOverlay) transitionOverlay.style.display = "none";
+                },
+                onEnter: () => {
                   if (transitionOverlay) transitionOverlay.style.display = "";
                 },
               },
