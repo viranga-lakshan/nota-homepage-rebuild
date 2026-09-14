@@ -2,7 +2,7 @@
   position: relative;
   z-index: 200;
   background: #000000;
-  margin-bottom: clamp(400px, 44vh, 510px);
+  margin-bottom: clamp(440px, 49vh, 560px);
   box-shadow: 0 40px 80px rgba(0, 0, 0, 1);
 }
 
