@@ -79,7 +79,7 @@
    anymore — see index.tsx for why. */
 .headline {
   position: absolute;
-  bottom: 5.56vw;
+  bottom: 2.8vw;
   left: 2.5vw;
   z-index: 2;
   display: flex;
@@ -95,13 +95,13 @@
    reference at the same font-size: these two lines are meant to sit
    tight, not loose. */
 .headlineLine1 {
-  font-size: var(--text-headline-1);
+  font-size: calc(var(--text-headline-1) * 0.88);
   line-height: 100%;
   letter-spacing: -0.04em;
 }
 
 .headlineLine2 {
-  font-size: var(--text-headline-2);
+  font-size: calc(var(--text-headline-2) * 0.88);
   line-height: 80%;
   letter-spacing: -0.05em;
 }
