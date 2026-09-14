@@ -24,46 +24,43 @@ interface UseWhoScrollOptions {
  *   86 -> 94:  Video HOLDS full-screen framed state firmly in view
  *   94 -> 100: ONLY AFTER HOLD, with continued scroll: Video shrinks (scale: 1 -> 0.65) as Paper climbs up
  */
-const MANIFESTO_WORDS_START = 5;
-const MANIFESTO_WORDS_END = 22;
+const DIVIDER_START = 4;
+const DIVIDER_END = 10;
 
-const DIVIDER_START = 22;
-const DIVIDER_END = 26;
+const LABEL_START = 6;
+const LABEL_END = 12;
 
-const LABEL_START = 23;
-const LABEL_END = 26;
+const RIGHT_ENTER_START = 12;
+const RIGHT_ENTER_END = 24;
 
-const RIGHT_ENTER_START = 26;
-const RIGHT_ENTER_END = 36;
+const INTRO_WORDS_START = 24;
+const INTRO_WORDS_END = 38;
 
-const INTRO_WORDS_START = 36;
-const INTRO_WORDS_END = 48;
+const CONTENT_SHIFT_START = 38;
+const CONTENT_SHIFT_END = 72;
 
-const CONTENT_SHIFT_START = 48;
-const CONTENT_SHIFT_END = 78;
+const PERSONA_1_TITLE_START = 38;
+const PERSONA_1_TITLE_END = 46;
+const PERSONA_1_BODY_START = 40;
+const PERSONA_1_BODY_END = 48;
 
-const PERSONA_1_TITLE_START = 48;
-const PERSONA_1_TITLE_END = 54;
-const PERSONA_1_BODY_START = 50;
-const PERSONA_1_BODY_END = 56;
+const PERSONA_2_TITLE_START = 48;
+const PERSONA_2_TITLE_END = 56;
+const PERSONA_2_BODY_START = 50;
+const PERSONA_2_BODY_END = 58;
 
-const PERSONA_2_TITLE_START = 56;
-const PERSONA_2_TITLE_END = 62;
-const PERSONA_2_BODY_START = 58;
-const PERSONA_2_BODY_END = 64;
+const PERSONA_3_TITLE_START = 58;
+const PERSONA_3_TITLE_END = 66;
+const PERSONA_3_BODY_START = 60;
+const PERSONA_3_BODY_END = 68;
 
-const PERSONA_3_TITLE_START = 64;
-const PERSONA_3_TITLE_END = 70;
-const PERSONA_3_BODY_START = 66;
-const PERSONA_3_BODY_END = 72;
+const VIDEO_STAGE_ENTER_START = 65;
+const VIDEO_STAGE_ENTER_END = 75;
 
-const VIDEO_STAGE_ENTER_START = 68;
-const VIDEO_STAGE_ENTER_END = 76;
+const TEXT_EXIT_START = 75;
+const TEXT_EXIT_END = 85;
 
-const TEXT_EXIT_START = 76;
-const TEXT_EXIT_END = 86;
-
-const VIDEO_EXPAND_START = 76;
+const VIDEO_EXPAND_START = 75;
 const VIDEO_EXPAND_END = 86;
 
 const VIDEO_PUSHBACK_START = 94;
@@ -95,10 +92,6 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
             return;
           }
 
-          const manifestoBlock = section.querySelector<HTMLElement>("[data-manifesto-block]");
-          const manifestoWords = Array.from(
-            section.querySelectorAll<HTMLElement>("[data-manifesto-word]")
-          );
           const introWords = Array.from(
             section.querySelectorAll<HTMLElement>("[data-intro-word]")
           );
@@ -152,41 +145,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               },
             });
 
-            // 0. Top manifesto block in-place appearance on solid black
-            if (manifestoBlock) {
-              timeline.fromTo(
-                manifestoBlock,
-                { opacity: 0 },
-                {
-                  opacity: 1,
-                  ease: "power1.inOut",
-                  duration: 4,
-                },
-                0
-              );
-            }
-
-            // 1. Top manifesto word-by-word color reveal (gray -> white)
-            if (manifestoWords.length > 0) {
-              const totalManifestoDuration = MANIFESTO_WORDS_END - MANIFESTO_WORDS_START;
-              const step = totalManifestoDuration / manifestoWords.length;
-
-              manifestoWords.forEach((word, index) => {
-                const start = MANIFESTO_WORDS_START + index * step;
-                timeline.fromTo(
-                  word,
-                  { color: "rgba(255, 255, 255, 0.4)" },
-                  {
-                    color: "#ffffff",
-                    ease: "none",
-                    duration: step * 1.5,
-                  },
-                  start
-                );
-              });
-            }
-
-            // 2. Horizontal divider appearance
+            // 1. Horizontal divider appearance
             if (divider) {
               timeline.fromTo(
                 divider,
@@ -200,7 +159,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 3. Left label appearance (stays gray)
+            // 2. Left label appearance
             if (leftLabel) {
               timeline.fromTo(
                 leftLabel,

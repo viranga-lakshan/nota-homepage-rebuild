@@ -37,13 +37,18 @@ const PEN_RISE_END = 28;
 const PEN_OFFSET = 120;
 
 const CARD_RISE_START = 18;
-const CARD_RISE_END = [32, 39, 46];
+const CARD_RISE_END = [30, 36, 42];
 
-/* Outro Transition Markers */
-const OUTRO_FADE_START = 52;
-const OUTRO_FADE_END = 56;
-const HORIZONTAL_EXPAND_START = 56;
-const HORIZONTAL_EXPAND_END = 80;
+/* Outro & Manifesto Transition Markers */
+const OUTRO_FADE_START = 46;
+const OUTRO_FADE_END = 50;
+const HORIZONTAL_EXPAND_START = 50;
+const HORIZONTAL_EXPAND_END = 66;
+
+const MANIFESTO_FADE_START = 66;
+const MANIFESTO_FADE_END = 70;
+const MANIFESTO_WORDS_START = 70;
+const MANIFESTO_WORDS_END = 95;
 
 interface UseSpecsScrollOptions {
   sectionRef: RefObject<HTMLElement | null>;
@@ -82,6 +87,12 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
           const bodyUpper = section.querySelector<HTMLElement>("[data-specs-tier='bodyUpper']");
           const bodyLower = section.querySelector<HTMLElement>("[data-specs-tier='bodyLower']");
           const base = section.querySelector<HTMLElement>("[data-specs-tier='base']");
+          const manifestoWrapper = section.querySelector<HTMLElement>(
+            "[data-specs-manifesto]"
+          );
+          const manifestoWords = Array.from(
+            section.querySelectorAll<HTMLElement>("[data-specs-word]")
+          );
 
           if (isDesktop) {
             const content = section.querySelector<HTMLElement>("[data-content]");
@@ -97,18 +108,6 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                 start: "top top",
                 end: "bottom bottom",
                 scrub: true,
-                onLeave: () => {
-                  if (transitionOverlay) transitionOverlay.style.display = "none";
-                },
-                onEnterBack: () => {
-                  if (transitionOverlay) transitionOverlay.style.display = "";
-                },
-                onLeaveBack: () => {
-                  if (transitionOverlay) transitionOverlay.style.display = "none";
-                },
-                onEnter: () => {
-                  if (transitionOverlay) transitionOverlay.style.display = "";
-                },
               },
             });
 
@@ -252,6 +251,42 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
               );
             }
 
+            // -------------------------------------------------------------
+            // 7. Outro: Directly on the solid black screen, Manifesto appears in-place
+            // -------------------------------------------------------------
+            if (manifestoWrapper) {
+              timeline.fromTo(
+                manifestoWrapper,
+                { opacity: 0 },
+                {
+                  opacity: 1,
+                  ease: "power1.inOut",
+                  duration: MANIFESTO_FADE_END - MANIFESTO_FADE_START,
+                },
+                MANIFESTO_FADE_START
+              );
+            }
+
+            // 8. Outro: Manifesto words turn from gray to white word-by-word
+            if (manifestoWords.length > 0) {
+              const totalManifestoDuration = MANIFESTO_WORDS_END - MANIFESTO_WORDS_START;
+              const step = totalManifestoDuration / manifestoWords.length;
+
+              manifestoWords.forEach((word, index) => {
+                const start = MANIFESTO_WORDS_START + index * step;
+                timeline.fromTo(
+                  word,
+                  { color: "rgba(255, 255, 255, 0.4)" },
+                  {
+                    color: "#ffffff",
+                    ease: "none",
+                    duration: step * 1.5,
+                  },
+                  start
+                );
+              });
+            }
+
             return () => {
               timeline.scrollTrigger?.kill();
               timeline.kill();
@@ -271,18 +306,6 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                 end: "+=120%",
                 pin: true,
                 scrub: true,
-                onLeave: () => {
-                  if (transitionOverlay) transitionOverlay.style.display = "none";
-                },
-                onEnterBack: () => {
-                  if (transitionOverlay) transitionOverlay.style.display = "";
-                },
-                onLeaveBack: () => {
-                  if (transitionOverlay) transitionOverlay.style.display = "none";
-                },
-                onEnter: () => {
-                  if (transitionOverlay) transitionOverlay.style.display = "";
-                },
               },
             });
 
@@ -290,7 +313,7 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             mobileTimeline.fromTo(
               transitionOverlay,
               { opacity: 0 },
-              { opacity: 1, ease: "power1.inOut", duration: 15 },
+              { opacity: 1, ease: "power1.inOut", duration: 10 },
               0
             );
 
@@ -299,8 +322,8 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
               mobileTimeline.fromTo(
                 stem,
                 { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
-                { scaleX: 45, ease: "power1.inOut", duration: 85 },
-                15
+                { scaleX: 45, ease: "power1.inOut", duration: 35 },
+                10
               );
             }
 
@@ -308,8 +331,8 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
               mobileTimeline.fromTo(
                 bodyUpper,
                 { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
-                { scaleX: 14, ease: "power1.inOut", duration: 85 },
-                15
+                { scaleX: 14, ease: "power1.inOut", duration: 35 },
+                10
               );
             }
 
@@ -317,8 +340,8 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
               mobileTimeline.fromTo(
                 bodyLower,
                 { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
-                { scaleX: 6, ease: "power1.inOut", duration: 85 },
-                15
+                { scaleX: 6, ease: "power1.inOut", duration: 35 },
+                10
               );
             }
 
@@ -326,9 +349,30 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
               mobileTimeline.fromTo(
                 base,
                 { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
-                { scaleX: 3, ease: "power1.inOut", duration: 85 },
-                15
+                { scaleX: 3, ease: "power1.inOut", duration: 35 },
+                10
               );
+            }
+
+            if (manifestoWrapper) {
+              mobileTimeline.fromTo(
+                manifestoWrapper,
+                { opacity: 0 },
+                { opacity: 1, ease: "power1.inOut", duration: 10 },
+                45
+              );
+            }
+
+            if (manifestoWords.length > 0) {
+              const step = 40 / manifestoWords.length;
+              manifestoWords.forEach((word, index) => {
+                mobileTimeline.fromTo(
+                  word,
+                  { color: "rgba(255, 255, 255, 0.4)" },
+                  { color: "#ffffff", ease: "none", duration: step * 1.5 },
+                  55 + index * step
+                );
+              });
             }
 
             return () => {
