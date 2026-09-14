@@ -44,13 +44,14 @@
 .nav {
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
+  padding-left: 3.5vw;
 }
 
 .navList {
   display: flex;
   align-items: center;
-  gap: 2.78vw;
+  gap: 2.2vw;
   list-style: none;
 }
 
