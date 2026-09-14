@@ -53,7 +53,7 @@
   align-items: center;
   gap: 2.2vw;
   list-style: none;
-  transform: translateY(-0.22vw);
+  transform: translateY(-0.42vw);
 }
 
 .navList a {
