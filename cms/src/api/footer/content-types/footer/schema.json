@@ -29,6 +29,13 @@
       "maxLength": 80,
       "description": "The copyright line, for example \"@2026 Nota Team\"."
     },
+    "year": {
+      "type": "string",
+      "required": false,
+      "maxLength": 20,
+      "default": "2026",
+      "description": "The year displayed in the footer (e.g. '2026')."
+    },
     "nav_links": {
       "type": "component",
       "repeatable": true,

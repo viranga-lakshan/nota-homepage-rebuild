@@ -173,6 +173,7 @@ export interface FooterDto {
   description: string;
   credit: string;
   copyright: string;
+  year?: string;
   nav_links: NavItemDto[];
   credit_links: CreditLinkDto[];
   made_in_logo?: StrapiMediaDto | null;
