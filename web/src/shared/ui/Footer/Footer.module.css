@@ -1,7 +1,8 @@
 .footerRevealWrapper {
   position: relative;
   width: 100%;
-  height: clamp(340px, 40vh, 460px);
+  min-height: 380px;
+  height: 44vh;
   background: transparent;
   z-index: 1;
 }
@@ -11,12 +12,13 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: clamp(340px, 40vh, 460px);
+  min-height: 380px;
+  height: 44vh;
   z-index: 1;
   background: #000000;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: space-between;
   pointer-events: auto;
 }
 
@@ -25,7 +27,7 @@
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding: 4.5vw 6vw 2.5vw;
+  padding: 3.5rem 6vw 2.2rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -38,20 +40,21 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 6vw;
+  gap: 4rem;
   width: 100%;
 }
 
 .descriptionWrapper {
-  max-width: 32vw;
+  max-width: 36rem;
+  flex: 1 1 auto;
 }
 
 .description {
   font-family: inherit;
-  font-size: clamp(1.1rem, 1.45vw, 1.6rem);
+  font-size: clamp(1.2rem, 1.6vw, 1.75rem);
   font-weight: 400;
   line-height: 1.35;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   color: #ffffff;
   margin: 0;
 }
@@ -60,7 +63,8 @@
 .infoWrapper {
   display: flex;
   align-items: flex-start;
-  gap: 7vw;
+  gap: 6rem;
+  flex-shrink: 0;
 }
 
 .menuColumn,
@@ -70,22 +74,22 @@
 }
 
 .columnTitle {
-  font-size: clamp(0.75rem, 0.85vw, 0.95rem);
-  font-weight: 400;
+  font-size: 0.85rem;
+  font-weight: 500;
   letter-spacing: -0.01em;
   color: rgba(255, 255, 255, 0.55);
-  margin: 0 0 1.2vw 0;
+  margin: 0 0 1rem 0;
   text-transform: none;
 }
 
 .navLinks {
   display: flex;
   flex-direction: column;
-  gap: 0.5vw;
+  gap: 0.45rem;
 }
 
 .navLink {
-  font-size: clamp(0.85rem, 0.95vw, 1.05rem);
+  font-size: 0.95rem;
   font-weight: 400;
   color: #ffffff;
   text-decoration: none;
@@ -100,8 +104,8 @@
 }
 
 .yearText {
-  font-size: clamp(0.85rem, 0.95vw, 1.05rem);
-  font-weight: 400;
+  font-size: 0.95rem;
+  font-weight: 500;
   color: #ffffff;
   margin: 0;
   line-height: 1.4;
@@ -113,10 +117,9 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-top: 4vw;
-  padding-top: 1.5vw;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  font-size: clamp(0.75rem, 0.82vw, 0.92rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.5);
 }
 
@@ -128,21 +131,19 @@
 .teamWrapper {
   display: flex;
   align-items: center;
-  gap: 5vw;
+  gap: 4rem;
 }
 
 .teamGroup {
   display: flex;
   align-items: center;
-  gap: 0.6vw;
+  gap: 0.6rem;
 }
 
 .teamIcon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 5px;
-  height: 5px;
+  display: inline-block;
+  width: 4px;
+  height: 4px;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.4);
 }
@@ -156,7 +157,7 @@
 .designTeam {
   display: flex;
   align-items: center;
-  gap: 0.4vw;
+  gap: 0.4rem;
 }
 
 .creditLink {
