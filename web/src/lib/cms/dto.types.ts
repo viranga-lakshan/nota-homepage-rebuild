@@ -154,6 +154,11 @@ export interface NavItemDto {
   href: string;
 }
 
+export interface CreditLinkDto {
+  label: string;
+  href?: string | null;
+}
+
 export interface NavigationDto {
   logo_text: string;
   items: NavItemDto[];
@@ -169,6 +174,8 @@ export interface FooterDto {
   credit: string;
   copyright: string;
   nav_links: NavItemDto[];
+  credit_links: CreditLinkDto[];
+  made_in_logo?: StrapiMediaDto | null;
 }
 
 export interface OrderPopupDto {

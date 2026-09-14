@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_shared_credit_links",
+  "info": {
+    "displayName": "Credit Link",
+    "icon": "link",
+    "description": "A credit attribution with an optional hyperlink (e.g. 'Made in Taptop' → taptop.pro)."
+  },
+  "options": {},
+  "attributes": {
+    "label": {
+      "type": "string",
+      "required": true,
+      "maxLength": 80,
+      "description": "The visible text, e.g. 'Made in Taptop' or 'Designed by Alice'."
+    },
+    "href": {
+      "type": "string",
+      "required": false,
+      "maxLength": 300,
+      "description": "Optional URL the label links to. Leave blank for plain text credits."
+    }
+  }
+}

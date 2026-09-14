@@ -16,7 +16,7 @@
 import { getEnv } from "@/shared/lib/env";
 import type { Image, Video } from "@/domain/media";
 import type { Homepage, Seo } from "@/domain/homepage";
-import type { Footer, NavItem, Navigation, OrderPopup } from "@/domain/site";
+import type { Footer, NavItem, Navigation, OrderPopup, CreditLink } from "@/domain/site";
 import type {
   BoxItem,
   ColorVariant,
@@ -29,6 +29,7 @@ import type {
 import type {
   BoxItemDto,
   ColorVariantDto,
+  CreditLinkDto,
   DetailCardDto,
   FooterDto,
   HomepageDto,
@@ -81,6 +82,10 @@ function toVideo(media: StrapiMediaDto | undefined | null): Video {
 
 function toNavItem(dto: NavItemDto): NavItem {
   return { label: dto.label, href: dto.href };
+}
+
+function toCreditLink(dto: CreditLinkDto): CreditLink {
+  return { label: dto.label, href: dto.href ?? null };
 }
 
 function toSpecGroup(dto: SpecGroupDto): SpecGroup {
@@ -258,6 +263,8 @@ export function toFooter(dto: FooterDto): Footer {
     credit: dto.credit,
     copyright: dto.copyright,
     navLinks: dto.nav_links.map(toNavItem),
+    creditLinks: (dto.credit_links ?? []).map(toCreditLink),
+    madeInLogo: dto.made_in_logo ? toImage(dto.made_in_logo, "Made in Taptop") : null,
   };
 }
 

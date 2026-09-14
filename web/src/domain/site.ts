@@ -25,11 +25,18 @@ export interface Navigation {
   mobileMenuImage: Image;
 }
 
+export interface CreditLink {
+  label: string;
+  href?: string | null;
+}
+
 export interface Footer {
   description: string;
   credit: string;
   copyright: string;
   navLinks: NavItem[];
+  creditLinks: CreditLink[];
+  madeInLogo: Image | null;
 }
 
 export interface OrderPopup {

@@ -37,6 +37,22 @@
       "min": 1,
       "max": 8,
       "description": "Footer links, in display order. Usually the same links as the header."
+    },
+    "credit_links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "shared.credit-link",
+      "required": false,
+      "min": 0,
+      "max": 8,
+      "description": "Bottom-bar credit attributions in display order (e.g. 'Made in Taptop', 'Designed by Alice'). Each can have an optional link."
+    },
+    "made_in_logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "Small logo icon shown beside the 'Made in' credit. SVG or PNG, max 64px."
     }
   }
 }
