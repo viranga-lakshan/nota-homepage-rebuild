@@ -25,7 +25,14 @@
   padding: 1.67vw 2.5vw;
   color: var(--color-white);
   font-family: var(--font-sans);
-  transition: color 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, color 0.3s ease;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.headerHidden {
+  transform: translate3d(0, -100%, 0);
+  pointer-events: none;
 }
 
 .logo {
