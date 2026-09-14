@@ -202,6 +202,7 @@ function toSection(dto: SectionDto | { __component: string }): Section | null {
       return {
         type: "details",
         cards: details.cards.map(toDetailCard),
+        video: toVideo(details.video),
       };
     }
 

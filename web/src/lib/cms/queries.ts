@@ -51,6 +51,7 @@ const HOMEPAGE_POPULATE = {
       "sections.details": {
         populate: {
           cards: { populate: ["image", "video"] },
+          video: true,
         },
       },
       "sections.color-variants": {
