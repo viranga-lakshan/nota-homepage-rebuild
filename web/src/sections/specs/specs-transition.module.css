@@ -30,7 +30,7 @@
   position: absolute;
   top: 0;
   left: 50%;
-  width: 1.4vw;
+  width: 1.2vw;
   height: 23.5vh;
   background-color: var(--color-black);
   transform-origin: 50% 50%;
@@ -42,7 +42,7 @@
   position: absolute;
   top: 22.5vh;
   left: 50%;
-  width: 5.8vw;
+  width: 3.8vw;
   height: 24.5vh;
   background-color: var(--color-black);
   transform-origin: 50% 50%;
@@ -54,7 +54,7 @@
   position: absolute;
   top: 46vh;
   left: 50%;
-  width: 15.5vw;
+  width: 9.5vw;
   height: 26vh;
   background-color: var(--color-black);
   transform-origin: 50% 50%;
@@ -66,7 +66,7 @@
   position: absolute;
   top: 71vh;
   left: 50%;
-  width: 38vw;
+  width: 22vw;
   height: 30vh;
   background-color: var(--color-black);
   transform-origin: 50% 50%;
@@ -76,18 +76,18 @@
 
 @media (max-width: 991px) {
   .stem {
-    width: 2.8vw;
+    width: 2.2vw;
   }
 
   .bodyUpper {
-    width: 12vw;
+    width: 8vw;
   }
 
   .bodyLower {
-    width: 32vw;
+    width: 20vw;
   }
 
   .base {
-    width: 60vw;
+    width: 42vw;
   }
 }

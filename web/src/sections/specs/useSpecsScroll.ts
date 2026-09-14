@@ -205,7 +205,7 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                 stem,
                 { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
                 {
-                  scaleX: 100,
+                  scaleX: 120,
                   ease: "power1.inOut",
                   duration: expandDuration,
                 },
@@ -218,7 +218,7 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                 bodyUpper,
                 { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
                 {
-                  scaleX: 25,
+                  scaleX: 38,
                   ease: "power1.inOut",
                   duration: expandDuration,
                 },
@@ -231,7 +231,7 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                 bodyLower,
                 { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
                 {
-                  scaleX: 10,
+                  scaleX: 16,
                   ease: "power1.inOut",
                   duration: expandDuration,
                 },
@@ -244,7 +244,7 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                 base,
                 { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
                 {
-                  scaleX: 4,
+                  scaleX: 7,
                   ease: "power1.inOut",
                   duration: expandDuration,
                 },
