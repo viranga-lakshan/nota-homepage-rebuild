@@ -14,7 +14,6 @@
 
 .insideBox {
   position: relative;
-  z-index: 130;
   background-color: var(--color-white);
   color: var(--color-black);
   min-height: 100vh;
@@ -35,10 +34,9 @@
 
 @media (min-width: 992px) {
   .insideBox {
-    height: 600vh;
-    margin-top: -100vh;
-    position: sticky;
-    top: -500vh;
+    height: 500vh;
+    margin-top: 0;
+    position: relative;
   }
 
   .camera {
