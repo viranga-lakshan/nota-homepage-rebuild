@@ -122,7 +122,6 @@ export interface InsideBoxSectionDto {
 export interface DetailsSectionDto {
   __component: "sections.details";
   cards: DetailCardDto[];
-  video: StrapiMediaDto;
 }
 
 export interface ColorVariantsSectionDto {

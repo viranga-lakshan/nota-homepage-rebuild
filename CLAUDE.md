@@ -165,7 +165,7 @@ One Strapi **Single Type** (`Homepage`) holding a **Dynamic Zone** of section co
 3. `sections.who` — manifesto statement, intro, sticky label, repeatable `shared.persona`, looping video
 4. `sections.paper` — two-part heading ("Works with" / "smart paper"), 2–6 `shared.paper-slide`
 5. `sections.inside-box` — heading, description, 1–6 `shared.box-item`
-6. `sections.details` — 1–8 `shared.detail-card` (photo + label pill), plus one looping video
+6. `sections.details` — 1–8 `shared.detail-card` (photo or video + optional label pill)
 7. `sections.color-variants` — 1–8 `shared.color-variant`, carousel-ordered
 
 **Shared components** (9): `shared.seo`, `shared.nav-item`, `shared.spec-item`, `shared.spec-group`, `shared.persona`, `shared.paper-slide`, `shared.box-item`, `shared.color-variant`, `shared.detail-card`

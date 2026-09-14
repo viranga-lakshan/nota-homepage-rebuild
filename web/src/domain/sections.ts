@@ -106,7 +106,6 @@ export interface InsideBoxSection {
 export interface DetailsSection {
   type: "details";
   cards: DetailCard[];
-  video: Video;
 }
 
 export interface ColorVariantsSection {
