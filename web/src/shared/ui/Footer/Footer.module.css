@@ -20,13 +20,12 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 4rem;
   width: 100%;
 }
 
 .descriptionWrapper {
-  max-width: 36rem;
-  flex: 1 1 auto;
+  width: 46%;
+  flex-shrink: 0;
 }
 
 .description {
@@ -39,12 +38,14 @@
   margin: 0;
 }
 
-/* Right side info: Navigation & Year */
+/* Right side info: Navigation (at center ~50%) & Year (at far right) */
 .infoWrapper {
+  width: 54%;
   display: flex;
   align-items: flex-start;
-  gap: 6rem;
-  flex-shrink: 0;
+  justify-content: space-between;
+  padding-left: 4vw;
+  box-sizing: border-box;
 }
 
 .menuColumn,
@@ -104,14 +105,19 @@
 }
 
 .copyright {
+  width: 46%;
+  flex-shrink: 0;
   margin: 0;
   color: rgba(255, 255, 255, 0.5);
 }
 
 .teamWrapper {
+  width: 54%;
   display: flex;
   align-items: center;
-  gap: 4rem;
+  justify-content: space-between;
+  padding-left: 4vw;
+  box-sizing: border-box;
 }
 
 .teamGroup {
