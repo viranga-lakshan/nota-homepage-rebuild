@@ -149,7 +149,7 @@
 .penWrap {
   position: absolute;
   right: 0;
-  bottom: 16vh;
+  bottom: 8vh;
   left: 0;
   display: flex;
   align-items: flex-end;
@@ -160,7 +160,7 @@
 
 .pen {
   width: auto;
-  height: 64vh;
+  height: 52vh;
   object-fit: contain;
 }
 
