@@ -48,7 +48,8 @@ import type {
  * absolute URL is left alone, so this keeps working if uploads later move to
  * object storage that returns full URLs.
  */
-function absoluteUrl(url: string): string {
+function absoluteUrl(url?: string): string {
+  if (!url) return "";
   if (url.startsWith("http://") || url.startsWith("https://")) {
     return url;
   }
@@ -56,19 +57,25 @@ function absoluteUrl(url: string): string {
   return `${getEnv().NEXT_PUBLIC_STRAPI_MEDIA_URL}${url}`;
 }
 
-function toImage(media: StrapiMediaDto, alt: string): Image {
+function toImage(media: StrapiMediaDto | undefined | null, alt: string): Image {
+  if (!media) {
+    return { url: "", alt, width: 0, height: 0 };
+  }
   return {
     url: absoluteUrl(media.url),
     alt,
-    width: media.width,
-    height: media.height,
+    width: media.width || 0,
+    height: media.height || 0,
   };
 }
 
-function toVideo(media: StrapiMediaDto): Video {
+function toVideo(media: StrapiMediaDto | undefined | null): Video {
+  if (!media) {
+    return { url: "", mime: "video/mp4" };
+  }
   return {
     url: absoluteUrl(media.url),
-    mime: media.mime,
+    mime: media.mime || "video/mp4",
   };
 }
 

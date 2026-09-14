@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import type { DetailsSection, DetailCard } from "@/domain/sections";
 import styles from "./details.module.css";
 
@@ -42,7 +43,7 @@ const DEFAULT_CARDS: DetailCard[] = [
     label: "Durable metal nib, low-profile control button",
     image: null,
     video: {
-      url: "https://nota.uprock.pro/video/pen.mp4",
+      url: "/videos/details_pen.mp4",
       mime: "video/mp4",
     },
   },
@@ -77,38 +78,101 @@ const CARD_CLASSES = [
   styles.card6,
 ];
 
+function CardMedia({
+  card,
+  defaultCard,
+  index,
+}: {
+  card?: DetailCard;
+  defaultCard: DetailCard;
+  index: number;
+}) {
+  const isVideoCard = index === 3 || Boolean(card?.video?.url);
+  const videoUrl = card?.video?.url || defaultCard.video?.url;
+  const initialImageUrl = card?.image?.url || defaultCard.image?.url || "";
+  const fallbackImageUrl = defaultCard.image?.url || "";
+
+  const [imgSrc, setImgSrc] = useState(initialImageUrl);
+
+  if (isVideoCard && videoUrl) {
+    return (
+      <video
+        className={styles.cardVideo}
+        src={videoUrl}
+        autoPlay
+        loop
+        muted
+        playsInline
+      />
+    );
+  }
+
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      className={styles.cardImage}
+      src={imgSrc || fallbackImageUrl}
+      alt={card?.image?.alt || defaultCard.image?.alt || `Detail ${index + 1}`}
+      loading="lazy"
+      onError={() => {
+        if (fallbackImageUrl && imgSrc !== fallbackImageUrl) {
+          setImgSrc(fallbackImageUrl);
+        }
+      }}
+    />
+  );
+}
+
 export function Details({ section }: DetailsProps) {
-  const cards = section.cards && section.cards.length > 0 ? section.cards : DEFAULT_CARDS;
+  // Always ensure 6 cards in exact reference grid layout
+  const cards = Array.from({ length: 6 }, (_, index) => {
+    const defaultCard = DEFAULT_CARDS[index];
+    const rawCard = section.cards?.[index];
+
+    // For slot 3 (Card 4), it is always the video card
+    if (index === 3) {
+      return {
+        ...defaultCard,
+        ...(rawCard?.video ? { video: rawCard.video } : {}),
+        label: "Durable metal nib, low-profile control button",
+      };
+    }
+
+    // For slot 4 (Card 5), it is "Aluminum body"
+    if (index === 4) {
+      return {
+        ...defaultCard,
+        ...(rawCard?.image ? { image: rawCard.image } : {}),
+        label: "Aluminum body",
+      };
+    }
+
+    if (!rawCard) return defaultCard;
+
+    // Clean label: empty/whitespace string should become null
+    const cleanedLabel =
+      rawCard.label && rawCard.label.trim().length > 0
+        ? rawCard.label.trim()
+        : defaultCard.label;
+
+    return {
+      ...defaultCard,
+      ...rawCard,
+      label: cleanedLabel,
+    };
+  });
 
   return (
     <section className={styles.section} data-details-section>
       <div className={styles.grid}>
         {cards.map((card, index) => {
           const cardClass = CARD_CLASSES[index] || styles.card1;
-          const hasVideo = Boolean(card.video?.url);
-          const hasImage = Boolean(card.image?.url);
+          const defaultCard = DEFAULT_CARDS[index];
           const hasLabel = Boolean(card.label && card.label.trim().length > 0);
 
           return (
             <div key={index} className={cardClass} data-detail-card={index}>
-              {hasVideo && card.video ? (
-                <video
-                  className={styles.cardVideo}
-                  src={card.video.url}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                />
-              ) : hasImage && card.image ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  className={styles.cardImage}
-                  src={card.image.url}
-                  alt={card.image.alt || card.label || `Detail ${index + 1}`}
-                  loading="lazy"
-                />
-              ) : null}
+              <CardMedia card={card} defaultCard={defaultCard} index={index} />
 
               {hasLabel && (
                 <div className={styles.label}>
