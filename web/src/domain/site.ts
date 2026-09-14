@@ -34,6 +34,7 @@ export interface Footer {
   description: string;
   credit: string;
   copyright: string;
+  year?: string;
   navLinks: NavItem[];
   creditLinks: CreditLink[];
   madeInLogo: Image | null;

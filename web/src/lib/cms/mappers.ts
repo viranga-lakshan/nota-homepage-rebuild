@@ -262,6 +262,7 @@ export function toFooter(dto: FooterDto): Footer {
     description: dto.description,
     credit: dto.credit,
     copyright: dto.copyright,
+    year: dto.year || "2026",
     navLinks: dto.nav_links.map(toNavItem),
     creditLinks: (dto.credit_links ?? []).map(toCreditLink),
     madeInLogo: dto.made_in_logo ? toImage(dto.made_in_logo, "Made in Taptop") : null,
