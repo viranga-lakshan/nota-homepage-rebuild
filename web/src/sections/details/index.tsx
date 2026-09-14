@@ -56,32 +56,29 @@ const DEFAULT_CARDS: DetailCard[] = [
     },
     video: null,
   },
+  {
+    label: "Long-lasting battery life",
+    image: {
+      url: "/images/detail_6.jpg",
+      alt: "Long-lasting battery life",
+      width: 800,
+      height: 600,
+    },
+    video: null,
+  },
 ];
 
 export function Details({ section }: DetailsProps) {
   const cards = section.cards && section.cards.length > 0 ? section.cards : DEFAULT_CARDS;
-  const backgroundVideoUrl = section.video?.url;
 
   return (
     <section className={styles.detailsSection} data-details-section>
-      {backgroundVideoUrl && (
-        <div className={styles.backgroundVideoWrapper} aria-hidden="true">
-          <video
-            className={styles.backgroundVideo}
-            src={backgroundVideoUrl}
-            autoPlay
-            loop
-            muted
-            playsInline
-          />
-        </div>
-      )}
-
       <div className={styles.container}>
         <div className={styles.cardsGrid}>
           {cards.map((card, index) => {
             const hasVideo = Boolean(card.video?.url);
             const hasImage = Boolean(card.image?.url);
+            const hasLabel = Boolean(card.label && card.label.trim().length > 0);
 
             return (
               <div key={index} className={styles.card} data-detail-card={index}>
@@ -106,7 +103,7 @@ export function Details({ section }: DetailsProps) {
                   ) : null}
                 </div>
 
-                {card.label && (
+                {hasLabel && (
                   <div className={styles.labelPill}>
                     <span className={styles.labelText}>{card.label}</span>
                   </div>

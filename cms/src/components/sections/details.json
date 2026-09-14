@@ -3,7 +3,7 @@
   "info": {
     "displayName": "Section - Details",
     "icon": "slideshow",
-    "description": "Dark grid of close-up product photos with label pills, plus one looping video card."
+    "description": "Dark grid of close-up product photos and video with label pills."
   },
   "options": {},
   "attributes": {
@@ -14,14 +14,7 @@
       "required": true,
       "min": 1,
       "max": 8,
-      "description": "The photo cards, in display order. Between 1 and 8."
-    },
-    "video": {
-      "type": "media",
-      "multiple": false,
-      "required": true,
-      "allowedTypes": ["videos"],
-      "description": "Video that plays silently on a loop in one of the grid cards. MP4, 1920px wide."
+      "description": "The detail cards in display order (images and video with optional label pills)."
     }
   }
 }
