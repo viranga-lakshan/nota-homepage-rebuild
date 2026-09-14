@@ -1,0 +1,171 @@
+/**
+ * Color Variants Section Styles
+ *
+ * Sticky 5-variant scroll presentation:
+ * - 500vh scroll track
+ * - Sticky 100vh camera
+ * - Center vertical pen with smooth crossfading background images
+ * - Left/Right serif typography ("Impossible to" | "overthink", etc.)
+ * - 5-bar pagination indicator at bottom
+ */
+
+.track {
+  position: relative;
+  width: 100%;
+  height: 500vh;
+  background: #000000;
+  z-index: 140;
+}
+
+.camera {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000000;
+  box-sizing: border-box;
+}
+
+.slideLayer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+.slideLayer.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.bgImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+}
+
+.content {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10vw;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.textLeft,
+.textRight {
+  font-family: var(--font-serif, "Instrument Serif", serif);
+  font-size: 3.27vw;
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  color: #ffffff;
+  white-space: nowrap;
+  user-select: none;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+}
+
+.textLeft {
+  text-align: right;
+  width: 38%;
+  transform: translateX(0);
+}
+
+.textRight {
+  text-align: left;
+  width: 38%;
+  transform: translateX(0);
+}
+
+.slideLayer:not(.active) .textLeft {
+  transform: translateY(12px);
+  opacity: 0;
+}
+
+.slideLayer:not(.active) .textRight {
+  transform: translateY(12px);
+  opacity: 0;
+}
+
+/* Bottom 5-bar indicators */
+.indicators {
+  position: absolute;
+  bottom: 3.5vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.8vw;
+  z-index: 10;
+}
+
+.indicatorBar {
+  width: 4.35vw;
+  height: 2px;
+  background: #ffffff;
+  border-radius: 100px;
+  border: none;
+  padding: 0;
+  opacity: 0.35;
+  cursor: pointer;
+  outline: none;
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
+.indicatorBar:hover {
+  opacity: 0.75;
+}
+
+.indicatorBar.activeIndicator {
+  opacity: 1;
+}
+
+/* Mobile responsive layout */
+@media (max-width: 991px) {
+  .track {
+    height: 400vh;
+  }
+
+  .content {
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 5vw;
+    gap: 45vh;
+  }
+
+  .textLeft,
+  .textRight {
+    font-size: 7.5vw;
+    width: 100%;
+    text-align: center;
+  }
+
+  .indicators {
+    bottom: 4vh;
+    gap: 2vw;
+  }
+
+  .indicatorBar {
+    width: 12vw;
+    height: 3px;
+  }
+}

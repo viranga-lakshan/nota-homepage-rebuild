@@ -24,6 +24,7 @@ import { Who } from "./who";
 import { Paper } from "./paper";
 import { InsideBox } from "./inside-box";
 import { Details } from "./details";
+import { ColorVariants } from "./color-variants";
 
 type SectionProps<T extends Section> = { section: T };
 
@@ -36,6 +37,7 @@ export const sectionRegistry: {
   paper: Paper,
   "inside-box": InsideBox,
   details: Details,
+  "color-variants": ColorVariants,
 };
 
 export function resolveSection<T extends Section>(section: T): ComponentType<SectionProps<T>> | null {
