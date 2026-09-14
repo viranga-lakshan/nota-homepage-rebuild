@@ -1,0 +1,651 @@
+/**
+ * The Inside the Box section.
+ *
+ * Sequence:
+ * 1. Sits on black background handover from Paper section.
+ * 2. Expanding 1:1 pure white circle emerges in center, growing to cover all 4 corners in solid white (#ffffff).
+ * 3. At ~80% circle expansion, "Inside the box" large serif heading fades in on pure white.
+ * 4. As user continues scrolling, "Inside the box" translates UP and exits.
+ * 5. From the bottom, the enlarged unboxing presentation set climbs up sliced with horizontal
+ *    white blind slits (with clean white margins on all 4 sides).
+ * 6. Horizontal slits shrink and close together, settling the large boxed set and top-right
+ *    copywriting firmly on the pure white stage.
+ */
+
+.insideBox {
+  position: relative;
+  z-index: 130;
+  background-color: var(--color-white);
+  color: var(--color-black);
+  min-height: 100vh;
+}
+
+.camera {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-white);
+  box-sizing: border-box;
+}
+
+@media (min-width: 992px) {
+  .insideBox {
+    height: 1200vh;
+    margin-top: -100vh;
+    position: sticky;
+    top: -1100vh;
+  }
+
+  .camera {
+    position: sticky;
+    top: 0;
+  }
+}
+
+/* =========================================================================
+   Phase 1: Perfect 1:1 Expanding White Circle Transition
+   ========================================================================= */
+
+.circleContainer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+  background-color: #080808;
+}
+
+.expandingCircle {
+  width: 260vmax;
+  height: 260vmax;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background-color: var(--color-white);
+  transform-origin: center center;
+  transform: scale(0);
+  will-change: transform;
+  flex-shrink: 0;
+}
+
+/* =========================================================================
+   Phase 2: Centered Large Display Headline ("Inside the box")
+   ========================================================================= */
+
+.headingWrapper {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  z-index: 3;
+  pointer-events: none;
+  padding-left: 2.02vw;
+  padding-right: 2.02vw;
+  box-sizing: border-box;
+  opacity: 0;
+  will-change: opacity, transform;
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-size: 11.5vw;
+  line-height: 94%;
+  letter-spacing: -0.04em;
+  color: var(--color-black);
+  margin: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 400;
+}
+
+.headingLine1 {
+  display: block;
+  color: rgba(0, 0, 0, 0.38);
+  font-weight: 400;
+}
+
+.headingLine2 {
+  display: block;
+  color: rgba(0, 0, 0, 0.78);
+  font-weight: 400;
+}
+
+@media (min-width: 1440px) {
+  .heading {
+    font-size: 10.6vw;
+    line-height: 92%;
+  }
+}
+
+@media (min-width: 1920px) {
+  .heading {
+    font-size: 10vw;
+    line-height: 90%;
+  }
+}
+
+/* =========================================================================
+   Phase 3: Original Website Unboxing Packaging Stage & 25-Blinds Reveal
+   ========================================================================= */
+
+.unboxingStage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  opacity: 0;
+  background-color: var(--color-white);
+  will-change: opacity, transform;
+}
+
+.stageWrapper {
+  width: 100%;
+  height: 100%;
+  padding: 2.02vw;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.blindsItem {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-top: 2.02vw;
+  padding-right: 2.02vw;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.blindsImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* 25 Horizontal White Blind Slits Grid Overlay */
+.blindsOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(25, 1fr);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.blindSlit {
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-white);
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+/* Top-Right Copywriting Overlay */
+.blindsContent {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.01vw;
+  max-width: 36.29vw;
+  box-sizing: border-box;
+  will-change: opacity, transform;
+}
+
+.blindsTitle {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 2.22vw;
+  line-height: 100%;
+  letter-spacing: -0.07em;
+  color: #000000;
+  margin: 0;
+}
+
+.blindsText {
+  font-family: var(--font-sans);
+  font-size: 1.81vw;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: -0.05em;
+  color: #000000;
+  margin: 0 0 0 6.05vw;
+}
+
+@media (min-width: 1440px) {
+  .stageWrapper {
+    padding: 2.78vw;
+  }
+
+  .blindsItem {
+    padding-top: 1.39vw;
+    padding-right: 1.39vw;
+  }
+
+  .blindsContent {
+    max-width: 25vw;
+    row-gap: 0.69vw;
+  }
+
+  .blindsTitle {
+    font-size: 1.6vw;
+  }
+
+  .blindsText {
+    font-size: 1.15vw;
+    margin-left: 4.17vw;
+  }
+}
+
+@media (min-width: 1920px) {
+  .stageWrapper {
+    padding: 2.08vw;
+  }
+
+  .blindsItem {
+    padding-top: 2.08vw;
+    padding-right: 2.08vw;
+  }
+
+  .blindsContent {
+    max-width: 22.4vw;
+    row-gap: 0.52vw;
+  }
+
+  .blindsTitle {
+    font-size: 1.25vw;
+  }
+
+  .blindsText {
+    font-size: 0.94vw;
+    margin-left: 4.17vw;
+  }
+}
+
+/* =========================================================================
+   Phase 4: Centered Large Serif Description Text Scroll-Fill Animation
+   ========================================================================= */
+
+.descriptionStage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4vw 6vw;
+  box-sizing: border-box;
+  z-index: 5;
+  opacity: 0;
+  background-color: var(--color-white);
+  will-change: opacity, transform;
+  pointer-events: none;
+}
+
+.descriptionWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 86vw;
+  width: 100%;
+}
+
+.descAccentDot {
+  width: 4px;
+  height: 16px;
+  border-radius: 2px;
+  background-color: #ffd400;
+  margin-bottom: 4.5vh;
+}
+
+.descriptionText {
+  font-family: var(--font-serif);
+  font-size: 3.85vw;
+  line-height: 114%;
+  letter-spacing: -0.035em;
+  color: #dddddd;
+  text-align: center;
+  margin: 0;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.descLine {
+  display: block;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.wordSpan {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.charSpan {
+  display: inline;
+  color: #dddddd;
+  will-change: color;
+}
+
+@media (min-width: 1440px) {
+  .descriptionWrapper {
+    max-width: 82vw;
+  }
+
+  .descriptionText {
+    font-size: 3.6vw;
+    line-height: 112%;
+  }
+}
+
+@media (min-width: 1920px) {
+  .descriptionWrapper {
+    max-width: 78vw;
+  }
+
+  .descriptionText {
+    font-size: 3.35vw;
+    line-height: 110%;
+  }
+}
+
+/* =========================================================================
+   Phase 5: 2-Column Device Cards Stage (Smart Pen & Charging Adapter)
+   ========================================================================= */
+
+.devicesStage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 2.02vw;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 6;
+  opacity: 0;
+  background-color: var(--color-white);
+  will-change: opacity, transform;
+}
+
+.devicesGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.04vw;
+  width: 100%;
+  height: 100%;
+}
+
+.deviceCard {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #f7f7f7;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 2.02vw;
+  box-sizing: border-box;
+}
+
+.cardImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+
+/* 25 Horizontal White Blind Slits Grid Overlay on Device Cards */
+.cardBlindsOverlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(25, 1fr);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.cardContent {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.01vw;
+  max-width: 36.29vw;
+  box-sizing: border-box;
+}
+
+.cardTitle {
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 2.22vw;
+  line-height: 100%;
+  letter-spacing: -0.07em;
+  color: #000000;
+  margin: 0;
+}
+
+.cardDesc {
+  font-family: var(--font-sans);
+  font-size: 1.81vw;
+  font-weight: 400;
+  line-height: 130%;
+  letter-spacing: -0.05em;
+  color: #000000;
+  margin: 0 0 0 6.05vw;
+}
+
+@media (min-width: 1440px) {
+  .devicesStage {
+    padding: 2.78vw;
+  }
+
+  .devicesGrid {
+    gap: 1.39vw;
+  }
+
+  .deviceCard {
+    padding: 1.39vw;
+  }
+
+  .cardContent {
+    max-width: 25vw;
+    row-gap: 0.69vw;
+  }
+
+  .cardTitle {
+    font-size: 1.6vw;
+  }
+
+  .cardDesc {
+    font-size: 1.15vw;
+    margin-left: 4.17vw;
+  }
+}
+
+@media (min-width: 1920px) {
+  .devicesStage {
+    padding: 2.08vw;
+  }
+
+  .devicesGrid {
+    gap: 1.04vw;
+  }
+
+  .deviceCard {
+    padding: 2.08vw;
+  }
+
+  .cardContent {
+    max-width: 22.4vw;
+    row-gap: 0.52vw;
+  }
+
+  .cardTitle {
+    font-size: 1.25vw;
+  }
+
+  .cardDesc {
+    font-size: 0.94vw;
+    margin-left: 4.17vw;
+  }
+}
+
+/* =========================================================================
+   Mobile Layout
+   ========================================================================= */
+
+@media (max-width: 991px) {
+  .insideBox {
+    height: auto;
+    margin-top: 0;
+    position: relative;
+    top: auto;
+  }
+
+  .camera {
+    height: auto;
+    min-height: 100vh;
+    position: relative;
+    padding: 8vh 4vw;
+    background-color: var(--color-white);
+  }
+
+  .circleContainer {
+    display: none;
+  }
+
+  .headingWrapper {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    padding: 8vh 4vw 4vh 4vw;
+  }
+
+  .heading {
+    font-size: 14vw;
+    line-height: 98%;
+  }
+
+  .unboxingStage {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    padding: 4vh 0;
+  }
+
+  .stageWrapper {
+    padding: 0;
+  }
+
+  .blindsOverlay {
+    display: none;
+  }
+
+  .blindsContent {
+    max-width: 100%;
+    padding: 2vh 4vw;
+  }
+
+  .blindsTitle {
+    font-size: 6vw;
+  }
+
+  .blindsText {
+    font-size: 4.5vw;
+    margin-left: 0;
+  }
+
+  .descriptionStage {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    padding: 6vh 4vw;
+  }
+
+  .descriptionText {
+    font-size: 6.5vw;
+    color: #000000;
+  }
+
+  .charSpan {
+    color: #000000 !important;
+  }
+
+  .devicesStage {
+    position: relative;
+    inset: auto;
+    opacity: 1 !important;
+    padding: 4vh 0;
+  }
+
+  .devicesGrid {
+    grid-template-columns: 1fr;
+    gap: 4vh;
+    height: auto;
+  }
+
+  .deviceCard {
+    height: 60vh;
+    min-height: 400px;
+    padding: 4vw;
+  }
+
+  .cardContent {
+    max-width: 100%;
+  }
+
+  .cardTitle {
+    font-size: 6vw;
+  }
+
+  .cardDesc {
+    font-size: 4.5vw;
+    margin-left: 0;
+  }
+}
+
