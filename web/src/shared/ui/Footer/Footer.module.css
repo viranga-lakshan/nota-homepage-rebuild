@@ -1,38 +1,18 @@
-.footerRevealWrapper {
-  position: relative;
-  width: 100%;
-  min-height: 380px;
-  height: 44vh;
-  background: transparent;
-  z-index: 1;
-}
-
-.footerStickyInner {
+.footer {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  min-height: 380px;
-  height: 44vh;
+  height: clamp(380px, 44vh, 480px);
   z-index: 1;
   background: #000000;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  pointer-events: auto;
-}
-
-.footerContent {
-  position: relative;
-  width: 100%;
-  height: 100%;
   box-sizing: border-box;
   padding: 3.5rem 6vw 2.2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: #000000;
   color: #ffffff;
+  pointer-events: auto;
 }
 
 /* Top content row */
@@ -174,54 +154,13 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* Bottom Badge (Made in Taptop) */
-.bottomBadge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.75rem 0;
-  background: #0a0a0a;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.bottomBadge a {
-  color: inherit;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  transition: color 0.2s ease;
-}
-
-.bottomBadge a:hover {
-  color: #ffffff;
-}
-
-.badgeLogo {
-  width: 14px;
-  height: 14px;
-  opacity: 0.6;
-}
-
 /* Responsive adjustments */
 @media (max-width: 991px) {
-  .footerRevealWrapper {
-    height: auto;
-    min-height: 480px;
-  }
-
-  .footerStickyInner {
+  .footer {
     position: relative;
     height: auto;
-    min-height: 480px;
-  }
-
-  .footerContent {
+    min-height: auto;
     padding: 8vw 6vw 6vw;
-    height: auto;
   }
 
   .contentTop {

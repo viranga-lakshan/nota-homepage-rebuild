@@ -2,6 +2,7 @@ import { getFooter, getHomepage, getNavigation } from "@/lib/cms/client";
 import { Header } from "@/shared/ui/Header/Header";
 import { Footer } from "@/shared/ui/Footer/Footer";
 import { resolveSection } from "@/sections/registry";
+import styles from "./page.module.css";
 
 /**
  * Fetches Homepage, Navigation and Footer concurrently and renders whatever
@@ -20,7 +21,7 @@ export default async function Home() {
     <>
       {navigation && <Header navigation={navigation} footer={footer} />}
 
-      <main>
+      <main className={styles.mainWrapper}>
         {homepage ? (
           homepage.sections.map((section, index) => {
             const Component = resolveSection(section);
