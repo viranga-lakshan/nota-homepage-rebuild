@@ -95,13 +95,13 @@
    reference at the same font-size: these two lines are meant to sit
    tight, not loose. */
 .headlineLine1 {
-  font-size: calc(var(--text-headline-1) * 0.94);
+  font-size: var(--text-headline-1);
   line-height: 100%;
   letter-spacing: -0.04em;
 }
 
 .headlineLine2 {
-  font-size: calc(var(--text-headline-1) * 0.94);
+  font-size: var(--text-headline-1);
   line-height: 95%;
   letter-spacing: -0.04em;
 }
