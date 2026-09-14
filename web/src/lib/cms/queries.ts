@@ -69,6 +69,8 @@ const NAVIGATION_POPULATE = {
 
 const FOOTER_POPULATE = {
   nav_links: true,
+  credit_links: true,
+  made_in_logo: true,
 } as const;
 
 function stringify(populate: unknown): string {
