@@ -45,7 +45,10 @@
   flex: 1;
   display: flex;
   justify-content: flex-start;
+  align-items: flex-start;
+  align-self: flex-start;
   padding-left: 3.5vw;
+  padding-top: 0.35vw;
 }
 
 .navList {
@@ -53,7 +56,6 @@
   align-items: center;
   gap: 2.2vw;
   list-style: none;
-  transform: translateY(-0.75vw);
 }
 
 .navList a {
