@@ -51,8 +51,9 @@ export interface ColorVariant {
 }
 
 export interface DetailCard {
-  label: string;
-  image: Image;
+  label?: string | null;
+  image?: Image | null;
+  video?: Video | null;
 }
 
 export interface HeroSection {

@@ -3,28 +3,35 @@
   "info": {
     "displayName": "Detail Card",
     "icon": "picture",
-    "description": "One close-up product photo with a label pill, used in the details grid."
+    "description": "One close-up product photo or video with an optional label pill, used in the details grid."
   },
   "options": {},
   "attributes": {
     "label": {
       "type": "string",
-      "required": true,
+      "required": false,
       "maxLength": 80,
-      "description": "Text of the label pill on the card, for example \"Aluminum body\"."
+      "description": "Text of the label pill on the card, for example \"Durable metal nib, low-profile control button\"."
     },
     "image": {
       "type": "media",
       "multiple": false,
-      "required": true,
+      "required": false,
       "allowedTypes": ["images"],
-      "description": "Close-up photo for this card."
+      "description": "Close-up photo for this card. Optional if video is provided."
     },
     "image_alt": {
       "type": "string",
-      "required": true,
+      "required": false,
       "maxLength": 150,
       "description": "Describes the photo for screen readers and when the image fails to load."
+    },
+    "video": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["videos"],
+      "description": "Video clip for this card. Optional if image is provided."
     }
   }
 }

@@ -68,9 +68,10 @@ export interface ColorVariantDto {
 }
 
 export interface DetailCardDto {
-  label: string;
-  image: StrapiMediaDto;
-  image_alt: string;
+  label?: string | null;
+  image?: StrapiMediaDto | null;
+  image_alt?: string | null;
+  video?: StrapiMediaDto | null;
 }
 
 export interface HeroSectionDto {
