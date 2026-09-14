@@ -37,8 +37,7 @@
   .insideBox {
     height: 1200vh;
     margin-top: -100vh;
-    position: sticky;
-    top: -1100vh;
+    position: relative;
   }
 
   .camera {

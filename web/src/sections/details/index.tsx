@@ -22,7 +22,7 @@ const DEFAULT_CARDS: DetailCard[] = [
   {
     label: "Refined colors. Personal expression",
     image: {
-      url: "/images/detail_2.jpg",
+      url: "/images/detail_2.png",
       alt: "Refined colors. Personal expression",
       width: 800,
       height: 1200,
