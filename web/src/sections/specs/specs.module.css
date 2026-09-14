@@ -133,17 +133,14 @@
   align-items: center;
   color: var(--color-black);
   font-family: var(--font-serif);
-  font-size: clamp(3rem, 7.8vw, 8.5rem);
+  font-size: var(--text-headline-1);
   font-weight: 400;
-  line-height: 95%;
+  line-height: 100%;
   letter-spacing: -0.04em;
 }
 
 .eyebrow {
-  color: rgba(0, 0, 0, 0.45);
-  font-style: italic;
-  font-size: 0.85em;
-  margin-bottom: -0.05em;
+  color: var(--color-gray);
 }
 
 /* Absolutely positioned so it sits behind the cards: the
