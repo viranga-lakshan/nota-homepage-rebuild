@@ -180,7 +180,7 @@
 .card {
   display: flex;
   flex-direction: column;
-  row-gap: 12px;
+  row-gap: 3px;
 }
 
 /* Frosted glass cards matching reference photo */
