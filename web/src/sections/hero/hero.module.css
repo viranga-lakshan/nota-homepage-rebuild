@@ -79,8 +79,8 @@
    anymore — see index.tsx for why. */
 .headline {
   position: absolute;
-  bottom: 2.8vw;
-  left: 2.5vw;
+  bottom: 1.8vw;
+  left: 1.6vw;
   z-index: 2;
   display: flex;
   flex-direction: column;
