@@ -1,6 +1,13 @@
 .mainWrapper {
   position: relative;
-  z-index: 2;
+  z-index: 200;
   background: #000000;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+  margin-bottom: clamp(360px, 40vh, 460px);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 1);
+}
+
+@media (max-width: 991px) {
+  .mainWrapper {
+    margin-bottom: 0;
+  }
 }
