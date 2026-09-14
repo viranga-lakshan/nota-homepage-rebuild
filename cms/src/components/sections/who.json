@@ -38,7 +38,7 @@
     "video": {
       "type": "media",
       "multiple": false,
-      "required": true,
+      "required": false,
       "allowedTypes": ["videos"],
       "description": "Video that plays silently on a loop at the bottom of this section. MP4, 1920px wide."
     }
