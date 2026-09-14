@@ -203,7 +203,7 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             if (stem) {
               timeline.fromTo(
                 stem,
-                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
+                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
                 {
                   scaleX: 120,
                   ease: "power1.inOut",
@@ -216,9 +216,9 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             if (bodyUpper) {
               timeline.fromTo(
                 bodyUpper,
-                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
+                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
                 {
-                  scaleX: 38,
+                  scaleX: 36,
                   ease: "power1.inOut",
                   duration: expandDuration,
                 },
@@ -229,9 +229,9 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             if (bodyLower) {
               timeline.fromTo(
                 bodyLower,
-                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
+                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
                 {
-                  scaleX: 16,
+                  scaleX: 15,
                   ease: "power1.inOut",
                   duration: expandDuration,
                 },
@@ -242,7 +242,7 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             if (base) {
               timeline.fromTo(
                 base,
-                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
+                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
                 {
                   scaleX: 7,
                   ease: "power1.inOut",
@@ -298,8 +298,8 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             if (stem) {
               mobileTimeline.fromTo(
                 stem,
-                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
-                { scaleX: 40, ease: "power1.inOut", duration: 85 },
+                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
+                { scaleX: 45, ease: "power1.inOut", duration: 85 },
                 15
               );
             }
@@ -307,8 +307,8 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             if (bodyUpper) {
               mobileTimeline.fromTo(
                 bodyUpper,
-                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
-                { scaleX: 10, ease: "power1.inOut", duration: 85 },
+                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
+                { scaleX: 14, ease: "power1.inOut", duration: 85 },
                 15
               );
             }
@@ -316,8 +316,8 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             if (bodyLower) {
               mobileTimeline.fromTo(
                 bodyLower,
-                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
-                { scaleX: 3.5, ease: "power1.inOut", duration: 85 },
+                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
+                { scaleX: 6, ease: "power1.inOut", duration: 85 },
                 15
               );
             }
@@ -325,8 +325,8 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             if (base) {
               mobileTimeline.fromTo(
                 base,
-                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
-                { scaleX: 2, ease: "power1.inOut", duration: 85 },
+                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
+                { scaleX: 3, ease: "power1.inOut", duration: 85 },
                 15
               );
             }
