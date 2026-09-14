@@ -98,6 +98,17 @@ export async function getNavigation(): Promise<Navigation | null> {
 
 export async function getFooter(): Promise<Footer | null> {
   const dto = await fetchSingle<FooterDto>("/api/footer", footerQuery, CACHE_TAGS.footer);
+  if (!dto) {
+    // Retry with simple query in case new relations are not yet populated/deployed in Strapi
+    const fallbackDto = await fetchSingle<FooterDto>(
+      "/api/footer",
+      "populate=nav_links",
+      CACHE_TAGS.footer
+    );
+    if (fallbackDto) {
+      return toFooter(fallbackDto);
+    }
+  }
   return dto ? toFooter(dto) : null;
 }
 

@@ -1,0 +1,238 @@
+.footerRevealContainer {
+  position: relative;
+  width: 100%;
+  min-height: 40vh;
+  background: #000000;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  z-index: 10;
+}
+
+.footerContent {
+  position: relative;
+  width: 100%;
+  min-height: 40vh;
+  box-sizing: border-box;
+  padding: 4.5vw 6vw 2.5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #000000;
+  color: #ffffff;
+}
+
+/* Top content row */
+.contentTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 6vw;
+  width: 100%;
+}
+
+.descriptionWrapper {
+  max-width: 32vw;
+}
+
+.description {
+  font-family: inherit;
+  font-size: clamp(1.1rem, 1.45vw, 1.6rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Right side info: Navigation & Year */
+.infoWrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 7vw;
+}
+
+.menuColumn,
+.yearColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.columnTitle {
+  font-size: clamp(0.75rem, 0.85vw, 0.95rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 0 1.2vw 0;
+  text-transform: none;
+}
+
+.navLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5vw;
+}
+
+.navLink {
+  font-size: clamp(0.85rem, 0.95vw, 1.05rem);
+  font-weight: 400;
+  color: #ffffff;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.navLink:hover {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.yearText {
+  font-size: clamp(0.85rem, 0.95vw, 1.05rem);
+  font-weight: 400;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Bottom content row */
+.contentBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 4vw;
+  padding-top: 1.5vw;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: clamp(0.75rem, 0.82vw, 0.92rem);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.copyright {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.teamWrapper {
+  display: flex;
+  align-items: center;
+  gap: 5vw;
+}
+
+.teamGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.6vw;
+}
+
+.teamIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.teamIconImg {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.designTeam {
+  display: flex;
+  align-items: center;
+  gap: 0.4vw;
+}
+
+.creditLink {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.creditLink:hover {
+  color: #ffffff;
+}
+
+.creditText {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Bottom Badge (Made in Taptop) */
+.bottomBadge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  background: #0a0a0a;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.bottomBadge a {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: color 0.2s ease;
+}
+
+.bottomBadge a:hover {
+  color: #ffffff;
+}
+
+.badgeLogo {
+  width: 14px;
+  height: 14px;
+  opacity: 0.6;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .footerRevealContainer {
+    min-height: auto;
+  }
+
+  .footerContent {
+    padding: 8vw 6vw 6vw;
+    min-height: auto;
+  }
+
+  .contentTop {
+    flex-direction: column;
+    gap: 8vw;
+  }
+
+  .descriptionWrapper {
+    max-width: 100%;
+  }
+
+  .description {
+    font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+  }
+
+  .infoWrapper {
+    width: 100%;
+    justify-content: space-between;
+    gap: 4vw;
+  }
+
+  .contentBottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4vw;
+    margin-top: 8vw;
+    padding-top: 6vw;
+  }
+
+  .teamWrapper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2.5vw;
+  }
+}

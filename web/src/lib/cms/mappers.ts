@@ -81,11 +81,17 @@ function toVideo(media: StrapiMediaDto | undefined | null): Video {
 }
 
 function toNavItem(dto: NavItemDto): NavItem {
-  return { label: dto.label, href: dto.href };
+  return {
+    label: dto.label ? dto.label.trim() : "",
+    href: dto.href ? dto.href.trim() : "",
+  };
 }
 
 function toCreditLink(dto: CreditLinkDto): CreditLink {
-  return { label: dto.label, href: dto.href ?? null };
+  return {
+    label: dto.label ? dto.label.trim() : "",
+    href: dto.href ? dto.href.trim() : null,
+  };
 }
 
 function toSpecGroup(dto: SpecGroupDto): SpecGroup {
@@ -249,7 +255,7 @@ export function toHomepage(dto: HomepageDto): Homepage {
 export function toNavigation(dto: NavigationDto): Navigation {
   return {
     logoText: dto.logo_text,
-    items: dto.items.map(toNavItem),
+    items: (dto.items || []).map(toNavItem),
     orderButtonLabel: dto.order_button_label,
     orderProductName: dto.order_product_name,
     orderPrice: dto.order_price,
@@ -257,14 +263,35 @@ export function toNavigation(dto: NavigationDto): Navigation {
   };
 }
 
+export const DEFAULT_FOOTER: Footer = {
+  description:
+    "NŌTA creates tools that respect the way people think and write. Natural handwriting, quietly connected to digital structure.",
+  credit: "Designed by Alice & UPROCK Studio",
+  copyright: "@2026 Nōta Team",
+  year: "2026",
+  navLinks: [
+    { label: "Specifications", href: "#specifications" },
+    { label: "Who it's for", href: "#who-its-for" },
+    { label: "About", href: "#about" },
+    { label: "Inside the box", href: "#inside-the-box" },
+  ],
+  creditLinks: [
+    { label: "Made in Taptop", href: "https://taptop.pro/" },
+    { label: "Builded by NōtaTeam", href: null },
+    { label: "Designed by Alice", href: "https://www.behance.net/alicem" },
+    { label: "& UPROCK Studio", href: "https://www.uprock.ru/" },
+  ],
+  madeInLogo: null,
+};
+
 export function toFooter(dto: FooterDto): Footer {
   return {
-    description: dto.description,
-    credit: dto.credit,
-    copyright: dto.copyright,
+    description: dto.description || DEFAULT_FOOTER.description,
+    credit: dto.credit || DEFAULT_FOOTER.credit,
+    copyright: dto.copyright || DEFAULT_FOOTER.copyright,
     year: dto.year || "2026",
-    navLinks: dto.nav_links.map(toNavItem),
-    creditLinks: (dto.credit_links ?? []).map(toCreditLink),
+    navLinks: dto.nav_links && Array.isArray(dto.nav_links) ? dto.nav_links.map(toNavItem) : DEFAULT_FOOTER.navLinks,
+    creditLinks: dto.credit_links && Array.isArray(dto.credit_links) ? dto.credit_links.map(toCreditLink) : DEFAULT_FOOTER.creditLinks,
     madeInLogo: dto.made_in_logo ? toImage(dto.made_in_logo, "Made in Taptop") : null,
   };
 }
