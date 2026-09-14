@@ -143,6 +143,25 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
           }
 
           if (isDesktop) {
+            // Explicit initial states to prevent any immediateRender flash on first page load
+            if (transitionOverlay) gsap.set(transitionOverlay, { opacity: 0 });
+            if (stem) gsap.set(stem, { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" });
+            if (bodyUpper) gsap.set(bodyUpper, { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" });
+            if (bodyLower) gsap.set(bodyLower, { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" });
+            if (base) gsap.set(base, { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" });
+
+            if (textLayer) gsap.set(textLayer, { opacity: 0, y: "0vw" });
+            if (manifestoWords.length > 0) gsap.set(manifestoWords, { color: "rgba(255, 255, 255, 0.4)" });
+            if (divider) gsap.set(divider, { opacity: 0 });
+            if (leftLabel) gsap.set(leftLabel, { opacity: 0 });
+            if (rightCol) gsap.set(rightCol, { x: "8vw", opacity: 0 });
+            if (introWords.length > 0) gsap.set(introWords, { color: "rgba(255, 255, 255, 0.4)" });
+            if (contentWrapper) gsap.set(contentWrapper, { y: "0vw" });
+            if (personaTitles.length > 0) gsap.set(personaTitles, { x: "12vw", opacity: 0 });
+            if (personaBodies.length > 0) gsap.set(personaBodies, { x: "12vw", opacity: 0 });
+            if (videoStage) gsap.set(videoStage, { opacity: 0 });
+            if (videoWrapper) gsap.set(videoWrapper, { opacity: 0, x: "15vw", width: "50vw", height: "34vh", scale: 1 });
+
             const timeline = gsap.timeline({
               scrollTrigger: {
                 trigger: section,
@@ -169,11 +188,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               },
             });
 
-            // 0. Transition Overlay fade in
+            // 0. Transition Overlay fade in (0 -> 5%)
             if (transitionOverlay) {
-              timeline.fromTo(
+              timeline.to(
                 transitionOverlay,
-                { opacity: 0 },
                 {
                   opacity: 1,
                   ease: "power1.inOut",
@@ -183,46 +201,25 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 0.1 Four tiers expand to full black
+            // 0.1 Four tiers expand to full black (5 -> 16%)
             const expandDuration = EXPAND_END - EXPAND_START;
             if (stem) {
-              timeline.fromTo(
-                stem,
-                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
-                { scaleX: 120, ease: "power1.inOut", duration: expandDuration },
-                EXPAND_START
-              );
+              timeline.to(stem, { scaleX: 120, ease: "power1.inOut", duration: expandDuration }, EXPAND_START);
             }
             if (bodyUpper) {
-              timeline.fromTo(
-                bodyUpper,
-                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
-                { scaleX: 36, ease: "power1.inOut", duration: expandDuration },
-                EXPAND_START
-              );
+              timeline.to(bodyUpper, { scaleX: 36, ease: "power1.inOut", duration: expandDuration }, EXPAND_START);
             }
             if (bodyLower) {
-              timeline.fromTo(
-                bodyLower,
-                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
-                { scaleX: 15, ease: "power1.inOut", duration: expandDuration },
-                EXPAND_START
-              );
+              timeline.to(bodyLower, { scaleX: 15, ease: "power1.inOut", duration: expandDuration }, EXPAND_START);
             }
             if (base) {
-              timeline.fromTo(
-                base,
-                { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" },
-                { scaleX: 7, ease: "power1.inOut", duration: expandDuration },
-                EXPAND_START
-              );
+              timeline.to(base, { scaleX: 7, ease: "power1.inOut", duration: expandDuration }, EXPAND_START);
             }
 
-            // 1. Text Layer (Manifesto) fades in directly on top of solid black screen
+            // 1. Text Layer (Manifesto) fades in directly on top of solid black screen (16 -> 20%)
             if (textLayer) {
-              timeline.fromTo(
+              timeline.to(
                 textLayer,
-                { opacity: 0 },
                 {
                   opacity: 1,
                   ease: "power1.inOut",
@@ -232,26 +229,24 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 2. Manifesto words turn from gray to white word-by-word
+            // 2. Manifesto words turn from gray to white word-by-word (20 -> 36%)
             if (manifestoWords.length > 0) {
               const totalManifestoDuration = MANIFESTO_WORDS_END - MANIFESTO_WORDS_START;
               const step = totalManifestoDuration / manifestoWords.length;
               manifestoWords.forEach((word, index) => {
                 const start = MANIFESTO_WORDS_START + index * step;
-                timeline.fromTo(
+                timeline.to(
                   word,
-                  { color: "rgba(255, 255, 255, 0.4)" },
                   { color: "#ffffff", ease: "none", duration: step * 1.5 },
                   start
                 );
               });
             }
 
-            // 3. Horizontal divider appearance
+            // 3. Horizontal divider appearance (36 -> 40%)
             if (divider) {
-              timeline.fromTo(
+              timeline.to(
                 divider,
-                { opacity: 0 },
                 {
                   opacity: 1,
                   ease: "power1.inOut",
@@ -261,11 +256,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 4. Left label appearance
+            // 4. Left label appearance (38 -> 42%)
             if (leftLabel) {
-              timeline.fromTo(
+              timeline.to(
                 leftLabel,
-                { opacity: 0 },
                 {
                   opacity: 1,
                   ease: "power1.inOut",
@@ -275,11 +269,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 5. Right column entry from right
+            // 5. Right column entry from right (42 -> 50%)
             if (rightCol) {
-              timeline.fromTo(
+              timeline.to(
                 rightCol,
-                { x: "8vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -290,16 +283,15 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 6. Right intro paragraph word-by-word color reveal (gray -> white)
+            // 6. Right intro paragraph word-by-word color reveal (gray -> white) (50 -> 62%)
             if (introWords.length > 0) {
               const totalIntroDuration = INTRO_WORDS_END - INTRO_WORDS_START;
               const step = totalIntroDuration / introWords.length;
 
               introWords.forEach((word, index) => {
                 const start = INTRO_WORDS_START + index * step;
-                timeline.fromTo(
+                timeline.to(
                   word,
-                  { color: "rgba(255, 255, 255, 0.4)" },
                   {
                     color: "#ffffff",
                     ease: "none",
@@ -310,11 +302,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               });
             }
 
-            // 7. Smooth upward shift of the whole content wrapper
+            // 7. Smooth upward shift of the whole content wrapper (62 -> 80%)
             if (contentWrapper) {
-              timeline.fromTo(
+              timeline.to(
                 contentWrapper,
-                { y: "0vw" },
                 {
                   y: "-13.5vw",
                   ease: "power1.inOut",
@@ -324,11 +315,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 8. Persona 1: Students & Learners
+            // 8. Persona 1: Students & Learners (62 -> 70%)
             if (personaTitles[0]) {
-              timeline.fromTo(
+              timeline.to(
                 personaTitles[0],
-                { x: "12vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -339,9 +329,8 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
             if (personaBodies[0]) {
-              timeline.fromTo(
+              timeline.to(
                 personaBodies[0],
-                { x: "12vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -352,11 +341,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 9. Persona 2: Creators, Designers & Architects
+            // 9. Persona 2: Creators, Designers & Architects (70 -> 78%)
             if (personaTitles[1]) {
-              timeline.fromTo(
+              timeline.to(
                 personaTitles[1],
-                { x: "12vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -367,9 +355,8 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
             if (personaBodies[1]) {
-              timeline.fromTo(
+              timeline.to(
                 personaBodies[1],
-                { x: "12vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -380,11 +367,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 10. Persona 3: Managers & Product Thinkers
+            // 10. Persona 3: Managers & Product Thinkers (78 -> 86%)
             if (personaTitles[2]) {
-              timeline.fromTo(
+              timeline.to(
                 personaTitles[2],
-                { x: "12vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -395,9 +381,8 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
             if (personaBodies[2]) {
-              timeline.fromTo(
+              timeline.to(
                 personaBodies[2],
-                { x: "12vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -408,11 +393,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 11. Video stage entrance
+            // 11. Video stage entrance (82 -> 88%)
             if (videoStage) {
-              timeline.fromTo(
+              timeline.to(
                 videoStage,
-                { opacity: 0 },
                 {
                   opacity: 1,
                   ease: "power1.inOut",
@@ -423,15 +407,8 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
             }
 
             if (videoWrapper) {
-              timeline.fromTo(
+              timeline.to(
                 videoWrapper,
-                {
-                  opacity: 0,
-                  x: "15vw",
-                  width: "50vw",
-                  height: "34vh",
-                  scale: 1,
-                },
                 {
                   opacity: 1,
                   x: "0vw",
@@ -444,7 +421,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 VIDEO_STAGE_ENTER_START
               );
 
-              // 12. Video expands to full framed stage as text layer moves off-screen
+              // 12. Video expands to full framed stage as text layer moves off-screen (88 -> 95%)
               timeline.to(
                 videoWrapper,
                 {
@@ -457,7 +434,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 VIDEO_EXPAND_START
               );
 
-              // 13. Video pushes back into the background
+              // 13. Video pushes back into the background (97 -> 100%)
               timeline.to(
                 videoWrapper,
                 {
@@ -470,11 +447,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 14. Text layer exit
+            // 14. Text layer exit (88 -> 94%)
             if (textLayer) {
-              timeline.fromTo(
+              timeline.to(
                 textLayer,
-                { opacity: 1, y: "0vw" },
                 {
                   opacity: 0,
                   y: "-15vw",
