@@ -160,9 +160,9 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 {
                   opacity: 1,
                   ease: "power1.inOut",
-                  duration: 5,
+                  duration: 4,
                 },
-                2
+                0
               );
             }
 
