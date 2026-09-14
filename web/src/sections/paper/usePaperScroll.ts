@@ -158,8 +158,8 @@ export function usePaperScroll({ sectionRef }: UsePaperScrollOptions) {
 
           const slideTransitions = [
             { from: 0, to: 1, start: 44, duration: 5 },
-            { from: 1, to: 2, start: 59, duration: 5 },
-            { from: 2, to: 3, start: 74, duration: 5 },
+            { from: 1, to: 2, start: 58, duration: 5 },
+            { from: 2, to: 3, start: 72, duration: 5 },
           ];
 
           slideTransitions.forEach(({ from, to, start, duration }) => {
@@ -220,9 +220,9 @@ export function usePaperScroll({ sectionRef }: UsePaperScrollOptions) {
           });
 
           // -------------------------------------------------------------------
-          // 6. Outro Sequence on Slide 4 (88 -> 100)
+          // 6. Outro Sequence on Slide 4 (82 -> 100)
           // -------------------------------------------------------------------
-          // A) First: The 4 progress indicator bars fade out (88 -> 93)
+          // A) First: The 4 progress indicator bars fade out (82 -> 87)
           if (indicatorsWrap) {
             timeline.to(
               indicatorsWrap,
@@ -232,11 +232,11 @@ export function usePaperScroll({ sectionRef }: UsePaperScrollOptions) {
                 ease: "power1.inOut",
                 duration: 5,
               },
-              88
+              82
             );
           }
 
-          // B) Second: Top-left headline and bottom-right callout card fade out (91 -> 97)
+          // B) Second: Top-left headline and bottom-right callout card fade out (85 -> 91)
           const lastSlide = slides[slides.length - 1];
           if (lastSlide) {
             const lastHeadline = lastSlide.querySelector<HTMLElement>(
@@ -255,7 +255,7 @@ export function usePaperScroll({ sectionRef }: UsePaperScrollOptions) {
                   ease: "power1.inOut",
                   duration: 6,
                 },
-                91
+                85
               );
             }
 
@@ -268,12 +268,23 @@ export function usePaperScroll({ sectionRef }: UsePaperScrollOptions) {
                   ease: "power1.inOut",
                   duration: 6,
                 },
-                91
+                85
               );
             }
-          }
 
-          // C) Clean standalone image remains in full view on screen (97 -> 100)
+            // C) Clean standalone image remains in full view on screen (91 -> 95)
+
+            // D) Standalone image fades out into pure pitch black (95 -> 100)
+            timeline.to(
+              lastSlide,
+              {
+                opacity: 0,
+                ease: "power1.inOut",
+                duration: 5,
+              },
+              95
+            );
+          }
 
           return () => {
             timeline.scrollTrigger?.kill();

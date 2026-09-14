@@ -50,7 +50,7 @@ const HOMEPAGE_POPULATE = {
       },
       "sections.details": {
         populate: {
-          cards: { populate: ["image"] },
+          cards: { populate: ["image", "video"] },
           video: true,
         },
       },

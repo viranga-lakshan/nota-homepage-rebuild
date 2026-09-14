@@ -114,8 +114,9 @@ function toColorVariant(dto: ColorVariantDto): ColorVariant {
 
 function toDetailCard(dto: DetailCardDto): DetailCard {
   return {
-    label: dto.label,
-    image: toImage(dto.image, dto.image_alt),
+    label: dto.label ?? null,
+    image: dto.image ? toImage(dto.image, dto.image_alt ?? "") : null,
+    video: dto.video ? toVideo(dto.video) : null,
   };
 }
 
