@@ -24,19 +24,20 @@ import { gsap } from "@/lib/animation/gsap.client";
  *                        (scaleX increasing), maintaining their distinct stepped
  *                        proportions at all times until solid black fills the viewport.
  */
-const CONTENT_FADE_END = 5;
-const HEADING_FADE_START = 2;
-const HEADING_FADE_END = 8;
-const HEADING_RISE_START = 8;
-const HEADING_RISE_END = 35;
-const HEADING_OFFSET = "32.68vh";
+const CONTENT_FADE_END = 8;
 
-const CARD_RISE_START = 15;
-const CARD_RISE_END = [32, 40, 48];
+const HEADING_FADE_START = 0;
+const HEADING_FADE_END = 18;
+const HEADING_RISE_START = 0;
+const HEADING_RISE_END = 22;
+const HEADING_OFFSET = "22vh";
 
-const PEN_RISE_START = 15;
-const PEN_RISE_END = 45;
-const PEN_OFFSET = 130;
+const PEN_RISE_START = 5;
+const PEN_RISE_END = 28;
+const PEN_OFFSET = 120;
+
+const CARD_RISE_START = 18;
+const CARD_RISE_END = [32, 39, 46];
 
 /* Outro Two-Phase Transition Markers */
 const REVEAL_START = 54;
