@@ -95,6 +95,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
             return;
           }
 
+          const manifestoBlock = section.querySelector<HTMLElement>("[data-manifesto-block]");
           const manifestoWords = Array.from(
             section.querySelectorAll<HTMLElement>("[data-manifesto-word]")
           );
@@ -150,6 +151,20 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 },
               },
             });
+
+            // 0. Top manifesto block in-place appearance on solid black
+            if (manifestoBlock) {
+              timeline.fromTo(
+                manifestoBlock,
+                { opacity: 0 },
+                {
+                  opacity: 1,
+                  ease: "power1.inOut",
+                  duration: 5,
+                },
+                2
+              );
+            }
 
             // 1. Top manifesto word-by-word color reveal (gray -> white)
             if (manifestoWords.length > 0) {
@@ -425,6 +440,15 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 scrub: true,
               },
             });
+
+            if (manifestoBlock) {
+              mobileTimeline.fromTo(
+                manifestoBlock,
+                { opacity: 0 },
+                { opacity: 1, ease: "power1.inOut", duration: 5 },
+                0
+              );
+            }
 
             if (manifestoWords.length > 0) {
               const step = 30 / manifestoWords.length;

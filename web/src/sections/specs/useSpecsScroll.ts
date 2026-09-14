@@ -39,18 +39,11 @@ const PEN_OFFSET = 120;
 const CARD_RISE_START = 18;
 const CARD_RISE_END = [32, 39, 46];
 
-/* Outro Two-Phase Transition Markers */
-const REVEAL_START = 54;
-const STEM_REVEAL_END = 60;
-const BODY_UP_REVEAL_START = 58;
-const BODY_UP_REVEAL_END = 64;
-const BODY_LOW_REVEAL_START = 61;
-const BODY_LOW_REVEAL_END = 66;
-const BASE_REVEAL_START = 64;
-const BASE_REVEAL_END = 68;
-
-const HORIZONTAL_EXPAND_START = 68;
-const HORIZONTAL_EXPAND_END = 100;
+/* Outro Transition Markers */
+const OUTRO_FADE_START = 52;
+const OUTRO_FADE_END = 56;
+const HORIZONTAL_EXPAND_START = 56;
+const HORIZONTAL_EXPAND_END = 80;
 
 interface UseSpecsScrollOptions {
   sectionRef: RefObject<HTMLElement | null>;
@@ -82,6 +75,9 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             return;
           }
 
+          const transitionOverlay = section.querySelector<HTMLElement>(
+            "[data-specs-transition]"
+          );
           const stem = section.querySelector<HTMLElement>("[data-specs-tier='stem']");
           const bodyUpper = section.querySelector<HTMLElement>("[data-specs-tier='bodyUpper']");
           const bodyLower = section.querySelector<HTMLElement>("[data-specs-tier='bodyLower']");
@@ -102,20 +98,16 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                 end: "bottom bottom",
                 scrub: true,
                 onLeave: () => {
-                  const trans = section.querySelector<HTMLElement>("[data-specs-transition]");
-                  if (trans) trans.style.display = "none";
+                  if (transitionOverlay) transitionOverlay.style.display = "none";
                 },
                 onEnterBack: () => {
-                  const trans = section.querySelector<HTMLElement>("[data-specs-transition]");
-                  if (trans) trans.style.display = "";
+                  if (transitionOverlay) transitionOverlay.style.display = "";
                 },
                 onLeaveBack: () => {
-                  const trans = section.querySelector<HTMLElement>("[data-specs-transition]");
-                  if (trans) trans.style.display = "none";
+                  if (transitionOverlay) transitionOverlay.style.display = "none";
                 },
                 onEnter: () => {
-                  const trans = section.querySelector<HTMLElement>("[data-specs-transition]");
-                  if (trans) trans.style.display = "";
+                  if (transitionOverlay) transitionOverlay.style.display = "";
                 },
               },
             });
@@ -186,73 +178,34 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             }
 
             // -------------------------------------------------------------
-            // 5. Outro Phase 1: Reveal 4 parts from top to bottom in center
+            // 5. Outro: Entire stepped silhouette appears simultaneously in center
             // -------------------------------------------------------------
-            if (stem) {
+            if (transitionOverlay) {
               timeline.fromTo(
-                stem,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
+                transitionOverlay,
+                { opacity: 0 },
                 {
-                  scaleY: 1,
+                  opacity: 1,
                   ease: "power1.inOut",
-                  duration: STEM_REVEAL_END - REVEAL_START,
+                  duration: OUTRO_FADE_END - OUTRO_FADE_START,
                 },
-                REVEAL_START
-              );
-            }
-
-            if (bodyUpper) {
-              timeline.fromTo(
-                bodyUpper,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                {
-                  scaleY: 1,
-                  ease: "power1.inOut",
-                  duration: BODY_UP_REVEAL_END - BODY_UP_REVEAL_START,
-                },
-                BODY_UP_REVEAL_START
-              );
-            }
-
-            if (bodyLower) {
-              timeline.fromTo(
-                bodyLower,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                {
-                  scaleY: 1,
-                  ease: "power1.inOut",
-                  duration: BODY_LOW_REVEAL_END - BODY_LOW_REVEAL_START,
-                },
-                BODY_LOW_REVEAL_START
-              );
-            }
-
-            if (base) {
-              timeline.fromTo(
-                base,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                {
-                  scaleY: 1,
-                  ease: "power1.inOut",
-                  duration: BASE_REVEAL_END - BASE_REVEAL_START,
-                },
-                BASE_REVEAL_START
+                OUTRO_FADE_START
               );
             }
 
             // -------------------------------------------------------------
-            // 6. Outro Phase 2: Pure Centered Horizontal Expansion (scaleY FIXED)
-            //    All 4 original parts expand horizontally together while
-            //    retaining their relative stepped geometry at every point.
+            // 6. Outro: Pure Centered Horizontal Expansion (scaleY fixed)
+            //    All 4 tiers expand horizontally simultaneously while
+            //    maintaining the stepped pyramid proportions until 100% black.
             // -------------------------------------------------------------
             const expandDuration = HORIZONTAL_EXPAND_END - HORIZONTAL_EXPAND_START;
 
             if (stem) {
               timeline.fromTo(
                 stem,
-                { scaleX: 1 },
+                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
                 {
-                  scaleX: 45,
+                  scaleX: 100,
                   ease: "power1.inOut",
                   duration: expandDuration,
                 },
@@ -263,9 +216,9 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             if (bodyUpper) {
               timeline.fromTo(
                 bodyUpper,
-                { scaleX: 1 },
+                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
                 {
-                  scaleX: 8,
+                  scaleX: 25,
                   ease: "power1.inOut",
                   duration: expandDuration,
                 },
@@ -276,9 +229,9 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             if (bodyLower) {
               timeline.fromTo(
                 bodyLower,
-                { scaleX: 1 },
+                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
                 {
-                  scaleX: 4,
+                  scaleX: 10,
                   ease: "power1.inOut",
                   duration: expandDuration,
                 },
@@ -289,9 +242,9 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
             if (base) {
               timeline.fromTo(
                 base,
-                { scaleX: 1 },
+                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
                 {
-                  scaleX: 2.5,
+                  scaleX: 4,
                   ease: "power1.inOut",
                   duration: expandDuration,
                 },
@@ -307,10 +260,6 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
 
           // Mobile scrubbed transition pin
           if (isMobile) {
-            const transitionOverlay = section.querySelector<HTMLElement>(
-              "[data-specs-transition]"
-            );
-
             if (!transitionOverlay) {
               return;
             }
@@ -337,77 +286,48 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
               },
             });
 
-            // Mobile Phase 1: Reveal 4 parts
+            // Mobile: Fade in entire stepped silhouette
+            mobileTimeline.fromTo(
+              transitionOverlay,
+              { opacity: 0 },
+              { opacity: 1, ease: "power1.inOut", duration: 15 },
+              0
+            );
+
+            // Mobile: Symmetrical horizontal expansion (scaleY fixed)
             if (stem) {
               mobileTimeline.fromTo(
                 stem,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                { scaleY: 1, ease: "power1.inOut", duration: 15 },
-                0
+                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
+                { scaleX: 40, ease: "power1.inOut", duration: 85 },
+                15
               );
             }
 
             if (bodyUpper) {
               mobileTimeline.fromTo(
                 bodyUpper,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                { scaleY: 1, ease: "power1.inOut", duration: 15 },
-                8
+                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
+                { scaleX: 10, ease: "power1.inOut", duration: 85 },
+                15
               );
             }
 
             if (bodyLower) {
               mobileTimeline.fromTo(
                 bodyLower,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                { scaleY: 1, ease: "power1.inOut", duration: 15 },
-                16
+                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
+                { scaleX: 3.5, ease: "power1.inOut", duration: 85 },
+                15
               );
             }
 
             if (base) {
               mobileTimeline.fromTo(
                 base,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                { scaleY: 1, ease: "power1.inOut", duration: 15 },
-                24
-              );
-            }
-
-            // Mobile Phase 2: Symmetrical horizontal expansion (scaleY fixed)
-            if (stem) {
-              mobileTimeline.fromTo(
-                stem,
-                { scaleX: 1 },
-                { scaleX: 28, ease: "power1.inOut", duration: 65 },
-                35
-              );
-            }
-
-            if (bodyUpper) {
-              mobileTimeline.fromTo(
-                bodyUpper,
-                { scaleX: 1 },
-                { scaleX: 4.2, ease: "power1.inOut", duration: 65 },
-                35
-              );
-            }
-
-            if (bodyLower) {
-              mobileTimeline.fromTo(
-                bodyLower,
-                { scaleX: 1 },
-                { scaleX: 2.3, ease: "power1.inOut", duration: 65 },
-                35
-              );
-            }
-
-            if (base) {
-              mobileTimeline.fromTo(
-                base,
-                { scaleX: 1 },
-                { scaleX: 1.6, ease: "power1.inOut", duration: 65 },
-                35
+                { scaleX: 1, scaleY: 1, xPercent: -50, transformOrigin: "50% 50%" },
+                { scaleX: 2, ease: "power1.inOut", duration: 85 },
+                15
               );
             }
 

@@ -82,6 +82,7 @@
 .manifestoBlock {
   padding-bottom: 0;
   width: 100%;
+  opacity: 0;
 }
 
 .manifesto {
