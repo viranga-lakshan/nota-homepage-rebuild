@@ -12,6 +12,37 @@ const DEFAULT_NAV_LINKS = [
   { label: "Inside the box", href: "#inside-the-box" },
 ];
 
+function formatDescription(text: string) {
+  if (text.includes("\n")) {
+    return text.split("\n").map((line, i, arr) => (
+      <span key={i}>
+        {line}
+        {i < arr.length - 1 && <br />}
+      </span>
+    ));
+  }
+
+  // Format standard statement into the exact 4 lines requested
+  if (
+    text.toLowerCase().includes("tools that respect") &&
+    text.toLowerCase().includes("digital structure")
+  ) {
+    return (
+      <>
+        <span>NŌTA creates tools that respect the</span>
+        <br />
+        <span>way people think and write.</span>
+        <br />
+        <span>Natural handwriting, quietly</span>
+        <br />
+        <span>connected to digital structure.</span>
+      </>
+    );
+  }
+
+  return text;
+}
+
 export function Footer({ footer }: FooterProps) {
   const description =
     footer?.description ||
@@ -46,7 +77,7 @@ export function Footer({ footer }: FooterProps) {
       {/* Top section with description & navigation */}
       <div className={styles.contentTop}>
         <div className={styles.descriptionWrapper}>
-          <p className={styles.description}>{description}</p>
+          <p className={styles.description}>{formatDescription(description)}</p>
         </div>
 
         <div className={styles.infoWrapper}>
