@@ -20,7 +20,7 @@
   right: 0;
   z-index: 250;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   padding: 0.9vw 2.5vw;
   color: var(--color-white);
@@ -39,6 +39,7 @@
   display: block;
   width: 7.56vw;
   height: 2.42vw;
+  align-self: flex-start;
 }
 
 .nav {
@@ -48,7 +49,7 @@
   align-items: flex-start;
   align-self: flex-start;
   padding-left: 3.5vw;
-  padding-top: 0.35vw;
+  padding-top: 0.25vw;
 }
 
 .navList {
