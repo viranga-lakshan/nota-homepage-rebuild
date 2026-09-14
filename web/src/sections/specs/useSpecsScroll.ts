@@ -100,6 +100,14 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                 start: "top top",
                 end: "bottom bottom",
                 scrub: true,
+                onLeave: () => {
+                  const trans = section.querySelector<HTMLElement>("[data-specs-transition]");
+                  if (trans) trans.style.display = "none";
+                },
+                onEnterBack: () => {
+                  const trans = section.querySelector<HTMLElement>("[data-specs-transition]");
+                  if (trans) trans.style.display = "";
+                },
               },
             });
 
@@ -305,6 +313,12 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                 end: "+=120%",
                 pin: true,
                 scrub: true,
+                onLeave: () => {
+                  if (transitionOverlay) transitionOverlay.style.display = "none";
+                },
+                onEnterBack: () => {
+                  if (transitionOverlay) transitionOverlay.style.display = "";
+                },
               },
             });
 

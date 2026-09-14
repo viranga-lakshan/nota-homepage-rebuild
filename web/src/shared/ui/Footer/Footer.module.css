@@ -1,0 +1,262 @@
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: clamp(460px, 51vh, 580px);
+  z-index: 139;
+  background: #000000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  color: #ffffff;
+  pointer-events: auto;
+}
+
+.footerContent {
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4.4rem clamp(20px, 3.5vw, 60px) 2.4rem;
+  box-sizing: border-box;
+}
+
+/* Top content row */
+.contentTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.descriptionWrapper {
+  width: 45%;
+  flex-shrink: 0;
+}
+
+.description {
+  font-family: inherit;
+  font-size: clamp(1.15rem, 1.5vw, 1.6rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Right side info: Navigation (at center ~50%) & Year (at far right) */
+.infoWrapper {
+  width: 55%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding-left: 2vw;
+  box-sizing: border-box;
+}
+
+.menuColumn {
+  display: flex;
+  flex-direction: column;
+}
+
+.yearColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.columnTitle {
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0 0 0.9rem 0;
+  text-transform: none;
+}
+
+.navLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.navLink {
+  font-size: 0.95rem;
+  font-weight: 400;
+  color: #ffffff;
+  text-decoration: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  line-height: 1.4;
+  opacity: 0.9;
+}
+
+.navLink:hover {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+.yearText {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* Bottom content row */
+.contentBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-top: 1.2rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.copyright {
+  width: 45%;
+  flex-shrink: 0;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.teamWrapper {
+  width: 55%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-left: 2vw;
+  box-sizing: border-box;
+}
+
+.teamGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.teamIcon {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.4);
+}
+
+.teamIconImg {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.designTeam {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.creditLink {
+  color: rgba(255, 255, 255, 0.5);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.creditLink:hover {
+  color: #ffffff;
+}
+
+.creditText {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Separate bottom Taptop bar */
+.taptopBar {
+  width: 100%;
+  height: 42px;
+  background: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.taptopBarLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.taptopBarLink:hover {
+  color: #ffffff;
+}
+
+.taptopBarLogo {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .footer {
+    position: relative;
+    height: auto;
+    min-height: auto;
+  }
+
+  .footerContent {
+    padding: 8vw 6vw 6vw;
+  }
+
+  .contentTop {
+    flex-direction: column;
+    gap: 8vw;
+  }
+
+  .descriptionWrapper {
+    width: 100%;
+  }
+
+  .description {
+    font-size: clamp(1.2rem, 4.5vw, 1.6rem);
+  }
+
+  .infoWrapper {
+    width: 100%;
+    padding-left: 0;
+    justify-content: space-between;
+    gap: 4vw;
+  }
+
+  .contentBottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4vw;
+    margin-top: 8vw;
+    padding-top: 6vw;
+  }
+
+  .copyright {
+    width: 100%;
+  }
+
+  .teamWrapper {
+    width: 100%;
+    padding-left: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2.5vw;
+  }
+}
