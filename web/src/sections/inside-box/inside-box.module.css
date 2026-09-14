@@ -35,10 +35,10 @@
 
 @media (min-width: 992px) {
   .insideBox {
-    height: 1200vh;
+    height: 600vh;
     margin-top: -100vh;
     position: sticky;
-    top: -1100vh;
+    top: -500vh;
   }
 
   .camera {

@@ -63,8 +63,7 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
           });
 
           // -------------------------------------------------------------------
-          // 1. Expanding Perfect 1:1 Circle (0 -> 16)
-          // Covers the full viewport in pure solid white (#ffffff).
+          // 1. Expanding 1:1 Circle (0 -> 18)
           // -------------------------------------------------------------------
           if (circle) {
             timeline.fromTo(
@@ -73,14 +72,14 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
               {
                 scale: 1,
                 ease: "power1.inOut",
-                duration: 16,
+                duration: 18,
               },
               0
             );
           }
 
           // -------------------------------------------------------------------
-          // 2. Centered "Inside the box" Heading Fades In (8 -> 18)
+          // 2. "Inside the box" Heading Fades In (10 -> 22)
           // -------------------------------------------------------------------
           if (heading) {
             timeline.fromTo(
@@ -90,14 +89,12 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
                 opacity: 1,
                 scale: 1,
                 ease: "power1.out",
-                duration: 10,
+                duration: 12,
               },
-              8
+              10
             );
 
-            // -----------------------------------------------------------------
-            // 3. Heading Exits Upwards (24 -> 34)
-            // -----------------------------------------------------------------
+            // 3. Heading Exits Upwards (26 -> 36)
             timeline.to(
               heading,
               {
@@ -106,12 +103,12 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
                 ease: "power1.inOut",
                 duration: 10,
               },
-              24
+              26
             );
           }
 
           // -------------------------------------------------------------------
-          // 4. Unboxing Stage Climbs Upwards from Below (28 -> 44)
+          // 4. Unboxing Stage Climbs Upwards (30 -> 46)
           // -------------------------------------------------------------------
           if (unboxingStage) {
             timeline.fromTo(
@@ -123,30 +120,28 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
                 ease: "power1.inOut",
                 duration: 16,
               },
-              28
+              30
             );
 
-            // -----------------------------------------------------------------
-            // 5. Unboxing Stage Exits Upwards (48 -> 56)
-            // -----------------------------------------------------------------
+            // 5. Unboxing Stage Exits Upwards (52 -> 62)
             timeline.to(
               unboxingStage,
               {
                 opacity: 0,
                 y: "-35vh",
                 ease: "power1.inOut",
-                duration: 8,
+                duration: 10,
               },
-              48
+              52
             );
           }
 
           // -------------------------------------------------------------------
-          // 6. 25 Horizontal Blinds / Slits Reveal on Packaging Set (32 -> 44)
+          // 6. 25 Horizontal Blinds Reveal on Packaging Set (34 -> 46)
           // -------------------------------------------------------------------
           if (blindSlits.length > 0) {
             blindSlits.forEach((slit, index) => {
-              const slitStart = 32 + index * 0.4;
+              const slitStart = 34 + index * 0.35;
               timeline.fromTo(
                 slit,
                 { scaleY: 1, opacity: 1 },
@@ -154,7 +149,7 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
                   scaleY: 0,
                   opacity: 0,
                   ease: "power1.inOut",
-                  duration: 8,
+                  duration: 6,
                 },
                 slitStart
               );
@@ -162,7 +157,7 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
           }
 
           // -------------------------------------------------------------------
-          // 7. Top-Right Copywriting Settles (36 -> 46)
+          // 7. Top-Right Copywriting Settles (38 -> 48)
           // -------------------------------------------------------------------
           if (boxInfo) {
             timeline.fromTo(
@@ -174,13 +169,10 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
                 ease: "power1.out",
                 duration: 10,
               },
-              36
+              38
             );
           }
 
-          // -------------------------------------------------------------------
-          // 8. Blinds Item Settle Polish (34 -> 46)
-          // -------------------------------------------------------------------
           if (blindsItem) {
             timeline.fromTo(
               blindsItem,
@@ -188,15 +180,14 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
               {
                 scale: 1,
                 ease: "power1.out",
-                duration: 12,
+                duration: 10,
               },
-              34
+              36
             );
           }
 
           // -------------------------------------------------------------------
-          // 9. Phase 4: Centered Description Stage Enters & Fills Simultaneously (48 -> 56)
-          // Words finish turning black right as the stage covers the screen!
+          // 8. Description Stage Enters & Fills (54 -> 68)
           // -------------------------------------------------------------------
           if (descStage) {
             timeline.fromTo(
@@ -207,30 +198,27 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
                 y: "0vh",
                 scale: 1,
                 ease: "power1.out",
-                duration: 8,
+                duration: 10,
               },
-              48
+              54
             );
 
-            // Locked Fixed-Gap Translation Upwards with Device Cards (56 -> 76)
+            // Description Stage Exits Upwards with Device Cards (68 -> 84)
             timeline.to(
               descStage,
               {
                 opacity: 0,
                 y: "-110vh",
                 ease: "power1.inOut",
-                duration: 20,
+                duration: 16,
               },
-              56
+              68
             );
           }
 
-          // -------------------------------------------------------------------
-          // 10. Word-by-Word Color Fill during Stage Entry (48 -> 56)
-          // Fully black the instant the stage takes full screen!
-          // -------------------------------------------------------------------
+          // Character Color Fill (56 -> 68)
           if (charSpans.length > 0) {
-            const fillDuration = 8;
+            const fillDuration = 12;
             const step = fillDuration / charSpans.length;
 
             charSpans.forEach((span, index) => {
@@ -242,14 +230,13 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
                   ease: "power2.out",
                   duration: 0.15,
                 },
-                48 + index * step
+                56 + index * step
               );
             });
           }
 
           // -------------------------------------------------------------------
-          // 11. Phase 5: 2-Column Device Cards Stage Climbs Up with Fixed Gap (56 -> 76)
-          // Constant distance maintained directly beneath departing text stage
+          // 9. 2-Column Device Cards Stage (68 -> 88)
           // -------------------------------------------------------------------
           if (devicesStage) {
             timeline.fromTo(
@@ -259,21 +246,17 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
                 opacity: 1,
                 y: "0vh",
                 ease: "power1.inOut",
-                duration: 20,
+                duration: 16,
               },
-              56
+              68
             );
           }
 
-          // -------------------------------------------------------------------
-          // 12. 25 Horizontal Blinds / Slits Reveal on Device Images (60 -> 74)
-          // Slits slice across images horizontally as cards enter
-          // -------------------------------------------------------------------
           if (cardBlindSlits.length > 0) {
             const BLINDS_COUNT = 25;
             cardBlindSlits.forEach((slit, index) => {
               const slitRowIndex = index % BLINDS_COUNT;
-              const slitStart = 60 + slitRowIndex * 0.45;
+              const slitStart = 72 + slitRowIndex * 0.35;
               timeline.fromTo(
                 slit,
                 { scaleY: 1, opacity: 1 },
@@ -281,16 +264,13 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
                   scaleY: 0,
                   opacity: 0,
                   ease: "power1.inOut",
-                  duration: 8,
+                  duration: 6,
                 },
                 slitStart
               );
             });
           }
 
-          // -------------------------------------------------------------------
-          // 13. Device Cards Settle & Polish (64 -> 78)
-          // -------------------------------------------------------------------
           if (deviceCards.length > 0) {
             timeline.fromTo(
               deviceCards,
@@ -298,10 +278,10 @@ export function useInsideBoxScroll({ sectionRef }: UseInsideBoxScrollOptions) {
               {
                 scale: 1,
                 ease: "power1.out",
-                duration: 14,
-                stagger: 0.6,
+                duration: 10,
+                stagger: 0.4,
               },
-              64
+              76
             );
           }
 
