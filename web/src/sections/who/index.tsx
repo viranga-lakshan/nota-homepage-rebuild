@@ -134,6 +134,14 @@ export function Who({ section }: WhoProps) {
   return (
     <section ref={sectionRef} className={styles.who}>
       <div className={styles.camera}>
+        {/* Entrance Transition: 4-tier stepped pyramid expanding to solid black */}
+        <div data-specs-transition className={styles.transitionOverlay} aria-hidden="true">
+          <div data-specs-tier="stem" className={styles.stem} />
+          <div data-specs-tier="bodyUpper" className={styles.bodyUpper} />
+          <div data-specs-tier="bodyLower" className={styles.bodyLower} />
+          <div data-specs-tier="base" className={styles.base} />
+        </div>
+
         {/* Text Layer: Manifesto + Intro + Personas */}
         <div data-text-layer className={styles.textLayer}>
           <div data-content-wrapper className={styles.contentWrapper}>

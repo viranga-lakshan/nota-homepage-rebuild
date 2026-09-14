@@ -24,32 +24,20 @@ import { gsap } from "@/lib/animation/gsap.client";
  *                        (scaleX increasing), maintaining their distinct stepped
  *                        proportions at all times until solid black fills the viewport.
  */
-const CONTENT_FADE_END = 5;
-const HEADING_FADE_START = 2;
-const HEADING_FADE_END = 8;
-const HEADING_RISE_START = 8;
-const HEADING_RISE_END = 35;
-const HEADING_OFFSET = "32.68vh";
+const CONTENT_FADE_END = 8;
 
-const CARD_RISE_START = 15;
-const CARD_RISE_END = [32, 40, 48];
+const HEADING_FADE_START = 0;
+const HEADING_FADE_END = 18;
+const HEADING_RISE_START = 0;
+const HEADING_RISE_END = 22;
+const HEADING_OFFSET = "22vh";
 
-const PEN_RISE_START = 15;
-const PEN_RISE_END = 45;
-const PEN_OFFSET = 130;
+const PEN_RISE_START = 5;
+const PEN_RISE_END = 28;
+const PEN_OFFSET = 120;
 
-/* Outro Two-Phase Transition Markers */
-const REVEAL_START = 54;
-const STEM_REVEAL_END = 60;
-const BODY_UP_REVEAL_START = 58;
-const BODY_UP_REVEAL_END = 64;
-const BODY_LOW_REVEAL_START = 61;
-const BODY_LOW_REVEAL_END = 66;
-const BASE_REVEAL_START = 64;
-const BASE_REVEAL_END = 68;
-
-const HORIZONTAL_EXPAND_START = 68;
-const HORIZONTAL_EXPAND_END = 100;
+const CARD_RISE_START = 18;
+const CARD_RISE_END = [30, 36, 42];
 
 interface UseSpecsScrollOptions {
   sectionRef: RefObject<HTMLElement | null>;
@@ -74,17 +62,11 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
         },
         (ctx) => {
           const isDesktop = Boolean(ctx.conditions?.isDesktop);
-          const isMobile = Boolean(ctx.conditions?.isMobile);
           const reduceMotion = Boolean(ctx.conditions?.reduceMotion);
 
           if (reduceMotion) {
             return;
           }
-
-          const stem = section.querySelector<HTMLElement>("[data-specs-tier='stem']");
-          const bodyUpper = section.querySelector<HTMLElement>("[data-specs-tier='bodyUpper']");
-          const bodyLower = section.querySelector<HTMLElement>("[data-specs-tier='bodyLower']");
-          const base = section.querySelector<HTMLElement>("[data-specs-tier='base']");
 
           if (isDesktop) {
             const content = section.querySelector<HTMLElement>("[data-content]");
@@ -100,14 +82,6 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
                 start: "top top",
                 end: "bottom bottom",
                 scrub: true,
-                onLeave: () => {
-                  const trans = section.querySelector<HTMLElement>("[data-specs-transition]");
-                  if (trans) trans.style.display = "none";
-                },
-                onEnterBack: () => {
-                  const trans = section.querySelector<HTMLElement>("[data-specs-transition]");
-                  if (trans) trans.style.display = "";
-                },
               },
             });
 
@@ -176,229 +150,9 @@ export function useSpecsScroll({ sectionRef }: UseSpecsScrollOptions) {
               );
             }
 
-            // -------------------------------------------------------------
-            // 5. Outro Phase 1: Reveal 4 parts from top to bottom in center
-            // -------------------------------------------------------------
-            if (stem) {
-              timeline.fromTo(
-                stem,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                {
-                  scaleY: 1,
-                  ease: "power1.inOut",
-                  duration: STEM_REVEAL_END - REVEAL_START,
-                },
-                REVEAL_START
-              );
-            }
-
-            if (bodyUpper) {
-              timeline.fromTo(
-                bodyUpper,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                {
-                  scaleY: 1,
-                  ease: "power1.inOut",
-                  duration: BODY_UP_REVEAL_END - BODY_UP_REVEAL_START,
-                },
-                BODY_UP_REVEAL_START
-              );
-            }
-
-            if (bodyLower) {
-              timeline.fromTo(
-                bodyLower,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                {
-                  scaleY: 1,
-                  ease: "power1.inOut",
-                  duration: BODY_LOW_REVEAL_END - BODY_LOW_REVEAL_START,
-                },
-                BODY_LOW_REVEAL_START
-              );
-            }
-
-            if (base) {
-              timeline.fromTo(
-                base,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                {
-                  scaleY: 1,
-                  ease: "power1.inOut",
-                  duration: BASE_REVEAL_END - BASE_REVEAL_START,
-                },
-                BASE_REVEAL_START
-              );
-            }
-
-            // -------------------------------------------------------------
-            // 6. Outro Phase 2: Pure Centered Horizontal Expansion (scaleY FIXED)
-            //    All 4 original parts expand horizontally together while
-            //    retaining their relative stepped geometry at every point.
-            // -------------------------------------------------------------
-            const expandDuration = HORIZONTAL_EXPAND_END - HORIZONTAL_EXPAND_START;
-
-            if (stem) {
-              timeline.fromTo(
-                stem,
-                { scaleX: 1 },
-                {
-                  scaleX: 45,
-                  ease: "power1.inOut",
-                  duration: expandDuration,
-                },
-                HORIZONTAL_EXPAND_START
-              );
-            }
-
-            if (bodyUpper) {
-              timeline.fromTo(
-                bodyUpper,
-                { scaleX: 1 },
-                {
-                  scaleX: 8,
-                  ease: "power1.inOut",
-                  duration: expandDuration,
-                },
-                HORIZONTAL_EXPAND_START
-              );
-            }
-
-            if (bodyLower) {
-              timeline.fromTo(
-                bodyLower,
-                { scaleX: 1 },
-                {
-                  scaleX: 4,
-                  ease: "power1.inOut",
-                  duration: expandDuration,
-                },
-                HORIZONTAL_EXPAND_START
-              );
-            }
-
-            if (base) {
-              timeline.fromTo(
-                base,
-                { scaleX: 1 },
-                {
-                  scaleX: 2.5,
-                  ease: "power1.inOut",
-                  duration: expandDuration,
-                },
-                HORIZONTAL_EXPAND_START
-              );
-            }
-
             return () => {
               timeline.scrollTrigger?.kill();
               timeline.kill();
-            };
-          }
-
-          // Mobile scrubbed transition pin
-          if (isMobile) {
-            const transitionOverlay = section.querySelector<HTMLElement>(
-              "[data-specs-transition]"
-            );
-
-            if (!transitionOverlay) {
-              return;
-            }
-
-            const mobileTimeline = gsap.timeline({
-              scrollTrigger: {
-                trigger: section,
-                start: "bottom bottom",
-                end: "+=120%",
-                pin: true,
-                scrub: true,
-                onLeave: () => {
-                  if (transitionOverlay) transitionOverlay.style.display = "none";
-                },
-                onEnterBack: () => {
-                  if (transitionOverlay) transitionOverlay.style.display = "";
-                },
-              },
-            });
-
-            // Mobile Phase 1: Reveal 4 parts
-            if (stem) {
-              mobileTimeline.fromTo(
-                stem,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                { scaleY: 1, ease: "power1.inOut", duration: 15 },
-                0
-              );
-            }
-
-            if (bodyUpper) {
-              mobileTimeline.fromTo(
-                bodyUpper,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                { scaleY: 1, ease: "power1.inOut", duration: 15 },
-                8
-              );
-            }
-
-            if (bodyLower) {
-              mobileTimeline.fromTo(
-                bodyLower,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                { scaleY: 1, ease: "power1.inOut", duration: 15 },
-                16
-              );
-            }
-
-            if (base) {
-              mobileTimeline.fromTo(
-                base,
-                { scaleY: 0, scaleX: 1, xPercent: -50, transformOrigin: "50% 0%" },
-                { scaleY: 1, ease: "power1.inOut", duration: 15 },
-                24
-              );
-            }
-
-            // Mobile Phase 2: Symmetrical horizontal expansion (scaleY fixed)
-            if (stem) {
-              mobileTimeline.fromTo(
-                stem,
-                { scaleX: 1 },
-                { scaleX: 28, ease: "power1.inOut", duration: 65 },
-                35
-              );
-            }
-
-            if (bodyUpper) {
-              mobileTimeline.fromTo(
-                bodyUpper,
-                { scaleX: 1 },
-                { scaleX: 4.2, ease: "power1.inOut", duration: 65 },
-                35
-              );
-            }
-
-            if (bodyLower) {
-              mobileTimeline.fromTo(
-                bodyLower,
-                { scaleX: 1 },
-                { scaleX: 2.3, ease: "power1.inOut", duration: 65 },
-                35
-              );
-            }
-
-            if (base) {
-              mobileTimeline.fromTo(
-                base,
-                { scaleX: 1 },
-                { scaleX: 1.6, ease: "power1.inOut", duration: 65 },
-                35
-              );
-            }
-
-            return () => {
-              mobileTimeline.scrollTrigger?.kill();
-              mobileTimeline.kill();
             };
           }
         }

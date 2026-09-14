@@ -24,49 +24,59 @@ interface UseWhoScrollOptions {
  *   86 -> 94:  Video HOLDS full-screen framed state firmly in view
  *   94 -> 100: ONLY AFTER HOLD, with continued scroll: Video shrinks (scale: 1 -> 0.65) as Paper climbs up
  */
-const MANIFESTO_WORDS_START = 5;
-const MANIFESTO_WORDS_END = 22;
+/* Entrance Transition Markers (4-tier silhouette -> black screen) */
+const TRANSITION_FADE_START = 0;
+const TRANSITION_FADE_END = 5;
+const EXPAND_START = 5;
+const EXPAND_END = 16;
 
-const DIVIDER_START = 22;
-const DIVIDER_END = 26;
+/* Manifesto Reveal (on solid black) */
+const MANIFESTO_FADE_START = 16;
+const MANIFESTO_FADE_END = 20;
+const MANIFESTO_WORDS_START = 20;
+const MANIFESTO_WORDS_END = 36;
 
-const LABEL_START = 23;
-const LABEL_END = 26;
+/* Rest of Section Flow */
+const DIVIDER_START = 36;
+const DIVIDER_END = 40;
 
-const RIGHT_ENTER_START = 26;
-const RIGHT_ENTER_END = 36;
+const LABEL_START = 38;
+const LABEL_END = 42;
 
-const INTRO_WORDS_START = 36;
-const INTRO_WORDS_END = 48;
+const RIGHT_ENTER_START = 42;
+const RIGHT_ENTER_END = 50;
 
-const CONTENT_SHIFT_START = 48;
-const CONTENT_SHIFT_END = 78;
+const INTRO_WORDS_START = 50;
+const INTRO_WORDS_END = 62;
 
-const PERSONA_1_TITLE_START = 48;
-const PERSONA_1_TITLE_END = 54;
-const PERSONA_1_BODY_START = 50;
-const PERSONA_1_BODY_END = 56;
+const CONTENT_SHIFT_START = 62;
+const CONTENT_SHIFT_END = 80;
 
-const PERSONA_2_TITLE_START = 56;
-const PERSONA_2_TITLE_END = 62;
-const PERSONA_2_BODY_START = 58;
-const PERSONA_2_BODY_END = 64;
+const PERSONA_1_TITLE_START = 62;
+const PERSONA_1_TITLE_END = 68;
+const PERSONA_1_BODY_START = 64;
+const PERSONA_1_BODY_END = 70;
 
-const PERSONA_3_TITLE_START = 64;
-const PERSONA_3_TITLE_END = 70;
-const PERSONA_3_BODY_START = 66;
-const PERSONA_3_BODY_END = 72;
+const PERSONA_2_TITLE_START = 70;
+const PERSONA_2_TITLE_END = 76;
+const PERSONA_2_BODY_START = 72;
+const PERSONA_2_BODY_END = 78;
 
-const VIDEO_STAGE_ENTER_START = 68;
-const VIDEO_STAGE_ENTER_END = 76;
+const PERSONA_3_TITLE_START = 78;
+const PERSONA_3_TITLE_END = 84;
+const PERSONA_3_BODY_START = 80;
+const PERSONA_3_BODY_END = 86;
 
-const TEXT_EXIT_START = 76;
-const TEXT_EXIT_END = 86;
+const VIDEO_STAGE_ENTER_START = 82;
+const VIDEO_STAGE_ENTER_END = 88;
 
-const VIDEO_EXPAND_START = 76;
-const VIDEO_EXPAND_END = 86;
+const TEXT_EXIT_START = 88;
+const TEXT_EXIT_END = 94;
 
-const VIDEO_PUSHBACK_START = 94;
+const VIDEO_EXPAND_START = 88;
+const VIDEO_EXPAND_END = 95;
+
+const VIDEO_PUSHBACK_START = 97;
 const VIDEO_PUSHBACK_END = 100;
 
 export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
@@ -94,6 +104,14 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
           if (reduceMotion) {
             return;
           }
+
+          const transitionOverlay = section.querySelector<HTMLElement>(
+            "[data-specs-transition]"
+          );
+          const stem = section.querySelector<HTMLElement>("[data-specs-tier='stem']");
+          const bodyUpper = section.querySelector<HTMLElement>("[data-specs-tier='bodyUpper']");
+          const bodyLower = section.querySelector<HTMLElement>("[data-specs-tier='bodyLower']");
+          const base = section.querySelector<HTMLElement>("[data-specs-tier='base']");
 
           const manifestoWords = Array.from(
             section.querySelectorAll<HTMLElement>("[data-manifesto-word]")
@@ -125,6 +143,25 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
           }
 
           if (isDesktop) {
+            // Explicit initial states to prevent any immediateRender flash on first page load
+            if (transitionOverlay) gsap.set(transitionOverlay, { opacity: 0 });
+            if (stem) gsap.set(stem, { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" });
+            if (bodyUpper) gsap.set(bodyUpper, { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" });
+            if (bodyLower) gsap.set(bodyLower, { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" });
+            if (base) gsap.set(base, { scaleX: 1, scaleY: 1, transformOrigin: "50% 50%" });
+
+            if (textLayer) gsap.set(textLayer, { opacity: 0, y: "0vw" });
+            if (manifestoWords.length > 0) gsap.set(manifestoWords, { color: "rgba(255, 255, 255, 0.4)" });
+            if (divider) gsap.set(divider, { opacity: 0 });
+            if (leftLabel) gsap.set(leftLabel, { opacity: 0 });
+            if (rightCol) gsap.set(rightCol, { x: "8vw", opacity: 0 });
+            if (introWords.length > 0) gsap.set(introWords, { color: "rgba(255, 255, 255, 0.4)" });
+            if (contentWrapper) gsap.set(contentWrapper, { y: "0vw" });
+            if (personaTitles.length > 0) gsap.set(personaTitles, { x: "12vw", opacity: 0 });
+            if (personaBodies.length > 0) gsap.set(personaBodies, { x: "12vw", opacity: 0 });
+            if (videoStage) gsap.set(videoStage, { opacity: 0 });
+            if (videoWrapper) gsap.set(videoWrapper, { opacity: 0, x: "15vw", width: "50vw", height: "34vh", scale: 1 });
+
             const timeline = gsap.timeline({
               scrollTrigger: {
                 trigger: section,
@@ -132,40 +169,84 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 end: "bottom bottom",
                 scrub: true,
                 onUpdate: (self) => {
-                  if (whoVideo && !videoHasPlayed && self.progress >= 0.65) {
-                    videoHasPlayed = true;
-                    whoVideo.currentTime = 0;
-                    whoVideo.play().catch(() => {});
+                  if (whoVideo) {
+                    if (self.progress >= 0.80) {
+                      if (!videoHasPlayed) {
+                        videoHasPlayed = true;
+                        whoVideo.currentTime = 0;
+                        whoVideo.play().catch(() => {});
+                      }
+                    } else {
+                      if (videoHasPlayed) {
+                        videoHasPlayed = false;
+                        whoVideo.pause();
+                        whoVideo.currentTime = 0;
+                      }
+                    }
                   }
                 },
               },
             });
 
-            // 1. Top manifesto word-by-word color reveal (gray -> white)
+            // 0. Transition Overlay fade in (0 -> 5%)
+            if (transitionOverlay) {
+              timeline.to(
+                transitionOverlay,
+                {
+                  opacity: 1,
+                  ease: "power1.inOut",
+                  duration: TRANSITION_FADE_END - TRANSITION_FADE_START,
+                },
+                TRANSITION_FADE_START
+              );
+            }
+
+            // 0.1 Four tiers expand to full black (5 -> 16%)
+            const expandDuration = EXPAND_END - EXPAND_START;
+            if (stem) {
+              timeline.to(stem, { scaleX: 120, ease: "power1.inOut", duration: expandDuration }, EXPAND_START);
+            }
+            if (bodyUpper) {
+              timeline.to(bodyUpper, { scaleX: 36, ease: "power1.inOut", duration: expandDuration }, EXPAND_START);
+            }
+            if (bodyLower) {
+              timeline.to(bodyLower, { scaleX: 15, ease: "power1.inOut", duration: expandDuration }, EXPAND_START);
+            }
+            if (base) {
+              timeline.to(base, { scaleX: 7, ease: "power1.inOut", duration: expandDuration }, EXPAND_START);
+            }
+
+            // 1. Text Layer (Manifesto) fades in directly on top of solid black screen (16 -> 20%)
+            if (textLayer) {
+              timeline.to(
+                textLayer,
+                {
+                  opacity: 1,
+                  ease: "power1.inOut",
+                  duration: MANIFESTO_FADE_END - MANIFESTO_FADE_START,
+                },
+                MANIFESTO_FADE_START
+              );
+            }
+
+            // 2. Manifesto words turn from gray to white word-by-word (20 -> 36%)
             if (manifestoWords.length > 0) {
               const totalManifestoDuration = MANIFESTO_WORDS_END - MANIFESTO_WORDS_START;
               const step = totalManifestoDuration / manifestoWords.length;
-
               manifestoWords.forEach((word, index) => {
                 const start = MANIFESTO_WORDS_START + index * step;
-                timeline.fromTo(
+                timeline.to(
                   word,
-                  { color: "rgba(255, 255, 255, 0.4)" },
-                  {
-                    color: "#ffffff",
-                    ease: "none",
-                    duration: step * 1.5,
-                  },
+                  { color: "#ffffff", ease: "none", duration: step * 1.5 },
                   start
                 );
               });
             }
 
-            // 2. Horizontal divider appearance
+            // 3. Horizontal divider appearance (36 -> 40%)
             if (divider) {
-              timeline.fromTo(
+              timeline.to(
                 divider,
-                { opacity: 0 },
                 {
                   opacity: 1,
                   ease: "power1.inOut",
@@ -175,11 +256,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 3. Left label appearance (stays gray)
+            // 4. Left label appearance (38 -> 42%)
             if (leftLabel) {
-              timeline.fromTo(
+              timeline.to(
                 leftLabel,
-                { opacity: 0 },
                 {
                   opacity: 1,
                   ease: "power1.inOut",
@@ -189,11 +269,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 4. Right column entry from right
+            // 5. Right column entry from right (42 -> 50%)
             if (rightCol) {
-              timeline.fromTo(
+              timeline.to(
                 rightCol,
-                { x: "8vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -204,16 +283,15 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 5. Right intro paragraph word-by-word color reveal (gray -> white)
+            // 6. Right intro paragraph word-by-word color reveal (gray -> white) (50 -> 62%)
             if (introWords.length > 0) {
               const totalIntroDuration = INTRO_WORDS_END - INTRO_WORDS_START;
               const step = totalIntroDuration / introWords.length;
 
               introWords.forEach((word, index) => {
                 const start = INTRO_WORDS_START + index * step;
-                timeline.fromTo(
+                timeline.to(
                   word,
-                  { color: "rgba(255, 255, 255, 0.4)" },
                   {
                     color: "#ffffff",
                     ease: "none",
@@ -224,13 +302,12 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               });
             }
 
-            // 6. Upward translation of contentWrapper bringing personas to upper screen
+            // 7. Smooth upward shift of the whole content wrapper (62 -> 80%)
             if (contentWrapper) {
-              timeline.fromTo(
+              timeline.to(
                 contentWrapper,
-                { y: "0vw" },
                 {
-                  y: "-38vw",
+                  y: "-13.5vw",
                   ease: "power1.inOut",
                   duration: CONTENT_SHIFT_END - CONTENT_SHIFT_START,
                 },
@@ -238,11 +315,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 7. Persona 1 (Students & Learners) entrance from RIGHT -> LEFT with title/body subtle stagger
+            // 8. Persona 1: Students & Learners (62 -> 70%)
             if (personaTitles[0]) {
-              timeline.fromTo(
+              timeline.to(
                 personaTitles[0],
-                { x: "18vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -253,9 +329,8 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
             if (personaBodies[0]) {
-              timeline.fromTo(
+              timeline.to(
                 personaBodies[0],
-                { x: "18vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -266,11 +341,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 8. Persona 2 (Creators, Designers & Architects) entrance from RIGHT -> LEFT with subtle stagger
+            // 9. Persona 2: Creators, Designers & Architects (70 -> 78%)
             if (personaTitles[1]) {
-              timeline.fromTo(
+              timeline.to(
                 personaTitles[1],
-                { x: "18vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -281,9 +355,8 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
             if (personaBodies[1]) {
-              timeline.fromTo(
+              timeline.to(
                 personaBodies[1],
-                { x: "18vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -294,11 +367,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 9. Persona 3 (Managers & Product Thinkers) entrance from RIGHT -> LEFT with subtle stagger
+            // 10. Persona 3: Managers & Product Thinkers (78 -> 86%)
             if (personaTitles[2]) {
-              timeline.fromTo(
+              timeline.to(
                 personaTitles[2],
-                { x: "18vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -309,9 +381,8 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
             if (personaBodies[2]) {
-              timeline.fromTo(
+              timeline.to(
                 personaBodies[2],
-                { x: "18vw", opacity: 0 },
                 {
                   x: "0vw",
                   opacity: 1,
@@ -322,11 +393,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 10. Video stage entrance strictly below Managers & Product Thinkers
+            // 11. Video stage entrance (82 -> 88%)
             if (videoStage) {
-              timeline.fromTo(
+              timeline.to(
                 videoStage,
-                { opacity: 0 },
                 {
                   opacity: 1,
                   ease: "power1.inOut",
@@ -337,15 +407,8 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
             }
 
             if (videoWrapper) {
-              timeline.fromTo(
+              timeline.to(
                 videoWrapper,
-                {
-                  opacity: 0,
-                  x: "15vw",
-                  width: "50vw",
-                  height: "34vh",
-                  scale: 1,
-                },
                 {
                   opacity: 1,
                   x: "0vw",
@@ -358,7 +421,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 VIDEO_STAGE_ENTER_START
               );
 
-              // 11. Video expands to full framed stage as text layer moves off-screen
+              // 12. Video expands to full framed stage as text layer moves off-screen (88 -> 95%)
               timeline.to(
                 videoWrapper,
                 {
@@ -371,7 +434,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 VIDEO_EXPAND_START
               );
 
-              // 12. Video pushes back into the background ONLY AFTER HOLDING full frame (from 94% to 100%)
+              // 13. Video pushes back into the background (97 -> 100%)
               timeline.to(
                 videoWrapper,
                 {
@@ -384,11 +447,10 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 13. Text layer exit (gracefully moves up and fades out without overlapping video growth)
+            // 14. Text layer exit (88 -> 94%)
             if (textLayer) {
-              timeline.fromTo(
+              timeline.to(
                 textLayer,
-                { opacity: 1, y: "0vw" },
                 {
                   opacity: 0,
                   y: "-15vw",
@@ -416,26 +478,48 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               },
             });
 
+            if (transitionOverlay) {
+              mobileTimeline.fromTo(
+                transitionOverlay,
+                { opacity: 0 },
+                { opacity: 1, ease: "power1.inOut", duration: 8 },
+                0
+              );
+            }
+            if (stem) mobileTimeline.fromTo(stem, { scaleX: 1, transformOrigin: "50% 50%" }, { scaleX: 45, ease: "power1.inOut", duration: 15 }, 5);
+            if (bodyUpper) mobileTimeline.fromTo(bodyUpper, { scaleX: 1, transformOrigin: "50% 50%" }, { scaleX: 14, ease: "power1.inOut", duration: 15 }, 5);
+            if (bodyLower) mobileTimeline.fromTo(bodyLower, { scaleX: 1, transformOrigin: "50% 50%" }, { scaleX: 6, ease: "power1.inOut", duration: 15 }, 5);
+            if (base) mobileTimeline.fromTo(base, { scaleX: 1, transformOrigin: "50% 50%" }, { scaleX: 3, ease: "power1.inOut", duration: 15 }, 5);
+
+            if (textLayer) {
+              mobileTimeline.fromTo(
+                textLayer,
+                { opacity: 0 },
+                { opacity: 1, ease: "power1.inOut", duration: 5 },
+                18
+              );
+            }
+
             if (manifestoWords.length > 0) {
-              const step = 30 / manifestoWords.length;
+              const step = 20 / manifestoWords.length;
               manifestoWords.forEach((word, index) => {
                 mobileTimeline.fromTo(
                   word,
                   { color: "rgba(255, 255, 255, 0.4)" },
                   { color: "#ffffff", ease: "none", duration: step * 1.5 },
-                  5 + index * step
+                  20 + index * step
                 );
               });
             }
 
             if (introWords.length > 0) {
-              const step = 30 / introWords.length;
+              const step = 20 / introWords.length;
               introWords.forEach((word, index) => {
                 mobileTimeline.fromTo(
                   word,
                   { color: "rgba(255, 255, 255, 0.4)" },
                   { color: "#ffffff", ease: "none", duration: step * 1.5 },
-                  40 + index * step
+                  45 + index * step
                 );
               });
             }

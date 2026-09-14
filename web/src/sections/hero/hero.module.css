@@ -79,8 +79,8 @@
    anymore — see index.tsx for why. */
 .headline {
   position: absolute;
-  bottom: 5.56vw;
-  left: 2.5vw;
+  bottom: 1.8vw;
+  left: 1.6vw;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -101,9 +101,9 @@
 }
 
 .headlineLine2 {
-  font-size: var(--text-headline-2);
-  line-height: 80%;
-  letter-spacing: -0.05em;
+  font-size: var(--text-headline-1);
+  line-height: 95%;
+  letter-spacing: -0.04em;
 }
 
 /* ---------------------------------------------------------------------- */

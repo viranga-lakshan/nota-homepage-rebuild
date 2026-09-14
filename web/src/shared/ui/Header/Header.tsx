@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import type { Footer, Navigation } from "@/domain/site";
 import { NotaLogo } from "@/shared/ui/NotaLogo";
 import { NotaMark } from "@/shared/ui/NotaMark";
@@ -13,33 +13,60 @@ interface HeaderProps {
   footer: Footer | null;
 }
 
-/**
- * The persistent header: logo, nav links, order button, and — below 991px —
- * the burger that opens MobileMenu. `fixed`, not `absolute` — it stays
- * pinned through the whole page scroll, not just while it overlaps hero.
- *
- * The order button is two visually separate pieces inside one white box,
- * not one pill (confirmed against the reference's own live CSS, which
- * disagreed with an earlier "exact spec" document on this point — the mark
- * icon on the left, a genuinely separate black pill on the right, with
- * visible white space between them). Hidden entirely below 991px, not
- * shown differently — its own CSS confirms this, so it needs no mobile
- * variant here.
- *
- * No persistent mark icon in the collapsed mobile header (logo + burger
- * only) — an earlier version added one based on the same document, which
- * invented a `.header__mark` class that does not exist anywhere in the
- * reference's actual CSS.
- *
- * 'use client': opening/closing the mobile menu is real interactivity, not
- * something a Server Component can own.
- */
 export function Header({ navigation, footer }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const handleScroll = () => {
+      const currentScrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+      // At top of page, always show
+      if (currentScrollY <= 60) {
+        setIsVisible(true);
+        lastScrollY.current = currentScrollY;
+        return;
+      }
+
+      // Delta threshold to avoid tiny micro-jitters
+      const delta = currentScrollY - lastScrollY.current;
+      if (Math.abs(delta) < 8) {
+        return;
+      }
+
+      if (delta > 0 && currentScrollY > 100) {
+        // Scrolling DOWN -> Hide Header
+        setIsVisible(false);
+      } else if (delta < 0) {
+        // Scrolling UP -> Show Header
+        setIsVisible(true);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const headerClass = `${styles.header} ${!isVisible && !isMenuOpen ? styles.headerHidden : ""}`;
 
   return (
     <>
-      <header className={styles.header}>
+      <header className={headerClass}>
         <NotaLogo color="white" className={styles.logo} />
 
         <nav className={styles.nav} aria-label="Primary">

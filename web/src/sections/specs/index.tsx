@@ -29,10 +29,6 @@ export function Specs({ section }: SpecsProps) {
       <div className={styles.camera}>
         <div data-content className={styles.content}>
           <div data-heading className={styles.headingBlock}>
-            {/* One heading set on two lines, not two headings. The eyebrow
-                is the same sentence in a lighter colour — making it its own
-                h2 would put "Nota pen" into the document outline as a
-                section of its own. */}
             <h2 className={styles.heading}>
               <span className={styles.eyebrow}>{section.eyebrow}</span>
               <span>{section.heading}</span>
@@ -67,9 +63,6 @@ export function Specs({ section }: SpecsProps) {
             ))}
           </div>
         </div>
-
-        {/* The scroll-driven black silhouette transition closing the section */}
-        <SpecsTransition />
       </div>
     </section>
   );
