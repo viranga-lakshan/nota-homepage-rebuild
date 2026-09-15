@@ -213,10 +213,10 @@
 .desktopRightColumn {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  row-gap: 0.8vw;
-  width: 100%;
-  max-width: 40vw;
+  align-items: flex-start;
+  row-gap: 1.6vw;
+  width: auto;
+  max-width: 58vw;
   margin-left: auto;
   transform: translate3d(8vw, 0, 0);
   opacity: 0;
@@ -229,20 +229,30 @@
 .intro,
 .introParagraph {
   font-family: var(--font-sans);
-  font-size: 1.61vw;
+  font-size: clamp(24px, 2.45vw, 42px);
   font-weight: 500;
-  line-height: 130%;
+  line-height: 132%;
   letter-spacing: -0.03em;
   text-align: left;
   color: var(--color-white-40);
   margin: 0;
   width: fit-content;
-  max-width: 40vw;
+  max-width: 100%;
 }
 
-.manifestoLine,
+.manifestoLine {
+  display: block;
+}
+
 .introLine {
   display: block;
+  text-align: left;
+}
+
+.introLineIndented {
+  display: block;
+  text-align: left;
+  margin-left: clamp(36px, 5.8vw, 90px);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -254,12 +264,11 @@
   flex-direction: column;
   align-items: flex-end;
   row-gap: 2.8vw;
-  margin-top: 3.73vw;
-  overflow: hidden;
-  padding-left: 2.32vw;
-  padding-right: 2.32vw;
-  margin-left: -2.02vw;
-  margin-right: -2.02vw;
+  margin-top: 1.6vw;
+  overflow: visible;
+  padding: 0;
+  margin-left: 0;
+  margin-right: 0;
   margin-bottom: 0.5vw;
   width: 100%;
 }
@@ -268,17 +277,37 @@
   display: flex;
   flex-direction: column;
   row-gap: 0.8vw;
-  align-items: flex-end;
-  width: 43.35vw;
-  overflow: hidden;
+  align-items: flex-start;
+  width: 23.8vw;
+  max-width: 100%;
+  margin-left: auto;
+  overflow: visible;
 }
 
 .personaTitle {
-  width: 100%;
+  width: calc(100% + 5.2vw);
+  margin-left: -5.2vw;
   font-family: var(--font-sans);
   font-size: 1.61vw;
   font-weight: 600;
   line-height: 120%;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  text-align: left;
+  margin-top: 0;
+  margin-right: 0;
+  margin-bottom: 0;
+  transform: translate3d(18vw, 0, 0);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+.personaBody {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 1.25vw;
+  font-weight: 400;
+  line-height: 130%;
   letter-spacing: -0.02em;
   color: #ffffff;
   text-align: left;
@@ -288,19 +317,8 @@
   will-change: transform, opacity;
 }
 
-.personaBody {
-  width: 34.88vw;
-  font-family: var(--font-sans);
-  font-size: 1.25vw;
-  font-weight: 400;
-  line-height: 130%;
-  letter-spacing: -0.02em;
-  color: rgba(255, 255, 255, 0.9);
-  text-align: left;
-  margin: 0;
-  transform: translate3d(18vw, 0, 0);
-  opacity: 0;
-  will-change: transform, opacity;
+.personaLine {
+  display: block;
 }
 
 /* -------------------------------------------------------------------------- */

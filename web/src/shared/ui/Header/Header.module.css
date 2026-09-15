@@ -60,11 +60,11 @@
 }
 
 .navList a {
-  font-size: clamp(0.75rem, 0.8vw, 0.95rem);
-  font-weight: 400;
-  letter-spacing: 0.01em;
+  font-size: clamp(0.95rem, 1.1vw, 1.25rem);
+  font-weight: 450;
+  letter-spacing: -0.01em;
   color: inherit;
-  transition: opacity 0.2s;
+  transition: opacity 0.2s ease;
 }
 
 .navList a:hover {

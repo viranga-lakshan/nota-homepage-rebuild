@@ -283,23 +283,17 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 6. Right intro paragraph word-by-word color reveal (gray -> white) (50 -> 62%)
+            // 6. Right intro paragraph color reveal (gray -> white all together, not word-by-word) (38 -> 48%)
             if (introWords.length > 0) {
-              const totalIntroDuration = INTRO_WORDS_END - INTRO_WORDS_START;
-              const step = totalIntroDuration / introWords.length;
-
-              introWords.forEach((word, index) => {
-                const start = INTRO_WORDS_START + index * step;
-                timeline.to(
-                  word,
-                  {
-                    color: "#ffffff",
-                    ease: "none",
-                    duration: step * 1.5,
-                  },
-                  start
-                );
-              });
+              timeline.to(
+                introWords,
+                {
+                  color: "#ffffff",
+                  ease: "power1.inOut",
+                  duration: INTRO_WORDS_END - INTRO_WORDS_START,
+                },
+                INTRO_WORDS_START
+              );
             }
 
             // 7. Smooth upward shift of the whole content wrapper (48 -> 74%)
