@@ -35,7 +35,7 @@
 
 @media (min-width: 992px) {
   .insideBox {
-    height: 1200vh;
+    height: 850vh;
     margin-top: -100vh;
     position: relative;
   }

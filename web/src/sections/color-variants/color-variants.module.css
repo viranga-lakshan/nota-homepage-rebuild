@@ -12,7 +12,7 @@
 .track {
   position: relative;
   width: 100%;
-  height: 500vh;
+  height: 380vh;
   background: #000000;
   z-index: 140;
 }
