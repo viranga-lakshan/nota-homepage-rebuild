@@ -50,34 +50,32 @@ const INTRO_WORDS_START = 38;
 const INTRO_WORDS_END = 48;
 
 const CONTENT_SHIFT_START = 48;
-const CONTENT_SHIFT_END = 74;
+const CONTENT_SHIFT_MID = 70;
+const CONTENT_SHIFT_END = 84;
 
-const PERSONA_1_TITLE_START = 48;
-const PERSONA_1_TITLE_END = 56;
-const PERSONA_1_BODY_START = 50;
-const PERSONA_1_BODY_END = 58;
+const PERSONA_1_TITLE_START = 46;
+const PERSONA_1_TITLE_END = 54;
+const PERSONA_1_BODY_START = 48;
+const PERSONA_1_BODY_END = 56;
 
-const PERSONA_2_TITLE_START = 56;
-const PERSONA_2_TITLE_END = 64;
-const PERSONA_2_BODY_START = 58;
-const PERSONA_2_BODY_END = 66;
+const PERSONA_2_TITLE_START = 52;
+const PERSONA_2_TITLE_END = 60;
+const PERSONA_2_BODY_START = 54;
+const PERSONA_2_BODY_END = 62;
 
-const PERSONA_3_TITLE_START = 64;
-const PERSONA_3_TITLE_END = 72;
-const PERSONA_3_BODY_START = 66;
-const PERSONA_3_BODY_END = 74;
+const PERSONA_3_TITLE_START = 56;
+const PERSONA_3_TITLE_END = 64;
+const PERSONA_3_BODY_START = 58;
+const PERSONA_3_BODY_END = 66;
 
-const VIDEO_STAGE_ENTER_START = 68;
-const VIDEO_STAGE_ENTER_END = 74;
+const VIDEO_STAGE_ENTER_START = 58;
+const VIDEO_STAGE_ENTER_END = 66;
 
-const TEXT_EXIT_START = 74;
-const TEXT_EXIT_END = 82;
+const VIDEO_EXPAND_START = 64;
+const VIDEO_EXPAND_END = 72;
 
-const VIDEO_EXPAND_START = 74;
-const VIDEO_EXPAND_END = 82;
-
-const VIDEO_PUSHBACK_START = 88;
-const VIDEO_PUSHBACK_END = 100;
+const VIDEO_PUSHBACK_START = 77;
+const VIDEO_PUSHBACK_END = 83;
 
 export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
   useEffect(() => {
@@ -158,9 +156,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
             if (introWords.length > 0) gsap.set(introWords, { color: "rgba(255, 255, 255, 0.4)" });
             if (contentWrapper) gsap.set(contentWrapper, { y: "0vw" });
             if (personaTitles.length > 0) gsap.set(personaTitles, { x: "12vw", opacity: 0 });
-            if (personaBodies.length > 0) gsap.set(personaBodies, { x: "12vw", opacity: 0 });
-            if (videoStage) gsap.set(videoStage, { opacity: 0 });
-            if (videoWrapper) gsap.set(videoWrapper, { opacity: 0, x: "15vw", width: "50vw", height: "34vh", scale: 1 });
+            if (videoWrapper) gsap.set(videoWrapper, { opacity: 0, x: "25vw", width: "65vw", height: "24vh", right: "0vw", bottom: "0vh", scale: 1 });
 
             const timeline = gsap.timeline({
               scrollTrigger: {
@@ -170,7 +166,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 scrub: true,
                 onUpdate: (self) => {
                   if (whoVideo) {
-                    if (self.progress >= 0.80) {
+                    if (self.progress >= 0.72) {
                       if (!videoHasPlayed) {
                         videoHasPlayed = true;
                         whoVideo.currentTime = 0;
@@ -283,40 +279,59 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 6. Right intro paragraph word-by-word color reveal (gray -> white) (50 -> 62%)
+            // 6. Right intro paragraph color reveal (gray -> white all together, not word-by-word) (38 -> 48%)
             if (introWords.length > 0) {
-              const totalIntroDuration = INTRO_WORDS_END - INTRO_WORDS_START;
-              const step = totalIntroDuration / introWords.length;
-
-              introWords.forEach((word, index) => {
-                const start = INTRO_WORDS_START + index * step;
-                timeline.to(
-                  word,
-                  {
-                    color: "#ffffff",
-                    ease: "none",
-                    duration: step * 1.5,
-                  },
-                  start
-                );
-              });
+              timeline.to(
+                introWords,
+                {
+                  color: "#ffffff",
+                  ease: "power1.inOut",
+                  duration: INTRO_WORDS_END - INTRO_WORDS_START,
+                },
+                INTRO_WORDS_START
+              );
             }
 
             // 7. Smooth upward shift of the whole content wrapper (48 -> 74%)
-            // -40vw scrolls Manifesto & Intro completely off screen, placing Managers cleanly above the video card
+            // 7. Continuous upward scroll of content wrapper
+            // 7. Continuous upward scroll of content wrapper
+            // Stage 1 (46 -> 60%): Brings Persona 3 and the video below it smoothly into view
             if (contentWrapper) {
               timeline.to(
                 contentWrapper,
                 {
-                  y: "-40vw",
+                  y: "-50vw",
                   ease: "power1.inOut",
-                  duration: CONTENT_SHIFT_END - CONTENT_SHIFT_START,
+                  duration: 60 - PERSONA_1_TITLE_START,
                 },
-                CONTENT_SHIFT_START
+                PERSONA_1_TITLE_START
+              );
+
+              // Stage 2 (64 -> 72%): Text continues scrolling naturally off the top as video expands
+              timeline.to(
+                contentWrapper,
+                {
+                  y: "-115vw",
+                  ease: "power1.inOut",
+                  duration: VIDEO_EXPAND_END - VIDEO_EXPAND_START,
+                },
+                VIDEO_EXPAND_START
               );
             }
 
-            // 8. Persona 1: Students & Learners (62 -> 70%)
+            if (textLayer) {
+              timeline.to(
+                textLayer,
+                {
+                  opacity: 0,
+                  ease: "power1.inOut",
+                  duration: VIDEO_EXPAND_END - VIDEO_EXPAND_START,
+                },
+                VIDEO_EXPAND_START
+              );
+            }
+
+            // 8. Persona 1: Students & Learners
             if (personaTitles[0]) {
               timeline.to(
                 personaTitles[0],
@@ -342,7 +357,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 9. Persona 2: Creators, Designers & Architects (70 -> 78%)
+            // 9. Persona 2: Creators, Designers & Architects
             if (personaTitles[1]) {
               timeline.to(
                 personaTitles[1],
@@ -368,7 +383,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 10. Persona 3: Managers & Product Thinkers (78 -> 86%)
+            // 10. Persona 3: Managers & Product Thinkers
             if (personaTitles[2]) {
               timeline.to(
                 personaTitles[2],
@@ -394,7 +409,7 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               );
             }
 
-            // 11. Video stage entrance (82 -> 88%)
+            // 11. Video stage entrance (58 -> 66%) — Enters from right into bottom half below Persona 3
             if (videoStage) {
               timeline.to(
                 videoStage,
@@ -413,29 +428,28 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                 {
                   opacity: 1,
                   x: "0vw",
-                  width: "50vw",
-                  height: "34vh",
-                  scale: 1,
                   ease: "power2.out",
                   duration: VIDEO_STAGE_ENTER_END - VIDEO_STAGE_ENTER_START,
                 },
                 VIDEO_STAGE_ENTER_START
               );
 
-              // 12. Video expands to full framed stage as text layer moves off-screen (88 -> 95%)
+              // 12. Video expands across entire framed stage (64 -> 72%) as text scrolls off top with matched easing
               timeline.to(
                 videoWrapper,
                 {
                   width: "100%",
                   height: "100%",
+                  right: "0vw",
+                  bottom: "0vh",
                   scale: 1,
-                  ease: "power2.inOut",
+                  ease: "power1.inOut",
                   duration: VIDEO_EXPAND_END - VIDEO_EXPAND_START,
                 },
                 VIDEO_EXPAND_START
               );
 
-              // 13. Video pushes back into the background (97 -> 100%)
+              // 13. Video pushes back into the background (77 -> 83%)
               timeline.to(
                 videoWrapper,
                 {
@@ -445,20 +459,6 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
                   duration: VIDEO_PUSHBACK_END - VIDEO_PUSHBACK_START,
                 },
                 VIDEO_PUSHBACK_START
-              );
-            }
-
-            // 14. Text layer exit (88 -> 94%)
-            if (textLayer) {
-              timeline.to(
-                textLayer,
-                {
-                  opacity: 0,
-                  y: "-15vw",
-                  ease: "power1.inOut",
-                  duration: TEXT_EXIT_END - TEXT_EXIT_START,
-                },
-                TEXT_EXIT_START
               );
             }
 

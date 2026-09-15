@@ -70,8 +70,8 @@ export function useHeroScroll({
 
     function resizeCanvas() {
       const dpr = window.devicePixelRatio || 1;
-      const width = camera.clientWidth;
-      const height = camera.clientHeight;
+      const width = canvas!.clientWidth;
+      const height = canvas!.clientHeight;
 
       canvas!.width = width * dpr;
       canvas!.height = height * dpr;
@@ -90,8 +90,8 @@ export function useHeroScroll({
         return;
       }
 
-      const width = camera.clientWidth;
-      const height = camera.clientHeight;
+      const width = canvas!.clientWidth;
+      const height = canvas!.clientHeight;
       const imgRatio = img.naturalWidth / img.naturalHeight;
       const boxRatio = width / height;
 

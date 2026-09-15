@@ -27,32 +27,75 @@ const MOBILE_MANIFESTO_LINES = [
 ];
 
 const DEFAULT_INTRO_STRUCTURE = [
-  ["This tool is made for people who think on paper. It"],
   [
-    "keeps handwriting natural and focused, letting you write the way",
-    "you always have without distractions or screens getting in the way.",
+    "This tool is made for people who think on paper. It",
+    "keeps handwriting natural and focused, letting you write the",
+    "way you always have without distractions or screens getting in",
+    "the way.",
   ],
-  ["Everything you write syncs to the app, where"],
   [
-    "your notes are organized, searchable, and ready to work with AI",
-    "when you need more clarity or structure.",
+    "Everything you write syncs to the app, where",
+    "your notes are organized, searchable, and ready to work with",
+    "AI when you need more clarity or structure.",
   ],
 ];
 
 const DEFAULT_PERSONAS: Persona[] = [
   {
     title: "Students & Learners",
-    body: "Handwritten notes stay personal and intuitive, but become searchable, organized, and easy to study. Lectures, ideas, and revisions are captured as they are — then supported by AI summaries, text recognition, and quick navigation when it matters most.",
+    body: "Handwritten notes stay personal and\nintuitive, but become searchable, organized,\nand easy to study. Lectures, ideas, and\nrevisions are captured as they are — then\nsupported by AI summaries, text recognition,\nand quick navigation when it matters most.",
   },
   {
     title: "Creators, Designers & Architects",
-    body: "Sketches, diagrams, concepts, and fragments of ideas belong on paper. This tool makes sure they don’t disappear. Everything drawn or written is safely stored, easy to revisit, and ready to evolve into something bigger — without interrupting the creative flow.",
+    body: "Sketches, diagrams, concepts, and\nfragments of ideas belong on paper. This tool\nmakes sure they don’t disappear. Everything\ndrawn or written is safely stored, easy to\nrevisit, and ready to evolve into something\nbigger — without interrupting the creative\nflow.",
   },
   {
     title: "Managers & Product Thinkers",
-    body: "Meetings start on paper and end with structure. Notes turn into clear summaries, tasks, and follow-ups. The pen captures everything quietly, while the app helps organize decisions without pulling attention away from the room.",
+    body: "Meetings start on paper and end with\nstructure. Notes turn into clear summaries,\ntasks, and follow-ups. The pen captures\neverything quietly, while the app helps\norganize decisions without pulling attention\naway from the room.",
   },
 ];
+
+function getPersonaBodyLines(body: string, title?: string): string[] {
+  if (body.includes("\n")) {
+    return body.split(/\r?\n+/).map((l) => l.trim()).filter(Boolean);
+  }
+
+  if (title === "Students & Learners" || body.startsWith("Handwritten notes")) {
+    return [
+      "Handwritten notes stay personal and",
+      "intuitive, but become searchable, organized,",
+      "and easy to study. Lectures, ideas, and",
+      "revisions are captured as they are — then",
+      "supported by AI summaries, text recognition,",
+      "and quick navigation when it matters most.",
+    ];
+  }
+
+  if (title === "Creators, Designers & Architects" || body.startsWith("Sketches, diagrams")) {
+    return [
+      "Sketches, diagrams, concepts, and",
+      "fragments of ideas belong on paper. This tool",
+      "makes sure they don’t disappear. Everything",
+      "drawn or written is safely stored, easy to",
+      "revisit, and ready to evolve into something",
+      "bigger — without interrupting the creative",
+      "flow.",
+    ];
+  }
+
+  if (title === "Managers & Product Thinkers" || body.startsWith("Meetings start")) {
+    return [
+      "Meetings start on paper and end with",
+      "structure. Notes turn into clear summaries,",
+      "tasks, and follow-ups. The pen captures",
+      "everything quietly, while the app helps",
+      "organize decisions without pulling attention",
+      "away from the room.",
+    ];
+  }
+
+  return [body];
+}
 
 function getManifestoLines(manifesto: string): string[] {
   if (!manifesto) {
@@ -192,7 +235,10 @@ export function Who({ section }: WhoProps) {
                   {introParagraphs.map((lines, pIndex) => (
                     <p key={pIndex} className={styles.introParagraph}>
                       {lines.map((lineText, lIndex) => (
-                        <span key={lIndex} className={styles.introLine}>
+                        <span
+                          key={lIndex}
+                          className={lIndex === 0 ? styles.introLineIndented : styles.introLine}
+                        >
                           {renderAnimatedWords(lineText, "data-intro-word")}
                           {lIndex < lines.length - 1 ? " " : ""}
                         </span>
@@ -220,7 +266,11 @@ export function Who({ section }: WhoProps) {
                         {persona.title}
                       </h3>
                       <p data-persona-body className={styles.personaBody}>
-                        {persona.body}
+                        {getPersonaBodyLines(persona.body, persona.title).map((line, lIndex) => (
+                          <span key={lIndex} className={styles.personaLine}>
+                            {line}
+                          </span>
+                        ))}
                       </p>
                     </div>
                   ))}
@@ -230,7 +280,7 @@ export function Who({ section }: WhoProps) {
           </div>
         </div>
 
-        {/* Video Stage Frame: Plays once and holds on final frame */}
+        {/* Video Stage Frame: Clean full-viewport layer */}
         <div data-video-stage className={styles.videoStage}>
           <div data-video-wrapper className={styles.videoWrapper}>
             <video
