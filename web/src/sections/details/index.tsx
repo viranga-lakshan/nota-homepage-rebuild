@@ -32,7 +32,7 @@ const DEFAULT_CARDS: DetailCard[] = [
   {
     label: null,
     image: {
-      url: "/images/detail_3.jpg",
+      url: "/images/detail_5.jpg",
       alt: "Control button detail",
       width: 800,
       height: 800,
@@ -50,7 +50,7 @@ const DEFAULT_CARDS: DetailCard[] = [
   {
     label: "Aluminum body",
     image: {
-      url: "/images/detail_5.jpg",
+      url: "/images/detail_3.jpg",
       alt: "Aluminum body",
       width: 800,
       height: 600,
@@ -60,7 +60,7 @@ const DEFAULT_CARDS: DetailCard[] = [
   {
     label: null,
     image: {
-      url: "/images/detail_6.jpg",
+      url: "/images/detail_5.jpg",
       alt: "Control button detail",
       width: 800,
       height: 800,
@@ -129,6 +129,20 @@ export function Details({ section }: DetailsProps) {
     const defaultCard = DEFAULT_CARDS[index];
     const rawCard = section.cards?.[index];
 
+    // For slot 2 (Card 3), button closeup image (detail_5.jpg)
+    if (index === 2) {
+      return {
+        ...defaultCard,
+        image: {
+          url: "/images/detail_5.jpg",
+          alt: "Control button detail",
+          width: 800,
+          height: 800,
+        },
+        label: null,
+      };
+    }
+
     // For slot 3 (Card 4), it is always the video card
     if (index === 3) {
       return {
@@ -138,11 +152,16 @@ export function Details({ section }: DetailsProps) {
       };
     }
 
-    // For slot 4 (Card 5), it is "Aluminum body"
+    // For slot 4 (Card 5), it is "Aluminum body" with pen body/nib (detail_3.jpg)
     if (index === 4) {
       return {
         ...defaultCard,
-        ...(rawCard?.image ? { image: rawCard.image } : {}),
+        image: {
+          url: "/images/detail_3.jpg",
+          alt: "Aluminum body",
+          width: 800,
+          height: 600,
+        },
         label: "Aluminum body",
       };
     }
