@@ -222,11 +222,11 @@
     align-self: auto;
   }
 
-  /* Card 3: Button closeup arch (403 x 335.95) */
+  /* Card 3: Button closeup capsule (403 x 335.95) */
   .card3 {
     width: 100%;
     aspect-ratio: 403 / 336;
-    border-radius: 200px 200px 24px 24px;
+    border-radius: 200px;
     overflow: hidden;
     grid-column: auto;
     grid-row: auto;
@@ -264,11 +264,11 @@
     align-self: auto;
   }
 
-  /* Card 6: Standalone arch (403 x 336) */
+  /* Card 6: Standalone capsule (403 x 336) */
   .card6 {
     width: 100%;
     aspect-ratio: 403 / 336;
-    border-radius: 200px 200px 24px 24px;
+    border-radius: 200px;
     overflow: hidden;
     grid-column: auto;
     grid-row: auto;
