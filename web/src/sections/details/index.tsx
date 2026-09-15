@@ -203,6 +203,7 @@ export function Details({ section }: DetailsProps) {
           );
         })}
       </div>
+      <div className={styles.bottomDivider} />
     </section>
   );
 }

@@ -75,6 +75,7 @@
 .textLeft,
 .textRight {
   font-family: var(--font-serif, "Instrument Serif", serif);
+  font-weight: 400;
   font-size: 3.27vw;
   line-height: 1.05;
   letter-spacing: -0.05em;
@@ -142,30 +143,86 @@
 /* Mobile responsive layout */
 @media (max-width: 991px) {
   .track {
-    height: 400vh;
+    height: 100vh;
+    height: 100dvh;
+    position: relative;
+    touch-action: pan-y;
+  }
+
+  .camera {
+    position: relative;
+    top: auto;
+    height: 100%;
+    width: 100%;
+  }
+
+  .bgImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
   }
 
   .content {
-    flex-direction: column;
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
-    padding: 0 5vw;
-    gap: 45vh;
+    padding: 0 4vw;
+    gap: 0.3em;
+    pointer-events: none;
+    z-index: 3;
+    box-sizing: border-box;
   }
 
   .textLeft,
   .textRight {
-    font-size: 7.5vw;
-    width: 100%;
+    font-family: var(--font-serif, "Instrument Serif", serif);
+    font-weight: 400;
+    font-size: 40.334px;
+    line-height: 53px;
+    letter-spacing: -0.04em;
+    color: #ffffff;
+    width: auto;
+    margin: 0;
+    padding: 0;
     text-align: center;
+    white-space: nowrap;
+    transform: none !important;
+  }
+
+  .slideLayer:not(.active) .textLeft,
+  .slideLayer:not(.active) .textRight {
+    opacity: 0 !important;
+  }
+
+  .slideLayer.active .textLeft,
+  .slideLayer.active .textRight {
+    opacity: 1 !important;
   }
 
   .indicators {
-    bottom: 4vh;
-    gap: 2vw;
+    bottom: 3.5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 88vw;
+    max-width: 360px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    z-index: 10;
   }
 
   .indicatorBar {
-    width: 12vw;
-    height: 3px;
+    flex: 1;
+    width: auto;
+    height: 2px;
+    border-radius: 100px;
   }
 }
