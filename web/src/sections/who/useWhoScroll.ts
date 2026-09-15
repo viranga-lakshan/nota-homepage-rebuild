@@ -26,57 +26,57 @@ interface UseWhoScrollOptions {
  */
 /* Entrance Transition Markers (4-tier silhouette -> black screen) */
 const TRANSITION_FADE_START = 0;
-const TRANSITION_FADE_END = 5;
-const EXPAND_START = 5;
-const EXPAND_END = 16;
+const TRANSITION_FADE_END = 4;
+const EXPAND_START = 4;
+const EXPAND_END = 12;
 
 /* Manifesto Reveal (on solid black) */
-const MANIFESTO_FADE_START = 16;
-const MANIFESTO_FADE_END = 20;
-const MANIFESTO_WORDS_START = 20;
-const MANIFESTO_WORDS_END = 36;
+const MANIFESTO_FADE_START = 12;
+const MANIFESTO_FADE_END = 16;
+const MANIFESTO_WORDS_START = 16;
+const MANIFESTO_WORDS_END = 28;
 
 /* Rest of Section Flow */
-const DIVIDER_START = 36;
-const DIVIDER_END = 40;
+const DIVIDER_START = 28;
+const DIVIDER_END = 32;
 
-const LABEL_START = 38;
-const LABEL_END = 42;
+const LABEL_START = 29;
+const LABEL_END = 32;
 
-const RIGHT_ENTER_START = 42;
-const RIGHT_ENTER_END = 50;
+const RIGHT_ENTER_START = 32;
+const RIGHT_ENTER_END = 38;
 
-const INTRO_WORDS_START = 50;
-const INTRO_WORDS_END = 62;
+const INTRO_WORDS_START = 38;
+const INTRO_WORDS_END = 48;
 
-const CONTENT_SHIFT_START = 62;
-const CONTENT_SHIFT_END = 80;
+const CONTENT_SHIFT_START = 48;
+const CONTENT_SHIFT_END = 74;
 
-const PERSONA_1_TITLE_START = 62;
-const PERSONA_1_TITLE_END = 68;
-const PERSONA_1_BODY_START = 64;
-const PERSONA_1_BODY_END = 70;
+const PERSONA_1_TITLE_START = 48;
+const PERSONA_1_TITLE_END = 56;
+const PERSONA_1_BODY_START = 50;
+const PERSONA_1_BODY_END = 58;
 
-const PERSONA_2_TITLE_START = 70;
-const PERSONA_2_TITLE_END = 76;
-const PERSONA_2_BODY_START = 72;
-const PERSONA_2_BODY_END = 78;
+const PERSONA_2_TITLE_START = 56;
+const PERSONA_2_TITLE_END = 64;
+const PERSONA_2_BODY_START = 58;
+const PERSONA_2_BODY_END = 66;
 
-const PERSONA_3_TITLE_START = 78;
-const PERSONA_3_TITLE_END = 84;
-const PERSONA_3_BODY_START = 80;
-const PERSONA_3_BODY_END = 86;
+const PERSONA_3_TITLE_START = 64;
+const PERSONA_3_TITLE_END = 72;
+const PERSONA_3_BODY_START = 66;
+const PERSONA_3_BODY_END = 74;
 
-const VIDEO_STAGE_ENTER_START = 82;
-const VIDEO_STAGE_ENTER_END = 88;
+const VIDEO_STAGE_ENTER_START = 68;
+const VIDEO_STAGE_ENTER_END = 74;
 
-const TEXT_EXIT_START = 88;
-const TEXT_EXIT_END = 94;
+const TEXT_EXIT_START = 74;
+const TEXT_EXIT_END = 82;
 
-const VIDEO_EXPAND_START = 88;
-const VIDEO_EXPAND_END = 95;
+const VIDEO_EXPAND_START = 74;
+const VIDEO_EXPAND_END = 82;
 
-const VIDEO_PUSHBACK_START = 97;
+const VIDEO_PUSHBACK_START = 88;
 const VIDEO_PUSHBACK_END = 100;
 
 export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
@@ -302,12 +302,13 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
               });
             }
 
-            // 7. Smooth upward shift of the whole content wrapper (62 -> 80%)
+            // 7. Smooth upward shift of the whole content wrapper (48 -> 74%)
+            // -40vw scrolls Manifesto & Intro completely off screen, placing Managers cleanly above the video card
             if (contentWrapper) {
               timeline.to(
                 contentWrapper,
                 {
-                  y: "-13.5vw",
+                  y: "-40vw",
                   ease: "power1.inOut",
                   duration: CONTENT_SHIFT_END - CONTENT_SHIFT_START,
                 },

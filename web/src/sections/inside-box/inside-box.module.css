@@ -358,6 +358,10 @@
   will-change: color;
 }
 
+.mobileDescriptionText {
+  display: none;
+}
+
 @media (min-width: 1440px) {
   .descriptionWrapper {
     max-width: 82vw;
