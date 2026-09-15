@@ -183,6 +183,7 @@ export function Details({ section }: DetailsProps) {
 
   return (
     <section className={styles.section} data-details-section>
+      <div className={styles.divider} />
       <div className={styles.grid}>
         {cards.map((card, index) => {
           const cardClass = CARD_CLASSES[index] || styles.card1;
