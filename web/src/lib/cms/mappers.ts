@@ -304,10 +304,10 @@ export function toFooter(dto: FooterDto): Footer {
 
 export function toOrderPopup(dto: OrderPopupDto): OrderPopup {
   return {
-    heading: dto.heading,
-    subtext: dto.subtext,
-    emailPlaceholder: dto.email_placeholder,
-    buttonLabel: dto.button_label,
-    successMessage: dto.success_message,
+    heading: dto.heading || "Stay ahead",
+    subtext: dto.subtext || "Launching soon. Get early access and insider updates",
+    emailPlaceholder: dto.email_placeholder || "E-mail",
+    buttonLabel: dto.button_label || "Notify me",
+    successMessage: dto.success_message || "All set. We'll keep you posted",
   };
 }
