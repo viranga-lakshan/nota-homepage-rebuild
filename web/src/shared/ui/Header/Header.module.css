@@ -126,30 +126,29 @@
   background: var(--color-white);
 }
 
-.burger {
+.mobileRightMark {
   display: none;
-  padding: 0;
-  background: none;
-  border: none;
-  cursor: pointer;
 }
 
-.burgerIcon {
-  width: 4.17vw;
-  height: 4.17vw;
+.mobileMarkIcon {
+  width: 24px;
+  height: 24px;
 }
 
-/* Below 991px: nav links and the order button give way to a burger. The
-   logo stays — no persistent mark icon in the collapsed header (see
-   Header.tsx docblock for why one isn't rendered here). */
+/* Below 991px: nav links and the order button give way to center burger and right mark. */
 @media (max-width: 991px) {
   .header {
-    padding: 4.17vw 4.69vw;
+    padding: 20px 24px;
+    min-height: 74px;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    background: transparent;
   }
 
   .logo {
-    width: 7.29vw;
-    height: 2.34vw;
+    width: 82px;
+    height: 27px;
+    margin: 0;
   }
 
   .nav,
@@ -158,31 +157,64 @@
   }
 
   .burger {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
-  }
-}
-
-@media (max-width: 767px) {
-  .logo {
-    width: 11.67vw;
-    height: 3.75vw;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
   }
 
   .burgerIcon {
-    width: 6.67vw;
-    height: 6.67vw;
+    width: 26px;
+    height: 26px;
+  }
+
+  .mobileRightMark {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .mobileMarkIcon {
+    width: 26px;
+    height: 26px;
   }
 }
 
 @media (max-width: 479px) {
+  .header {
+    padding: 18px 20px;
+    min-height: 68px;
+  }
+
   .logo {
-    width: 17.5vw;
-    height: 5.63vw;
+    width: 76px;
+    height: 25px;
+  }
+
+  .burger {
+    width: auto;
+    height: auto;
+    background: transparent;
+    border: none;
   }
 
   .burgerIcon {
-    width: 10vw;
-    height: 10vw;
+    width: 26px;
+    height: 26px;
+  }
+
+  .mobileMarkIcon {
+    width: 26px;
+    height: 26px;
   }
 }
 

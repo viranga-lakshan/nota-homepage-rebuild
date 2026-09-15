@@ -32,6 +32,7 @@ const HOMEPAGE_POPULATE = {
       "sections.specs": {
         populate: {
           pen_image: true,
+          mobile_pen_image: true,
           groups: { populate: ["items"] },
         },
       },

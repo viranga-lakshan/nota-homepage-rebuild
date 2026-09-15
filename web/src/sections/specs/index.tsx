@@ -24,6 +24,13 @@ export function Specs({ section }: SpecsProps) {
 
   useSpecsScroll({ sectionRef });
 
+  const mobilePenSrc =
+    section.mobilePenImage?.url || "/images/specs_pen_mobile.webp";
+  const mobilePenAlt =
+    section.mobilePenImage?.alt ||
+    section.penImage.alt ||
+    "Nota pen specifications view";
+
   return (
     <section ref={sectionRef} className={styles.specs}>
       <div className={styles.camera}>
@@ -35,12 +42,23 @@ export function Specs({ section }: SpecsProps) {
             </h2>
           </div>
 
-          <div data-pen className={styles.penWrap}>
+          <div className={styles.mobilePenWrap}>
+            <Image
+              src={mobilePenSrc}
+              alt={mobilePenAlt}
+              width={756}
+              height={148}
+              priority
+              className={styles.mobilePen}
+            />
+          </div>
+
+          <div data-pen className={styles.desktopPenWrap}>
             <Image
               src={section.penImage.url}
               alt={section.penImage.alt}
-              width={section.penImage.width}
-              height={section.penImage.height}
+              width={section.penImage.width || 440}
+              height={section.penImage.height || 980}
               sizes="(max-width: 991px) 40vh, 71vh"
               className={styles.pen}
             />

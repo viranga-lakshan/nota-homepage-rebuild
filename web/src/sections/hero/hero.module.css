@@ -115,42 +115,74 @@
 }
 
 @media (max-width: 991px) {
+  .hero {
+    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+  }
+
   .mobile {
+    position: relative;
     background: var(--color-bg-radial);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 4vh;
+    justify-content: flex-end;
+    height: 100vh;
     min-height: 100vh;
-    padding: 8vh 6vw;
+    padding: 0 16px 11vh;
+    box-sizing: border-box;
     text-align: center;
+    overflow: hidden;
   }
-}
 
-.mobileImageWrap {
-  position: relative;
-  width: 60vw;
-  max-width: 320px;
-}
-
-.mobileImage {
-  width: 100%;
-  height: auto;
-}
-
-@media (max-width: 479px) {
   .mobileImageWrap {
-    width: 80vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    z-index: 1;
+    pointer-events: none;
+    overflow: visible;
   }
-}
 
-/* Mobile tree's own .headline is not absolutely positioned — it flows
-   under the image instead, per the spec ("headline below the image"). The
-   desktop rules above set position/z-index unconditionally, so this
-   overrides them back to normal flow inside the mobile tree specifically. */
-.mobile .headline {
-  position: static;
-  align-items: center;
-  text-align: center;
+  .mobileImage {
+    width: 38vw;
+    max-width: 165px;
+    min-width: 130px;
+    height: auto;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  .mobile .headline {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: var(--font-serif);
+    color: #ffffff;
+    margin: 0;
+    width: 100%;
+  }
+
+  .mobile .headlineLine1 {
+    font-size: clamp(4rem, 17.5vw, 5.6rem);
+    line-height: 88%;
+    letter-spacing: -0.04em;
+    display: block;
+  }
+
+  .mobile .headlineLine2 {
+    font-size: clamp(4rem, 17.5vw, 5.6rem);
+    line-height: 88%;
+    letter-spacing: -0.04em;
+    display: block;
+  }
 }

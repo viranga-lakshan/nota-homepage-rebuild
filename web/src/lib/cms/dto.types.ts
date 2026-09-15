@@ -93,6 +93,8 @@ export interface SpecsSectionDto {
   heading: string;
   pen_image: StrapiMediaDto;
   pen_image_alt: string;
+  mobile_pen_image?: StrapiMediaDto | null;
+  mobile_pen_image_alt?: string | null;
   groups: SpecGroupDto[];
 }
 

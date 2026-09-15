@@ -34,6 +34,19 @@
       "maxLength": 150,
       "description": "Describes the pen photo for screen readers and when the image fails to load."
     },
+    "mobile_pen_image": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"],
+      "description": "Horizontal pen photo shown on mobile devices."
+    },
+    "mobile_pen_image_alt": {
+      "type": "string",
+      "required": false,
+      "maxLength": 150,
+      "description": "Describes the mobile pen photo for screen readers."
+    },
     "groups": {
       "type": "component",
       "repeatable": true,

@@ -55,6 +55,10 @@
     top: 0;
   }
 
+  .mobilePenWrap {
+    display: none;
+  }
+
   /* Starting states, declared here rather than set from JS so nothing
      flashes in place before the hook runs. The hook animates away from
      exactly these values. */
@@ -67,7 +71,7 @@
     opacity: 0;
   }
 
-  .penWrap {
+  .desktopPenWrap {
     transform: translate3d(0, 130%, 0);
   }
 
@@ -98,7 +102,7 @@
   }
 
   .headingBlock,
-  .penWrap,
+  .desktopPenWrap,
   .card {
     transform: none;
   }
@@ -146,7 +150,7 @@
 
 /* Absolutely positioned so it sits behind the cards: the
    cards are later in the flow and their frosted glass blur reads over the pen. */
-.penWrap {
+.desktopPenWrap {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -252,11 +256,6 @@
 /* Below 992px                                                            */
 /* ---------------------------------------------------------------------- */
 
-/* The reference hides the animated section here and renders a separate
-   static block instead. Rather than ship a second copy of the markup, the
-   same tree flows normally: no camera, no scrub, pen above the cards,
-   columns stacked. This layout is my own — the reference's mobile block was
-   not mined for exact values. */
 @media (max-width: 991px) {
   .camera {
     height: auto;
@@ -264,45 +263,112 @@
   }
 
   .content {
-    row-gap: 6vh;
-    padding: 8vh 6vw;
+    display: flex;
+    flex-direction: column;
+    height: auto;
+    padding: 7vh 4.5vw 8vh;
+    background: #ffffff;
+    color: #111111;
   }
 
   .headingBlock {
     height: auto;
+    margin: 0;
+    padding: 0;
   }
 
-
-  .penWrap {
-    position: relative;
+  .heading {
+    font-size: clamp(2.3rem, 10.5vw, 3rem);
+    line-height: 104%;
+    letter-spacing: -0.035em;
   }
 
-  .pen {
-    height: 40vh;
+  .eyebrow {
+    font-size: clamp(1.9rem, 8.8vw, 2.5rem);
+    color: #8e8e93;
+    line-height: 110%;
+  }
+
+  .desktopPenWrap {
+    display: none;
+  }
+
+  .mobilePenWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 3.5vh auto 4.5vh;
+  }
+
+  .mobilePen {
+    width: 90vw;
+    max-width: 380px;
+    height: auto;
+    object-fit: contain;
   }
 
   .cards {
-    grid-template-columns: 1fr;
-    row-gap: 2vh;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5vh;
+    width: 100%;
+    max-width: 100%;
     padding: 0;
+    margin: 0;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 100%;
+    transform: none !important;
   }
 
   .cardTitle,
   .cardItems {
-    padding: 2.4vh 5vw;
-    border-radius: 3vw;
+    background-color: #f7f7f8;
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    border-radius: 3.8vw;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .cardTitle {
-    font-size: 5vw;
+    padding: 2.2vh 5.5vw;
+    font-size: clamp(1.2rem, 5.2vw, 1.45rem);
+    font-weight: 600;
+    color: #111111;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .cardItems {
+    padding: 0.8vh 5.5vw;
+    row-gap: 0;
+  }
+
+  .cardItem {
+    padding: 2vh 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
   }
 
   .cardItemLabel {
-    font-size: 4vw;
+    font-size: clamp(0.95rem, 4.1vw, 1.1rem);
+    font-weight: 450;
+    color: #1a1a1a;
+    line-height: 135%;
+    letter-spacing: -0.015em;
   }
 
   .cardItemDot {
-    width: 2vw;
-    height: 2vw;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #c7c7cc;
+    flex-shrink: 0;
+    margin-left: 3vw;
   }
 }

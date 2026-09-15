@@ -12,21 +12,27 @@ interface MobileMenuProps {
   footer: Footer | null;
   isOpen: boolean;
   onClose: () => void;
+  onOpenOrder?: () => void;
 }
 
 /**
- * The full-screen mobile nav overlay. Always mounted, never conditionally
- * rendered — `inert` (not a class, not `display: none`) is what actually
- * removes it from the tab order and accessibility tree while closed, so a
- * CSS transition can animate it open/closed both ways rather than only
- * having an enter animation from a fresh mount.
- *
- * Nav links, the order pill's text, and the footer credits all come from
- * `navigation`/`footer` — nothing here is hardcoded, even though the task
- * that asked for this listed the link labels and footer text as if they
- * were fixed strings.
+ * Full-screen mobile nav overlay matching the exact reference design:
+ * - Header row with black Nota logo, close X icon, and Nota mark
+ * - Center horizontal capsule/pill container with blue pens image & frosted Order pill button
+ * - Footer row with copyright on left and credits on right
  */
-export function MobileMenu({ navigation, footer, isOpen, onClose }: MobileMenuProps) {
+export function MobileMenu({
+  navigation,
+  footer,
+  isOpen,
+  onClose,
+  onOpenOrder,
+}: MobileMenuProps) {
+  const imageUrl =
+    navigation.mobileMenuImage?.url || "/images/popup_order_img_vertical.webp";
+  const imageAlt =
+    navigation.mobileMenuImage?.alt || "NŌTA One Smart Pen";
+
   return (
     <div
       className={styles.overlay}
@@ -38,12 +44,19 @@ export function MobileMenu({ navigation, footer, isOpen, onClose }: MobileMenuPr
     >
       <div className={styles.topBar}>
         <NotaLogo color="black" className={styles.logo} />
-        <button type="button" className={styles.closeButton} onClick={onClose} aria-label="Close menu">
-          {/* Path data pulled directly from the reference site's own close
-              button — the earlier version of this hand-drew a plain two-line
-              X, which wasn't the real asset. No width/height attributes,
-              same reason as NotaLogo/NotaMark: sized via CSS instead. */}
-          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className={styles.closeIcon} aria-hidden="true">
+        <button
+          type="button"
+          className={styles.closeButton}
+          onClick={onClose}
+          aria-label="Close menu"
+        >
+          <svg
+            viewBox="8.5 8.5 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            className={styles.closeIcon}
+            aria-hidden="true"
+          >
             <path
               fillRule="evenodd"
               clipRule="evenodd"
@@ -55,44 +68,100 @@ export function MobileMenu({ navigation, footer, isOpen, onClose }: MobileMenuPr
         <NotaMark color="black" className={styles.mark} />
       </div>
 
-      <nav className={styles.nav} aria-label="Mobile">
-        <ul className={styles.navList}>
-          {navigation.items.map((item) => (
-            <li key={item.href}>
-              <a href={item.href} onClick={onClose}>
-                {item.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      <div className={styles.divider} />
 
-      <div className={styles.productWrap}>
-        <Image
-          src={navigation.mobileMenuImage.url}
-          alt={navigation.mobileMenuImage.alt}
-          width={navigation.mobileMenuImage.width}
-          height={navigation.mobileMenuImage.height}
-          sizes="80vw"
-          className={styles.productImage}
-        />
-        {/* Three stacked rows with a divider, matching the reference's own
-            order pill layout — an earlier version combined these into one
-            bulleted line, which wasn't how the real one is structured. */}
-        <div className={styles.orderPill}>
-          <span>{navigation.orderButtonLabel}</span>
-          <span className={styles.orderPillProduct}>{navigation.orderProductName}</span>
-          <span className={styles.orderPillDivider} aria-hidden="true" />
-          <span>{navigation.orderPrice}</span>
+      <div className={styles.content}>
+        <nav className={styles.nav} aria-label="Mobile">
+          <ul className={styles.navList}>
+            {(navigation.items && navigation.items.length > 0
+              ? navigation.items
+              : [
+                  { label: "Specifications", href: "#specifications" },
+                  { label: "Who it's for", href: "#who-its-for" },
+                  { label: "About", href: "#about" },
+                  { label: "Inside the box", href: "#inside-the-box" },
+                ]
+            ).map((item) => (
+              <li key={item.href} className={styles.navItem}>
+                <a
+                  href={item.href}
+                  onClick={onClose}
+                  className={styles.navLink}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        <div
+          className={styles.productWrap}
+          onClick={onOpenOrder}
+          role="button"
+          tabIndex={0}
+        >
+          <Image
+            src={imageUrl}
+            alt={imageAlt}
+            width={1008}
+            height={1472}
+            className={styles.productImage}
+          />
+          <div className={styles.orderPill}>
+            <span className={styles.orderPillLabel}>
+              {navigation.orderButtonLabel || "Order"}
+            </span>
+            <span className={styles.orderPillProduct}>
+              {navigation.orderProductName || "Nota One"}
+            </span>
+            <span className={styles.orderPillDivider} aria-hidden="true" />
+            <span className={styles.orderPillPrice}>
+              {navigation.orderPrice || "$300"}
+            </span>
+          </div>
         </div>
       </div>
 
-      {footer && (
-        <div className={styles.footer}>
-          <span>{footer.copyright}</span>
-          <span>{footer.credit}</span>
+      <div className={styles.divider} />
+
+      <div className={styles.footer}>
+        <div className={styles.footerCopyright}>
+          {footer?.copyright || "@2026 Nōta Team"}
         </div>
-      )}
+        <div className={styles.footerCredits}>
+          <div className={styles.footerBlockTop}>
+            <a
+              href="https://taptop.pro/"
+              target="_blank"
+              rel="noreferrer"
+              className={styles.footerLink}
+            >
+              Made in Taptop
+            </a>
+            <span className={styles.footerLinkText}>Builded by NōtaTeam</span>
+          </div>
+          <div className={styles.footerBlockBottom}>
+            <a
+              href="https://www.behance.net/alicem"
+              target="_blank"
+              rel="noreferrer"
+              className={styles.footerLink}
+            >
+              Designed by Alice
+            </a>
+            <a
+              href="https://www.uprock.ru/"
+              target="_blank"
+              rel="noreferrer"
+              className={styles.footerLink}
+            >
+              &amp; UPROCK Studio
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
+
