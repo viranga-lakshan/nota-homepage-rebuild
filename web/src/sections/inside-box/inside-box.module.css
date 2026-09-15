@@ -35,7 +35,7 @@
 
 @media (min-width: 992px) {
   .insideBox {
-    height: 1200vh;
+    height: 850vh;
     margin-top: -100vh;
     position: relative;
   }
@@ -356,6 +356,10 @@
   display: inline;
   color: #dddddd;
   will-change: color;
+}
+
+.mobileDescriptionText {
+  display: none;
 }
 
 @media (min-width: 1440px) {

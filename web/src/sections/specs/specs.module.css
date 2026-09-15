@@ -44,10 +44,10 @@
    same markup simply flows normally — see the bottom of this file. */
 @media (min-width: 992px) {
   .specs {
-    height: 400vh;
+    height: 350vh;
     margin-top: -100vh;
     position: sticky;
-    top: -300vh;
+    top: -250vh;
   }
 
   .camera {

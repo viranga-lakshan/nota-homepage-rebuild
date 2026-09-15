@@ -37,10 +37,10 @@
 
 @media (min-width: 992px) {
   .who {
-    height: 800vh;
+    height: 650vh;
     margin-top: -100vh;
     position: sticky;
-    top: -700vh;
+    top: -550vh;
   }
 
   .camera {

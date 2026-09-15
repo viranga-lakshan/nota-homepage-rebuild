@@ -41,10 +41,10 @@
 
 @media (min-width: 992px) {
   .paper {
-    height: 900vh;
+    height: 700vh;
     margin-top: -100vh;
     position: sticky;
-    top: -800vh;
+    top: -600vh;
   }
 
   .camera {
