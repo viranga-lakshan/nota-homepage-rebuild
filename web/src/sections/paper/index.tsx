@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import type { PaperSection, PaperSlide } from "@/domain/sections";
 import { usePaperScroll } from "./usePaperScroll";
@@ -75,6 +75,8 @@ const DIVIDER_POSITIONS = [
 
 export function Paper({ section }: PaperProps) {
   const sectionRef = useRef<HTMLElement>(null);
+  const darkStageRef = useRef<HTMLDivElement>(null);
+  const [mobileActiveIndex, setMobileActiveIndex] = useState(0);
 
   usePaperScroll({ sectionRef });
 
@@ -83,67 +85,42 @@ export function Paper({ section }: PaperProps) {
 
   const slides = section.slides && section.slides.length > 0 ? section.slides : DEFAULT_SLIDES;
 
+  const handleMobileScroll = () => {
+    const el = darkStageRef.current;
+    if (!el) return;
+    const scrollLeft = el.scrollLeft;
+    const slideWidth = el.offsetWidth || (typeof window !== "undefined" ? window.innerWidth : 390);
+    if (slideWidth > 0) {
+      const newIndex = Math.round(scrollLeft / slideWidth);
+      if (newIndex >= 0 && newIndex < slides.length && newIndex !== mobileActiveIndex) {
+        setMobileActiveIndex(newIndex);
+      }
+    }
+  };
+
+  const scrollToSlide = (index: number) => {
+    const el = darkStageRef.current;
+    if (!el) return;
+    const slideWidth = el.offsetWidth || (typeof window !== "undefined" ? window.innerWidth : 390);
+    el.scrollTo({
+      left: index * slideWidth,
+      behavior: "smooth",
+    });
+    setMobileActiveIndex(index);
+  };
+
   return (
     <section ref={sectionRef} className={styles.paper}>
       <div className={styles.camera}>
-        {/* Underneath Dark Showcase Stage (Holding All 4 Slides) */}
-        <div data-paper-dark-stage className={styles.darkStage}>
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              data-paper-slide={index}
-              className={`${styles.slideLayer} ${index === 0 ? styles.slideActive : styles.slideInactive}`}
-            >
-              {/* Full-width Background Image */}
-              <div className={styles.stageBgWrap}>
-                <Image
-                  src={slide.image.url}
-                  alt={slide.image.alt || `Nota Smart Paper Slide ${index + 1}`}
-                  fill
-                  priority={index === 0}
-                  sizes="100vw"
-                  className={styles.stageBgImage}
-                />
-              </div>
-
-              {/* Headline on Top Left */}
-              <div data-slide-headline className={styles.stageHeadlineWrap}>
-                <h3 className={styles.stageHeadline}>
-                  {slide.headline.split("\n").map((line, lineIdx) => (
-                    <span key={lineIdx} className={styles.headlineLine}>
-                      {line}
-                    </span>
-                  ))}
-                </h3>
-              </div>
-
-              {/* Floating Callout Card on Bottom Right (Separated Title & Body Boxes) */}
-              <div data-slide-callout className={styles.calloutWrap}>
-                <div className={styles.calloutTitleBox}>
-                  <h4 className={styles.calloutTitle}>{slide.calloutTitle}</h4>
-                </div>
-                <div className={styles.calloutBodyBox}>
-                  <p className={styles.calloutBody}>{slide.calloutBody}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-
-          {/* Slide Progress Indicators (Synced to 4 Slides) */}
-          <div data-stage-indicators className={styles.indicatorsWrap} aria-hidden="true">
-            <div className={styles.indicatorTrack}>
-              {slides.map((_, index) => (
-                <span
-                  key={index}
-                  data-indicator-bar={index}
-                  className={`${styles.indicatorBar} ${index === 0 ? styles.indicatorActive : ""}`}
-                />
-              ))}
-            </div>
-          </div>
+        {/* Intro Heading / White Cover: "Works with smart paper" */}
+        <div data-paper-heading className={styles.headingWrapper}>
+          <h2 className={styles.heading}>
+            <span className={styles.headingLight}>{headingLight}</span>
+            <span className={styles.headingBold}>{headingBold}</span>
+          </h2>
         </div>
 
-        {/* 6 White Curtain Panels & 5 Divider Lines Overlay */}
+        {/* 6 White Curtain Panels & 5 Divider Lines Overlay (Desktop only) */}
         <div data-paper-curtains-overlay className={styles.curtainOverlay} aria-hidden="true">
           <div className={styles.curtains}>
             {Array.from({ length: CURTAIN_COUNT }, (_, index) => (
@@ -167,12 +144,69 @@ export function Paper({ section }: PaperProps) {
           </div>
         </div>
 
-        {/* Intro Heading: "Works with smart paper" */}
-        <div data-paper-heading className={styles.headingWrapper}>
-          <h2 className={styles.heading}>
-            <span className={styles.headingLight}>{headingLight}</span>
-            <span className={styles.headingBold}>{headingBold}</span>
-          </h2>
+        {/* Underneath Dark Showcase Stage (Holding All 4 Slides / Mobile Swipeable Carousel) */}
+        <div
+          ref={darkStageRef}
+          onScroll={handleMobileScroll}
+          data-paper-dark-stage
+          className={styles.darkStage}
+        >
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              data-paper-slide={index}
+              className={`${styles.slideLayer} ${index === 0 ? styles.slideActive : styles.slideInactive}`}
+            >
+              {/* Headline on Top */}
+              <div data-slide-headline className={styles.stageHeadlineWrap}>
+                <h3 className={styles.stageHeadline}>
+                  {slide.headline.split("\n").map((line, lineIdx) => (
+                    <span key={lineIdx} className={styles.headlineLine}>
+                      {line}
+                    </span>
+                  ))}
+                </h3>
+              </div>
+
+              {/* Full-width Product Background Image */}
+              <div className={styles.stageBgWrap}>
+                <Image
+                  src={slide.image.url}
+                  alt={slide.image.alt || `Nota Smart Paper Slide ${index + 1}`}
+                  fill
+                  priority={index === 0}
+                  sizes="(max-width: 991px) 90vw, 100vw"
+                  className={styles.stageBgImage}
+                />
+              </div>
+
+              {/* Floating Callout Card on Bottom */}
+              <div data-slide-callout className={styles.calloutWrap}>
+                <div className={styles.calloutTitleBox}>
+                  <h4 className={styles.calloutTitle}>{slide.calloutTitle}</h4>
+                </div>
+                <div className={styles.calloutBodyBox}>
+                  <p className={styles.calloutBody}>{slide.calloutBody}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Slide Progress Indicators (Synced to 4 Slides) */}
+        <div data-stage-indicators className={styles.indicatorsWrap} aria-hidden="true">
+          <div className={styles.indicatorTrack}>
+            {slides.map((_, index) => (
+              <span
+                key={index}
+                data-indicator-bar={index}
+                onClick={() => scrollToSlide(index)}
+                className={`${styles.indicatorBar} ${
+                  index === mobileActiveIndex ? styles.mobileIndicatorActive : ""
+                } ${index === 0 ? styles.indicatorActive : ""}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

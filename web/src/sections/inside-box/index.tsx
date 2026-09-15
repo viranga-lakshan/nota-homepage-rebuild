@@ -29,7 +29,7 @@ const DEFAULT_ITEMS: BoxItem[] = [
     description:
       "Aluminum body, USB-C charging, physical control button, and Bluetooth connectivity. Up to 8 hours of active use with a lightweight, balanced design for everyday writing.",
     image: {
-      url: "https://nota-homepage-rebuild-production.up.railway.app/uploads/inside_box_2_27c30f9cc7.jpg",
+      url: "/images/inside_box_2.jpg",
       alt: "NŌTA smart pen close-up",
       width: 900,
       height: 1000,
@@ -40,7 +40,7 @@ const DEFAULT_ITEMS: BoxItem[] = [
     description:
       "Compact USB-C power adapter with stable output for everyday charging. Designed for safe, efficient power delivery with minimal heat.",
     image: {
-      url: "https://nota-homepage-rebuild-production.up.railway.app/uploads/inside_box_3_83c8a900ce.jpg",
+      url: "/images/inside_box_3.jpg",
       alt: "NŌTA charging adapter",
       width: 900,
       height: 1000,
@@ -48,11 +48,23 @@ const DEFAULT_ITEMS: BoxItem[] = [
   },
 ];
 
-const DEFAULT_DESCRIPTION_LINES = [
+const DESKTOP_DESCRIPTION_LINES = [
   "A precision smart pen with a solid aluminum body, designed for",
   "natural handwriting and accurate digital capture. Seamlessly",
   "connects to smart paper, translating every stroke into structured",
   "digital data — no screens, no distractions, just writing.",
+];
+
+const MOBILE_DESCRIPTION_LINES = [
+  "A precision smart pen with a",
+  "solid aluminum body, designed",
+  "for natural handwriting and",
+  "accurate digital capture.",
+  "Seamlessly connects to smart",
+  "paper, translating every stroke",
+  "into structured digital data —",
+  "no screens, no distractions, just",
+  "writing.",
 ];
 
 const BLINDS_COUNT = 25;
@@ -72,7 +84,8 @@ export function InsideBox({ section }: InsideBoxProps) {
   const itemImage = activeItem?.image?.url || DEFAULT_ITEMS[0].image.url;
   const itemDesc = activeItem.description || DEFAULT_ITEMS[0].description;
 
-  const lines = DEFAULT_DESCRIPTION_LINES;
+  const lines = DESKTOP_DESCRIPTION_LINES;
+  const mobileLines = MOBILE_DESCRIPTION_LINES;
 
   const penItem = items[1] || DEFAULT_ITEMS[1];
   const penImage = penItem?.image?.url || DEFAULT_ITEMS[1].image.url;
@@ -136,10 +149,11 @@ export function InsideBox({ section }: InsideBoxProps) {
           </div>
         </div>
 
-        {/* Phase 4: Centered Description Text Fill Reveal (4 Exact Lines, character-by-character) */}
+        {/* Phase 4: Centered Description Text Fill Reveal */}
         <div data-desc-stage className={styles.descriptionStage}>
           <div className={styles.descriptionWrapper}>
             <div className={styles.descAccentDot} aria-hidden="true" />
+            {/* Desktop: 4-Line Scroll-Fill Text */}
             <p data-desc-paragraph className={styles.descriptionText}>
               {lines.map((lineText, lIdx) => (
                 <span key={lIdx} className={styles.descLine}>
@@ -157,6 +171,18 @@ export function InsideBox({ section }: InsideBoxProps) {
                       )}
                     </span>
                   ))}
+                </span>
+              ))}
+            </p>
+
+            {/* Mobile: 8-Line Clean Static Manifesto */}
+            <p className={styles.mobileDescriptionText}>
+              {mobileLines.map((lineText, lIdx) => (
+                <span key={lIdx} className={styles.mobileDescLine}>
+                  {lineText}
+                  {lIdx === mobileLines.length - 1 && (
+                    <span className={styles.mobileDescAccentDot} aria-hidden="true" />
+                  )}
                 </span>
               ))}
             </p>

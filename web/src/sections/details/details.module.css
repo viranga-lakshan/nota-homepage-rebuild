@@ -188,52 +188,123 @@
 
 /* Mobile responsive layout */
 @media (max-width: 991px) {
+  .section {
+    padding: 0;
+    background: #000000;
+  }
+
   .grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 2.08vw;
-    padding: 2.08vw;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 14px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
+  /* Card 1: Flush-fit precision cap (403 x 430) */
   .card1 {
-    grid-column: 1 / 3;
+    width: 100%;
+    aspect-ratio: 403 / 430;
+    border-radius: 24px;
+    grid-column: auto;
     grid-row: auto;
-    border-radius: 3vw;
   }
 
+  /* Card 2: Refined colors. Personal expression (403 x 671.88 tall pill) */
   .card2 {
-    grid-column: 2;
+    width: 100%;
+    aspect-ratio: 403 / 672;
+    border-radius: 200px;
+    grid-column: auto;
     grid-row: auto;
-    border-radius: 6.25vw;
+    justify-self: stretch;
+    align-self: auto;
   }
 
+  /* Card 3: Button closeup capsule (403 x 335.95) */
   .card3 {
-    grid-column: 1;
+    width: 100%;
+    aspect-ratio: 403 / 336;
+    border-radius: 200px;
+    overflow: hidden;
+    grid-column: auto;
     grid-row: auto;
-    border-radius: 6.25vw;
+    justify-self: stretch;
+    align-self: auto;
   }
 
+  .card3 .cardImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+  }
+
+  /* Card 4: Durable metal nib... Video (403 x 671.88 tall pill) */
   .card4 {
-    grid-column: 1 / 3;
+    width: 100%;
+    aspect-ratio: 403 / 672;
+    border-radius: 200px;
+    overflow: hidden;
+    grid-column: auto;
     grid-row: auto;
-    aspect-ratio: 16 / 9;
-    border-radius: 3vw;
   }
 
+  /* Card 5: Aluminum body (403 x 430) */
   .card5 {
-    grid-column: 1 / 3;
+    width: 100%;
+    aspect-ratio: 403 / 430;
+    border-radius: 24px;
+    overflow: hidden;
+    grid-column: auto;
     grid-row: auto;
-    border-radius: 3vw;
+    justify-self: stretch;
+    align-self: auto;
   }
 
+  /* Card 6: Standalone capsule (403 x 336) */
   .card6 {
-    grid-column: 1 / 3;
+    width: 100%;
+    aspect-ratio: 403 / 336;
+    border-radius: 200px;
+    overflow: hidden;
+    grid-column: auto;
     grid-row: auto;
-    border-radius: 6.25vw;
+    justify-self: stretch;
+    align-self: auto;
   }
 
+  .card6 .cardImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+  }
+
+  /* Badges centered on all mobile cards */
+  .card1 .label,
+  .card2 .label,
+  .card3 .label,
+  .card4 .label,
+  .card5 .label,
+  .card6 .label,
   .label {
-    font-size: 2.6vw;
-    padding: 1.04vw 2.6vw;
-    bottom: 3.13vw;
+    top: 50%;
+    left: 50%;
+    bottom: auto;
+    transform: translate(-50%, -50%);
+    font-size: clamp(12px, 3.5vw, 15px);
+    padding: 8px 18px;
+    background: rgba(0, 0, 0, 0.30);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 100px;
+    color: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
   }
 }
+

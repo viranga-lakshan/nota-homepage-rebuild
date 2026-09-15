@@ -62,7 +62,7 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  background-color: #080808;
+  background-color: #0d0d0d;
   z-index: 1;
   box-sizing: border-box;
   overflow: hidden;
@@ -328,16 +328,21 @@
 @media (max-width: 991px) {
   .paper {
     height: auto;
+    min-height: auto;
     margin-top: 0;
     position: relative;
     top: auto;
+    background-color: var(--color-black);
   }
 
   .camera {
     height: auto;
-    min-height: 100vh;
+    min-height: auto;
     position: relative;
-    padding: 6vh 4vw;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-black);
   }
 
   .curtainOverlay {
@@ -347,31 +352,65 @@
   .headingWrapper {
     position: relative;
     inset: auto;
-    padding: 8vh 4vw 4vh 4vw;
-    color: var(--color-white);
+    width: 100%;
+    height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 0 3.5vw;
+    box-sizing: border-box;
   }
 
   .heading {
-    font-size: 11vw;
-    line-height: 105%;
+    font-family: var(--font-serif);
+    font-size: clamp(4.2rem, 18.75vw, 5.8rem);
+    line-height: 100%;
+    letter-spacing: -0.03em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .headingLight {
-    color: rgba(255, 255, 255, 0.45);
+    color: #666666;
+    font-weight: 400;
+    font-size: inherit;
+    line-height: 100%;
+    display: block;
   }
 
   .headingBold {
-    color: var(--color-white);
+    color: #000000;
+    font-weight: 400;
+    font-size: inherit;
+    line-height: 100%;
+    display: block;
   }
 
+  /* Horizontal swipeable / scrollable carousel */
   .darkStage {
     position: relative;
     inset: auto;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8vh;
-    padding: 4vh 0;
+    flex-direction: row;
+    align-items: stretch;
+    width: 100%;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    background-color: #0d0d0d;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .darkStage::-webkit-scrollbar {
+    display: none;
   }
 
   .slideLayer {
@@ -381,44 +420,163 @@
     pointer-events: auto !important;
     display: flex;
     flex-direction: column;
-    gap: 3vh;
-    margin-bottom: 6vh;
+    justify-content: flex-start;
+    min-width: 100vw;
+    width: 100vw;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    padding: 0 4.5vw 2vh;
+    box-sizing: border-box;
+    background-color: #0d0d0d;
+  }
+
+  .stageHeadlineWrap {
+    position: absolute;
+    top: 2vh;
+    left: 4.5vw;
+    right: 4.5vw;
+    max-width: 92%;
+    text-align: left;
+    z-index: 3;
+    padding: 0;
+    pointer-events: none;
+  }
+
+  .stageHeadline {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 8.5vw, 2.85rem);
+    font-weight: 400;
+    line-height: 106%;
+    letter-spacing: -0.035em;
+    color: #ffffff;
+    margin: 0;
+  }
+
+  .headlineLine {
+    display: block;
   }
 
   .stageBgWrap {
     position: relative;
-    width: 100%;
-    height: 45vh;
-    border-radius: 12px;
+    inset: auto;
+    width: 100vw;
+    margin-left: -4.5vw;
+    margin-right: -4.5vw;
+    height: 66vh;
+    min-height: 480px;
+    max-height: 600px;
+    margin-top: 0;
+    margin-bottom: 2vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
+    z-index: 1;
+    pointer-events: none;
+    padding-top: 4vh;
+    box-sizing: border-box;
   }
 
-  .stageHeadlineWrap {
-    position: relative;
-    top: auto;
-    left: auto;
-    max-width: 100%;
-    text-align: center;
-  }
-
-  .stageHeadline {
-    font-size: 8vw;
+  .stageBgImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transform: scale(1.05) translateY(2.5vh);
+    transform-origin: center top;
   }
 
   .calloutWrap {
     position: relative;
     bottom: auto;
     right: auto;
+    left: auto;
     width: 100%;
+    min-width: 0;
     max-width: 100%;
+    margin: 0 auto 1.5vh;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    box-sizing: border-box;
+    z-index: 2;
   }
 
-  .calloutTitleBox,
+  /* Matching bc--white-5 / paper__plate--static */
+  .calloutTitleBox {
+    padding: 2.2vh 5vw;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    min-height: 54px;
+  }
+
+  .calloutTitle {
+    font-family: var(--font-sans);
+    font-size: clamp(1.15rem, 4.6vw, 1.35rem);
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
   .calloutBodyBox {
-    padding: 1.25rem;
+    padding: 2.5vh 5vw 2.8vh 5vw;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-sizing: border-box;
+  }
+
+  .calloutBody {
+    font-family: var(--font-sans);
+    font-size: clamp(0.92rem, 3.7vw, 1.04rem);
+    font-weight: 400;
+    line-height: 144%;
+    color: #ffffff;
+    letter-spacing: -0.015em;
+    margin: 0;
   }
 
   .indicatorsWrap {
-    display: none;
+    position: relative;
+    inset: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 1.5vh 4.5vw 4.5vh;
+    background-color: #0d0d0d;
+    box-sizing: border-box;
+    opacity: 1 !important;
+    z-index: 10;
+  }
+
+  .indicatorTrack {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .indicatorBar {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.25);
+    transition: background-color 0.25s ease;
+    cursor: pointer;
+  }
+
+  .mobileIndicatorActive {
+    background-color: #ffffff !important;
   }
 }

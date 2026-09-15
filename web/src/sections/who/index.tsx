@@ -16,6 +16,16 @@ const DEFAULT_MANIFESTO_LINES = [
   "with ideas. This tool is built around that simple truth.",
 ];
 
+const MOBILE_MANIFESTO_LINES = [
+  "Some thoughts need time,",
+  "space, and a physical trace to",
+  "exist. Writing by hand creates",
+  "focus, presence, and a deeper",
+  "connection with ideas. This tool",
+  "is built around that simple",
+  "truth.",
+];
+
 const DEFAULT_INTRO_STRUCTURE = [
   ["This tool is made for people who think on paper. It"],
   [
@@ -145,13 +155,23 @@ export function Who({ section }: WhoProps) {
         {/* Text Layer: Manifesto + Intro + Personas */}
         <div data-text-layer className={styles.textLayer}>
           <div data-content-wrapper className={styles.contentWrapper}>
-            {/* Top Manifesto: ONE single paragraph in Instrument Serif */}
-            <div data-manifesto-block className={styles.manifestoBlock}>
+            {/* Top Manifesto: Desktop (3 lines) & Mobile (7 lines) */}
+            <div data-manifesto-block className={styles.desktopManifestoBlock}>
               <p className={styles.manifesto}>
                 {manifestoLines.map((lineText, lIndex) => (
                   <span key={lIndex} className={styles.manifestoLine}>
                     {renderAnimatedWords(lineText, "data-manifesto-word")}
                     {lIndex < manifestoLines.length - 1 ? " " : ""}
+                  </span>
+                ))}
+              </p>
+            </div>
+
+            <div className={styles.mobileManifestoBlock}>
+              <p className={styles.mobileManifesto}>
+                {MOBILE_MANIFESTO_LINES.map((lineText, lIndex) => (
+                  <span key={lIndex} className={styles.mobileManifestoLine}>
+                    {lineText}
                   </span>
                 ))}
               </p>
@@ -167,8 +187,8 @@ export function Who({ section }: WhoProps) {
               </div>
 
               <div className={styles.rightColumnGroup}>
-                {/* 4-Paragraph Intro */}
-                <div data-right-column className={styles.rightColumn}>
+                {/* Desktop Intro */}
+                <div data-right-column className={styles.desktopRightColumn}>
                   {introParagraphs.map((lines, pIndex) => (
                     <p key={pIndex} className={styles.introParagraph}>
                       {lines.map((lineText, lIndex) => (
@@ -179,6 +199,13 @@ export function Who({ section }: WhoProps) {
                       ))}
                     </p>
                   ))}
+                </div>
+
+                {/* Mobile Intro: Single bold paragraph matching reference screenshot */}
+                <div className={styles.mobileRightColumn}>
+                  <p className={styles.mobileIntroText}>
+                    This tool is made for people who think on paper. It keeps handwriting natural and focused, letting you write the way you always have without distractions or screens getting in the way. Everything you write syncs to the app, where your notes are organized, searchable, and ready to work with AI when you need more clarity or structure.
+                  </p>
                 </div>
 
                 {/* 3 Audience / Persona Blocks */}
