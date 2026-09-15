@@ -1,20 +1,23 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import type { Footer, Navigation } from "@/domain/site";
+import type { Footer, Navigation, OrderPopup } from "@/domain/site";
 import { NotaLogo } from "@/shared/ui/NotaLogo";
 import { NotaMark } from "@/shared/ui/NotaMark";
 import { BurgerIcon } from "@/shared/ui/BurgerIcon";
 import { MobileMenu } from "@/shared/ui/MobileMenu/MobileMenu";
+import { OrderPopupModal } from "@/shared/ui/OrderPopupModal";
 import styles from "./Header.module.css";
 
 interface HeaderProps {
   navigation: Navigation;
   footer: Footer | null;
+  orderPopup?: OrderPopup | null;
 }
 
-export function Header({ navigation, footer }: HeaderProps) {
+export function Header({ navigation, footer, orderPopup }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isOrderOpen, setIsOrderOpen] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
   const lastScrollY = useRef(0);
 
@@ -79,9 +82,12 @@ export function Header({ navigation, footer }: HeaderProps) {
           </ul>
         </nav>
 
-        {/* Not yet a real trigger — becomes one once the order popup
-            exists (this is what it opens on the reference site). */}
-        <button type="button" className={styles.orderButton}>
+        <button
+          type="button"
+          className={styles.orderButton}
+          onClick={() => setIsOrderOpen(true)}
+          aria-haspopup="dialog"
+        >
           <NotaMark color="black" className={styles.orderMark} />
           <span className={styles.orderContent}>
             <span className={styles.orderTexts}>
@@ -113,6 +119,16 @@ export function Header({ navigation, footer }: HeaderProps) {
         footer={footer}
         isOpen={isMenuOpen}
         onClose={() => setIsMenuOpen(false)}
+        onOpenOrder={() => {
+          setIsMenuOpen(false);
+          setIsOrderOpen(true);
+        }}
+      />
+
+      <OrderPopupModal
+        isOpen={isOrderOpen}
+        onClose={() => setIsOrderOpen(false)}
+        orderPopup={orderPopup}
       />
     </>
   );

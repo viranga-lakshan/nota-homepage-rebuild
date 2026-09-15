@@ -1,25 +1,32 @@
-import { getFooter, getHomepage, getNavigation } from "@/lib/cms/client";
+import { getFooter, getHomepage, getNavigation, getOrderPopup } from "@/lib/cms/client";
 import { Header } from "@/shared/ui/Header/Header";
 import { Footer } from "@/shared/ui/Footer/Footer";
 import { resolveSection } from "@/sections/registry";
 import styles from "./page.module.css";
 
 /**
- * Fetches Homepage, Navigation and Footer concurrently and renders whatever
+ * Fetches Homepage, Navigation, Footer, and OrderPopup concurrently and renders whatever
  * exists.
  */
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const [homepage, navigation, footer] = await Promise.all([
+  const [homepage, navigation, footer, orderPopup] = await Promise.all([
     getHomepage(),
     getNavigation(),
     getFooter(),
+    getOrderPopup(),
   ]);
 
   return (
     <>
-      {navigation && <Header navigation={navigation} footer={footer} />}
+      {navigation && (
+        <Header
+          navigation={navigation}
+          footer={footer}
+          orderPopup={orderPopup}
+        />
+      )}
 
       <main className={styles.mainWrapper}>
         {homepage ? (
