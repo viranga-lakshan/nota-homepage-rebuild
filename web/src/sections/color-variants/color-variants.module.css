@@ -76,9 +76,9 @@
 .textRight {
   font-family: var(--font-serif, "Instrument Serif", serif);
   font-weight: 400;
-  font-size: 3.27vw;
-  line-height: 1.05;
-  letter-spacing: -0.05em;
+  font-size: clamp(54px, 6vw, 115px);
+  line-height: 1;
+  letter-spacing: -0.035em;
   color: #ffffff;
   white-space: nowrap;
   user-select: none;
@@ -87,13 +87,13 @@
 
 .textLeft {
   text-align: right;
-  width: 38%;
+  width: 42%;
   transform: translateX(0);
 }
 
 .textRight {
   text-align: left;
-  width: 38%;
+  width: 42%;
   transform: translateX(0);
 }
 

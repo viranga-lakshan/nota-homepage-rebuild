@@ -62,43 +62,30 @@ const DEFAULT_VARIANTS: ColorVariant[] = [
   },
 ];
 
-const COLOR_NAMES = [
-  "silver",
-  "graphite",
-  "graphite black",
-  "mist blue",
-  "precision red",
-  "bright orange",
-  "orange",
-  "red",
-  "blue",
-  "black",
-];
-
 export function ColorVariants({ section }: ColorVariantsProps) {
   const variants = useMemo(() => {
-    return DEFAULT_VARIANTS.map((defaultVariant, i) => {
-      const c = section.colors?.[i];
-      const imageUrl = c?.image?.url || defaultVariant.image?.url;
-      const alt = c?.image?.alt || defaultVariant.image?.alt;
+    if (section.colors && section.colors.length > 0) {
+      return section.colors.map((c, i) => {
+        const defaultFallback = DEFAULT_VARIANTS[i] || DEFAULT_VARIANTS[0];
+        const imageUrl = c.image?.url || defaultFallback.image?.url;
+        const alt = c.image?.alt || defaultFallback.image?.alt;
+        const name = c.name?.trim() ? c.name : defaultFallback.name;
+        const tagline = c.tagline?.trim() ? c.tagline : defaultFallback.tagline;
 
-      const isColor = Boolean(
-        c?.name && COLOR_NAMES.includes(c.name.trim().toLowerCase())
-      );
-      const name = isColor || !c?.name ? defaultVariant.name : c.name;
-      const tagline = isColor || !c?.tagline ? defaultVariant.tagline : c.tagline;
+        return {
+          name,
+          tagline,
+          image: {
+            url: imageUrl,
+            alt: alt || `${name} ${tagline}`,
+            width: 1920,
+            height: 1080,
+          },
+        };
+      });
+    }
 
-      return {
-        name,
-        tagline,
-        image: {
-          url: imageUrl,
-          alt: alt || `${name} ${tagline}`,
-          width: 1920,
-          height: 1080,
-        },
-      };
-    });
+    return DEFAULT_VARIANTS;
   }, [section.colors]);
 
   const { containerRef, activeIndex: desktopActiveIndex, scrollToVariant } =
