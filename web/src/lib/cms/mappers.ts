@@ -179,6 +179,12 @@ function toSection(dto: SectionDto | { __component: string }): Section | null {
         eyebrow: specs.eyebrow,
         heading: specs.heading,
         penImage: toImage(specs.pen_image, specs.pen_image_alt),
+        mobilePenImage: specs.mobile_pen_image
+          ? toImage(
+              specs.mobile_pen_image,
+              specs.mobile_pen_image_alt ?? specs.pen_image_alt ?? ""
+            )
+          : null,
         groups: specs.groups.map(toSpecGroup),
       };
     }

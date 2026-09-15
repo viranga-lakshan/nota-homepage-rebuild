@@ -76,6 +76,7 @@ export interface SpecsSection {
   eyebrow: string;
   heading: string;
   penImage: Image;
+  mobilePenImage?: Image | null;
   /** Always exactly three — the CMS enforces min 3 / max 3. */
   groups: SpecGroup[];
 }

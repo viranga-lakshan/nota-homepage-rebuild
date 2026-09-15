@@ -102,6 +102,10 @@ export function Header({ navigation, footer }: HeaderProps) {
         >
           <BurgerIcon color="white" className={styles.burgerIcon} />
         </button>
+
+        <div className={styles.mobileRightMark}>
+          <NotaMark color="white" className={styles.mobileMarkIcon} />
+        </div>
       </header>
 
       <MobileMenu

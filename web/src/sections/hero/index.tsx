@@ -56,15 +56,14 @@ export function Hero({ section }: HeroProps) {
         <HeroSmartPen heroRef={containerRef} />
       </div>
 
-      {/* Mobile tree — static CMS image, hidden at 992px and above via CSS */}
+      {/* Mobile tree — static image, hidden at 992px and above via CSS */}
       <div className={styles.mobile}>
         <div className={styles.mobileImageWrap}>
           <Image
-            src={section.mobileFallback.url}
-            alt={section.mobileFallback.alt}
-            width={section.mobileFallback.width}
-            height={section.mobileFallback.height}
-            sizes="(max-width: 479px) 80vw, 60vw"
+            src={section.mobileFallback?.url || "/images/pen_mobile_hero.webp"}
+            alt={section.mobileFallback?.alt || "NŌTA Smart pen"}
+            width={440}
+            height={1200}
             priority
             className={styles.mobileImage}
           />
