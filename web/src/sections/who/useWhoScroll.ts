@@ -467,67 +467,15 @@ export function useWhoScroll({ sectionRef }: UseWhoScrollOptions) {
             };
           }
 
-          // Mobile scroll-driven word transitions
+          // Mobile: No scroll animations — clean, static presentation
           if (isMobile) {
-            const mobileTimeline = gsap.timeline({
-              scrollTrigger: {
-                trigger: section,
-                start: "top 75%",
-                end: "bottom 75%",
-                scrub: true,
-              },
-            });
-
-            if (transitionOverlay) {
-              mobileTimeline.fromTo(
-                transitionOverlay,
-                { opacity: 0 },
-                { opacity: 1, ease: "power1.inOut", duration: 8 },
-                0
-              );
+            if (whoVideo) {
+              whoVideo.loop = true;
+              whoVideo.muted = true;
+              whoVideo.playsInline = true;
+              whoVideo.play().catch(() => {});
             }
-            if (stem) mobileTimeline.fromTo(stem, { scaleX: 1, transformOrigin: "50% 50%" }, { scaleX: 45, ease: "power1.inOut", duration: 15 }, 5);
-            if (bodyUpper) mobileTimeline.fromTo(bodyUpper, { scaleX: 1, transformOrigin: "50% 50%" }, { scaleX: 14, ease: "power1.inOut", duration: 15 }, 5);
-            if (bodyLower) mobileTimeline.fromTo(bodyLower, { scaleX: 1, transformOrigin: "50% 50%" }, { scaleX: 6, ease: "power1.inOut", duration: 15 }, 5);
-            if (base) mobileTimeline.fromTo(base, { scaleX: 1, transformOrigin: "50% 50%" }, { scaleX: 3, ease: "power1.inOut", duration: 15 }, 5);
-
-            if (textLayer) {
-              mobileTimeline.fromTo(
-                textLayer,
-                { opacity: 0 },
-                { opacity: 1, ease: "power1.inOut", duration: 5 },
-                18
-              );
-            }
-
-            if (manifestoWords.length > 0) {
-              const step = 20 / manifestoWords.length;
-              manifestoWords.forEach((word, index) => {
-                mobileTimeline.fromTo(
-                  word,
-                  { color: "rgba(255, 255, 255, 0.4)" },
-                  { color: "#ffffff", ease: "none", duration: step * 1.5 },
-                  20 + index * step
-                );
-              });
-            }
-
-            if (introWords.length > 0) {
-              const step = 20 / introWords.length;
-              introWords.forEach((word, index) => {
-                mobileTimeline.fromTo(
-                  word,
-                  { color: "rgba(255, 255, 255, 0.4)" },
-                  { color: "#ffffff", ease: "none", duration: step * 1.5 },
-                  45 + index * step
-                );
-              });
-            }
-
-            return () => {
-              mobileTimeline.scrollTrigger?.kill();
-              mobileTimeline.kill();
-            };
+            return;
           }
         }
       );
