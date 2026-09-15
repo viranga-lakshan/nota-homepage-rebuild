@@ -24,14 +24,13 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-// TODO: title/description will come from the CMS's shared.seo component via
-// generateMetadata() once the homepage fetch exists (see CLAUDE.md §2 —
-// no content may be hardcoded). The placeholder strings below are scaffold
-// only. `robots` is a hard brief requirement and is not a placeholder — see
-// CLAUDE.md §2, "the design belongs to its original creators".
+// Site-wide fallback metadata — individual routes override this via
+// generateMetadata(). The homepage (page.tsx) is already wired to the CMS.
+// `noIndex` stays true site-wide per CLAUDE.md §2: the reference design
+// belongs to its original creators and this rebuild must not be indexed.
 export const metadata: Metadata = {
-  title: "NŌTA homepage rebuild (scaffold)",
-  description: "Work in progress — content is not yet wired to the CMS.",
+  title: "NŌTA — Smart Pen",
+  description: "NŌTA creates tools that respect the way people think and write. Natural handwriting, quietly connected to digital structure.",
   robots: {
     index: false,
     follow: false,
