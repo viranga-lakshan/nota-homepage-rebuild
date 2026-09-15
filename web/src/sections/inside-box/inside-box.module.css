@@ -100,9 +100,9 @@
 
 .heading {
   font-family: var(--font-serif);
-  font-size: 11.5vw;
-  line-height: 94%;
-  letter-spacing: -0.04em;
+  font-size: 8.2vw;
+  line-height: 100%;
+  letter-spacing: -0.035em;
   color: var(--color-black);
   margin: 0;
   text-align: center;
@@ -114,27 +114,25 @@
 
 .headingLine1 {
   display: block;
-  color: rgba(0, 0, 0, 0.38);
+  color: rgba(0, 0, 0, 0.45);
   font-weight: 400;
 }
 
 .headingLine2 {
   display: block;
-  color: rgba(0, 0, 0, 0.78);
+  color: var(--color-black);
   font-weight: 400;
 }
 
 @media (min-width: 1440px) {
   .heading {
-    font-size: 10.6vw;
-    line-height: 92%;
+    font-size: 7.2vw;
   }
 }
 
 @media (min-width: 1920px) {
   .heading {
-    font-size: 10vw;
-    line-height: 90%;
+    font-size: 6.8vw;
   }
 }
 
@@ -550,7 +548,9 @@
     height: auto;
     min-height: 100vh;
     position: relative;
-    padding: 8vh 4vw;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
     background-color: var(--color-white);
   }
 
@@ -561,54 +561,175 @@
   .headingWrapper {
     position: relative;
     inset: auto;
+    width: 100%;
+    height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 0 3.5vw;
+    box-sizing: border-box;
     opacity: 1 !important;
-    padding: 8vh 4vw 4vh 4vw;
   }
 
   .heading {
-    font-size: 14vw;
-    line-height: 98%;
+    font-family: var(--font-serif);
+    font-size: clamp(4.2rem, 18.75vw, 5.8rem);
+    line-height: 100%;
+    letter-spacing: -0.03em;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .headingLine1 {
+    color: #666666;
+    font-weight: 400;
+    font-size: inherit;
+    line-height: 100%;
+    display: block;
+  }
+
+  .headingLine2 {
+    color: #000000;
+    font-weight: 400;
+    font-size: inherit;
+    line-height: 100%;
+    display: block;
   }
 
   .unboxingStage {
     position: relative;
     inset: auto;
+    width: 100%;
     opacity: 1 !important;
-    padding: 4vh 0;
+    padding: 0 4.5vw 6vh;
+    box-sizing: border-box;
+    background-color: var(--color-white);
   }
 
   .stageWrapper {
+    width: 100%;
+    height: auto;
     padding: 0;
+  }
+
+  .blindsItem {
+    width: 100%;
+    min-height: 76vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    background-color: #f4f4f4;
+    border-radius: 20px;
+    padding: 5vh 5.5vw 4vh;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .blindsImage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center 68%;
+    background-repeat: no-repeat;
+    z-index: 1;
+    transform: scale(0.7);
+    transform-origin: center 68%;
+  }
+
+  .blindsContent {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .blindsTitle {
+    font-family: var(--font-sans);
+    font-size: 24.2px;
+    font-weight: 500;
+    color: #000000;
+    letter-spacing: -0.03em;
+    line-height: 100%;
+    margin: 0;
+  }
+
+  .blindsText {
+    font-family: var(--font-sans);
+    font-size: 18.8px;
+    font-weight: 400;
+    color: #000000;
+    line-height: 130%;
+    letter-spacing: -0.02em;
+    margin: 0;
   }
 
   .blindsOverlay {
     display: none;
   }
 
-  .blindsContent {
-    max-width: 100%;
-    padding: 2vh 4vw;
-  }
-
-  .blindsTitle {
-    font-size: 6vw;
-  }
-
-  .blindsText {
-    font-size: 4.5vw;
-    margin-left: 0;
-  }
-
   .descriptionStage {
     position: relative;
     inset: auto;
+    width: 100%;
     opacity: 1 !important;
-    padding: 6vh 4vw;
+    padding: 8vh 4vw 6vh;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-white);
+  }
+
+  .descAccentDot {
+    display: none;
   }
 
   .descriptionText {
-    font-size: 6.5vw;
+    display: none;
+  }
+
+  .mobileDescriptionText {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-family: var(--font-serif);
+    font-size: 40.334px;
+    line-height: 104%;
+    letter-spacing: -0.035em;
     color: #000000;
+    margin: 0;
+    font-weight: 400;
+    width: 100%;
+  }
+
+  .mobileDescLine {
+    display: block;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .mobileDescAccentDot {
+    display: inline-block;
+    width: 4px;
+    height: 18px;
+    border-radius: 2px;
+    background-color: #ffd400;
+    margin-left: 8px;
+    vertical-align: middle;
   }
 
   .charSpan {
@@ -618,33 +739,80 @@
   .devicesStage {
     position: relative;
     inset: auto;
+    width: 100%;
     opacity: 1 !important;
-    padding: 4vh 0;
+    padding: 0 4.5vw 8vh;
+    box-sizing: border-box;
+    background-color: var(--color-white);
   }
 
   .devicesGrid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 4vh;
+    width: 100%;
     height: auto;
   }
 
   .deviceCard {
-    height: 60vh;
-    min-height: 400px;
-    padding: 4vw;
+    width: 100%;
+    min-height: 74vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    background-color: #f4f4f4;
+    border-radius: 20px;
+    padding: 5vh 5.5vw 4vh;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .cardImage {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: right 2vw bottom 3.5vh;
+    background-repeat: no-repeat;
+    z-index: 1;
+    transform: none;
+  }
+
+  .cardBlindsOverlay {
+    display: none;
   }
 
   .cardContent {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     max-width: 100%;
+    padding: 0;
+    margin: 0;
   }
 
   .cardTitle {
-    font-size: 6vw;
+    font-family: var(--font-sans);
+    font-size: 24.2px;
+    font-weight: 500;
+    color: #000000;
+    letter-spacing: -0.03em;
+    line-height: 100%;
+    margin: 0;
   }
 
   .cardDesc {
-    font-size: 4.5vw;
-    margin-left: 0;
+    font-family: var(--font-sans);
+    font-size: 18.8px;
+    font-weight: 400;
+    color: #000000;
+    line-height: 130%;
+    letter-spacing: -0.02em;
+    margin: 0;
   }
 }
-
