@@ -280,7 +280,7 @@ export function Who({ section }: WhoProps) {
           </div>
         </div>
 
-        {/* Video Stage Frame: Plays once and holds on final frame */}
+        {/* Video Stage Frame: Clean full-viewport layer */}
         <div data-video-stage className={styles.videoStage}>
           <div data-video-wrapper className={styles.videoWrapper}>
             <video
